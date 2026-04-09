@@ -1,0 +1,47 @@
+{
+  "config": {
+    "flow_title": "Ryse SmartShade {name}",
+    "step": {
+      "user": {
+        "title": "Select Ryse SmartShade",
+        "description": "Select a discovered Ryse SmartShade device or choose manual entry.",
+        "data": {
+          "address": "Device"
+        }
+      },
+      "bluetooth_confirm": {
+        "title": "Confirm Ryse SmartShade",
+        "description": "Found Ryse SmartShade **{name}** ({address}). Configure and add this device.",
+        "data": {
+          "name": "Device name",
+          "fast_mode": "Fast mode (keep BLE connection alive)"
+        }
+      },
+      "manual": {
+        "title": "Manual Configuration",
+        "description": "Enter the Bluetooth MAC address of your Ryse SmartShade. The device must be paired via bluetoothctl first.",
+        "data": {
+          "address": "Bluetooth MAC address (XX:XX:XX:XX:XX:XX)",
+          "name": "Device name",
+          "use_ha_ble": "Use Home Assistant Bluetooth",
+          "fast_mode": "Fast mode (keep BLE connection alive)"
+        }
+      }
+    },
+    "error": {
+      "invalid_mac": "Invalid MAC address format. Use XX:XX:XX:XX:XX:XX."
+    },
+    "abort": {
+      "already_configured": "This device is already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": {
+          "fast_mode": "Fast mode (keep BLE connection alive for instant responsiveness)"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "domain": "ryse_smartshade",
+  "name": "Ryse SmartShade",
+  "bluetooth": [
+    {
+      "connectable": true,
+      "local_name": "RZSS*"
+    },
+    {
+      "connectable": true,
+      "service_uuid": "a72f2800-b0bd-498b-b4cd-4a3901388238"
+    }
+  ],
+  "codeowners": ["@ibielopolskyi"],
+  "config_flow": true,
+  "dependencies": ["bluetooth_adapters"],
+  "documentation": "https://github.com/ibielopolskyi/ryse_mqtt",
+  "integration_type": "device",
+  "iot_class": "local_push",
+  "issue_tracker": "https://github.com/ibielopolskyi/ryse_mqtt/issues",
+  "requirements": ["bleak>=0.21.0", "bleak-retry-connector>=3.4.0"],
+  "version": "1.0.0"
+}
