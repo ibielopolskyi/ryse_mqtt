@@ -1,0 +1,70 @@
+##
+## Drop this file at /config/themes/fridge-3d.yaml on the Home Assistant
+## host (the file editor add-on, Samba, or the VS Code add-on all work).
+##
+## Then either call the `frontend.reload_themes` service from Developer
+## Tools > Actions, or restart Home Assistant. After that the theme
+## "Fridge 3D" will be selectable on the fridge dashboard view
+## (already set via `theme: "Fridge 3D"` in the dashboard config).
+##
+## Pure CSS variables — no JavaScript, no custom cards, no card_mod.
+##
+
+Fridge 3D:
+  # ---------- Palette ----------
+  primary-color: "#ffd479"
+  accent-color: "#ffd479"
+  primary-background-color: "#0a0d1c"
+  secondary-background-color: "#10152b"
+  primary-text-color: "#f3f6ff"
+  secondary-text-color: "rgba(243, 246, 255, 0.72)"
+  disabled-text-color: "rgba(243, 246, 255, 0.38)"
+  divider-color: "rgba(255, 255, 255, 0.08)"
+  app-header-background-color: "transparent"
+  app-header-text-color: "#f3f6ff"
+
+  # ---------- ha-card (the 3D glass base) ----------
+  ha-card-background: "linear-gradient(145deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.02) 100%), linear-gradient(145deg, #1a1f3a 0%, #0a0d1c 100%)"
+  card-background-color: "rgba(20, 25, 50, 0.85)"
+  ha-card-border-radius: "20px"
+  ha-card-border-width: "1px"
+  ha-card-border-color: "rgba(255, 255, 255, 0.12)"
+  ha-card-box-shadow: >-
+    0 10px 22px rgba(0, 0, 0, 0.55),
+    -5px -5px 12px rgba(255, 255, 255, 0.05),
+    5px 5px 12px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.35)
+  ha-card-header-color: "#f3f6ff"
+
+  # ---------- Tile card ----------
+  # HA tile cards read these
+  tile-color: "#ffd479"
+  tile-icon-color: "#cfe2ff"
+  tile-icon-hover-color: "#fff4c2"
+
+  # ---------- Icon colors ----------
+  state-icon-color: "#cfe2ff"
+  state-icon-active-color: "#ffd479"
+  paper-item-icon-color: "#cfe2ff"
+  paper-item-icon-active-color: "#ffd479"
+
+  # ---------- Toggles / switches ----------
+  switch-checked-color: "#ffd479"
+  switch-checked-track-color: "rgba(255, 212, 121, 0.5)"
+  switch-unchecked-button-color: "#cfd5e0"
+  switch-unchecked-track-color: "rgba(207, 213, 224, 0.4)"
+
+  # ---------- Sliders ----------
+  paper-slider-active-color: "#ffd479"
+  paper-slider-knob-color: "#ffd479"
+  paper-slider-knob-start-color: "#ffd479"
+  paper-slider-pin-color: "#ffd479"
+  paper-slider-secondary-color: "rgba(255, 212, 121, 0.3)"
+
+  # ---------- Buttons ----------
+  mdc-theme-primary: "#ffd479"
+  mdc-text-button-label-text-color: "#f3f6ff"
+
+  # ---------- Scrollbars (for todo list etc.) ----------
+  scrollbar-thumb-color: "rgba(255, 255, 255, 0.15)"

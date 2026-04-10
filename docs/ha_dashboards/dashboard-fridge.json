@@ -5,6 +5,7 @@
       "title": "Home",
       "subview": true,
       "type": "panel",
+      "theme": "Fridge 3D",
       "badges": [],
       "background": "radial-gradient(1000px 600px at 0% 0%, rgba(80,130,255,0.18), transparent 55%), radial-gradient(800px 500px at 100% 0%, rgba(255,140,80,0.18), transparent 60%), linear-gradient(160deg, #0a0d1c 0%, #10152b 45%, #0a0d1c 100%) fixed",
       "cards": [
