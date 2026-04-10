@@ -1,11 +1,15 @@
 ##
-## Drop this file at /config/themes/fridge-3d.yaml on the Home Assistant
-## host (the file editor add-on, Samba, or the VS Code add-on all work).
+## Fridge 3D — pure-CSS glassmorphism theme for the fridge panel.
 ##
-## Then either call the `frontend.reload_themes` service from Developer
-## Tools > Actions, or restart Home Assistant. After that the theme
-## "Fridge 3D" will be selectable on the fridge dashboard view
-## (already set via `theme: "Fridge 3D"` in the dashboard config).
+## Install via HACS (recommended):
+##   1. HACS > Frontend > three-dots menu > Custom repositories
+##   2. Repository: ibielopolskyi/ryse_mqtt
+##      Category: Theme
+##   3. Install "Fridge 3D Theme"
+##   4. Call service `frontend.reload_themes` (or restart HA)
+##
+## The fridge dashboard view already requests `theme: "Fridge 3D"`,
+## so it activates automatically once the theme is installed.
 ##
 ## Pure CSS variables — no JavaScript, no custom cards, no card_mod.
 ##
