@@ -77,9 +77,7 @@
               ]
             },
             {
-              "type": "grid",
-              "columns": 2,
-              "square": false,
+              "type": "vertical-stack",
               "cards": [
                 {
                   "type": "tile",
@@ -104,7 +102,7 @@
                 {
                   "type": "tile",
                   "entity": "switch.kitchen_kitchen_torch_switch",
-                  "name": "Torch",
+                  "name": "Kitchen Torch",
                   "icon": "mdi:torch",
                   "color": "amber",
                   "tap_action": {
@@ -124,7 +122,7 @@
                 {
                   "type": "tile",
                   "entity": "light.living_room_lights",
-                  "name": "Living",
+                  "name": "Living Room",
                   "icon": "mdi:sofa",
                   "color": "amber",
                   "tap_action": {
@@ -134,7 +132,7 @@
                 {
                   "type": "tile",
                   "entity": "switch.living_room_plug",
-                  "name": "Lamp",
+                  "name": "Side Lamp",
                   "icon": "mdi:floor-lamp",
                   "color": "amber",
                   "tap_action": {
@@ -174,7 +172,7 @@
                 {
                   "type": "tile",
                   "entity": "switch.balcony_plug",
-                  "name": "Xmas",
+                  "name": "Xmas Lights",
                   "icon": "mdi:string-lights",
                   "color": "amber",
                   "tap_action": {
