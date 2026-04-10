@@ -1,0 +1,865 @@
+title: Fridge
+views:
+- title: Home
+  subview: true
+  type: panel
+  badges: []
+  background: 'radial-gradient(1000px 600px at 0% 0%, rgba(80,130,255,0.18), transparent 55%), radial-gradient(800px 500px
+    at 100% 0%, rgba(255,140,80,0.18), transparent 60%), linear-gradient(160deg, #0a0d1c 0%, #10152b 45%, #0a0d1c 100%) fixed'
+  cards:
+  - type: horizontal-stack
+    cards:
+    - type: vertical-stack
+      cards:
+      - type: conditional
+        conditions:
+        - condition: state
+          entity: binary_sensor.wantspreset
+          state: 'off'
+        card:
+          type: picture-entity
+          entity: camera.birdeye
+          show_state: false
+          show_name: false
+          camera_view: live
+          fit_mode: cover
+          card_mod:
+            style: |2
+
+              ha-card {
+                background: linear-gradient(145deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
+                backdrop-filter: blur(18px) saturate(140%);
+                -webkit-backdrop-filter: blur(18px) saturate(140%);
+                border: 1px solid rgba(255,255,255,0.12);
+                border-radius: 22px;
+                box-shadow:
+                  0 10px 26px rgba(0,0,0,0.55),
+                  inset 0 1px 0 rgba(255,255,255,0.22),
+                  inset 0 -1px 0 rgba(0,0,0,0.35);
+                color: #f3f6ff;
+                overflow: hidden;
+              }
+
+              ha-card {
+                padding: 0;
+                border-radius: 22px;
+                aspect-ratio: 16 / 9;
+              }
+              ha-card img, ha-card .camera-view {
+                border-radius: 22px;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+              }
+      - type: conditional
+        conditions:
+        - condition: state
+          entity: binary_sensor.wantspreset
+          state: 'on'
+        card:
+          type: picture-entity
+          entity: camera.front_2
+          show_state: false
+          show_name: false
+          camera_view: live
+          fit_mode: cover
+          card_mod:
+            style: |2
+
+              ha-card {
+                background: linear-gradient(145deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
+                backdrop-filter: blur(18px) saturate(140%);
+                -webkit-backdrop-filter: blur(18px) saturate(140%);
+                border: 1px solid rgba(255,255,255,0.12);
+                border-radius: 22px;
+                box-shadow:
+                  0 10px 26px rgba(0,0,0,0.55),
+                  inset 0 1px 0 rgba(255,255,255,0.22),
+                  inset 0 -1px 0 rgba(0,0,0,0.35);
+                color: #f3f6ff;
+                overflow: hidden;
+              }
+
+              ha-card {
+                padding: 0;
+                border-radius: 22px;
+                aspect-ratio: 16 / 9;
+              }
+              ha-card img, ha-card .camera-view {
+                border-radius: 22px;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+              }
+      - type: custom:button-card
+        entity: input_button.preset
+        name: Check Packages
+        icon: mdi:package-variant
+        show_state: false
+        tap_action:
+          action: call-service
+          service: input_button.press
+          target:
+            entity_id: input_button.preset
+        show_name: true
+        show_icon: true
+        styles:
+          card:
+          - border-radius: 20px
+          - padding: 10px
+          - background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(0,0,0,0.28))
+          - box-shadow: 0 10px 22px rgba(0,0,0,0.55), -5px -5px 12px rgba(255,255,255,0.05), 5px 5px 12px rgba(0,0,0,0.55),
+              inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.35)
+          - border: 1px solid rgba(255,255,255,0.10)
+          - color: '#eef2ff'
+          - transition: transform .18s ease, box-shadow .18s ease
+          img_cell:
+          - background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(255,255,255,0.02))
+          - border-radius: 50%
+          - width: 42px
+          - height: 42px
+          - margin-right: 6px
+          - box-shadow: inset 0 2px 3px rgba(255,255,255,0.24), inset 0 -2px 3px rgba(0,0,0,0.35), 0 4px 10px rgba(0,0,0,0.5)
+          icon:
+          - color: '#cfe2ff'
+          - width: 22px
+          name:
+          - font-size: 14px
+          - font-weight: '700'
+          - letter-spacing: 0.4px
+          - color: '#f2f5ff'
+          - text-align: start
+          - justify-self: start
+          state:
+          - font-size: 10px
+          - opacity: '0.72'
+          - text-align: start
+          - justify-self: start
+          grid:
+          - grid-template-areas: '"i n"'
+          - grid-template-columns: auto 1fr
+          - grid-template-rows: 1fr
+        state:
+        - value: 'on'
+          styles:
+            card:
+            - background: linear-gradient(145deg, rgba(255,221,120,0.58), rgba(255,150,0,0.28))
+            - box-shadow: 0 12px 30px rgba(255,170,60,0.45), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45)
+            icon:
+            - color: '#fff4c2'
+            img_cell:
+            - background: radial-gradient(circle at 30% 30%, rgba(255,240,200,0.95), rgba(255,165,0,0.35))
+        - value: open
+          styles:
+            card:
+            - background: linear-gradient(145deg, rgba(120,200,255,0.45), rgba(60,100,200,0.25))
+            icon:
+            - color: '#d9efff'
+      - type: custom:mini-media-player
+        entity: media_player.samsung
+        source: icon
+        sound_mode: full
+        info: scroll
+        volume_stateless: true
+        group: false
+        artwork: cover
+        card_mod:
+          style: |2
+
+            ha-card {
+              background: linear-gradient(145deg, rgba(80,30,100,0.45), rgba(10,10,40,0.78));
+              border-radius: 22px;
+              border: 1px solid rgba(255,255,255,0.12);
+              box-shadow:
+                0 14px 30px rgba(0,0,0,0.55),
+                inset 0 1px 0 rgba(255,255,255,0.22);
+              color: #ffffff;
+              overflow: hidden;
+              padding: 6px 10px;
+            }
+            .mmp__container { color: #ffffff !important; }
+            .mmp-player__adds { padding: 4px 0 0 0; }
+      - type: todo-list
+        entity: todo.shopping_list
+        title: Shopping
+        card_mod:
+          style: |2
+
+            ha-card {
+              background: linear-gradient(145deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
+              backdrop-filter: blur(18px) saturate(140%);
+              -webkit-backdrop-filter: blur(18px) saturate(140%);
+              border: 1px solid rgba(255,255,255,0.12);
+              border-radius: 22px;
+              box-shadow:
+                0 10px 26px rgba(0,0,0,0.55),
+                inset 0 1px 0 rgba(255,255,255,0.22),
+                inset 0 -1px 0 rgba(0,0,0,0.35);
+              color: #f3f6ff;
+              overflow: hidden;
+            }
+
+            .card-header, .mdc-list-item, .entity, .item {
+              color: #f3f6ff !important;
+            }
+
+            ha-card {
+              padding: 14px 16px 10px 16px;
+              max-height: 260px;
+              overflow: auto;
+            }
+            .card-header, ha-card .title, h1 {
+              font-size: 14px !important;
+              letter-spacing: 1.2px;
+              text-transform: uppercase;
+              opacity: 0.82;
+              padding: 0 0 6px 0 !important;
+            }
+            mwc-checkbox { --mdc-theme-secondary: #ffd479; }
+            ha-textfield {
+              --mdc-text-field-fill-color: rgba(255,255,255,0.05);
+              --mdc-text-field-ink-color: #f3f6ff;
+              --mdc-text-field-label-ink-color: rgba(255,255,255,0.6);
+            }
+            ::-webkit-scrollbar { width: 6px; }
+            ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
+      - type: horizontal-stack
+        cards:
+        - type: custom:button-card
+          entity: light.kitchen_lights
+          show_name: true
+          show_icon: true
+          show_state: true
+          styles:
+            card:
+            - border-radius: 20px
+            - padding: 10px
+            - background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(0,0,0,0.28))
+            - box-shadow: 0 10px 22px rgba(0,0,0,0.55), -5px -5px 12px rgba(255,255,255,0.05), 5px 5px 12px rgba(0,0,0,0.55),
+                inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.35)
+            - border: 1px solid rgba(255,255,255,0.10)
+            - color: '#eef2ff'
+            - transition: transform .18s ease, box-shadow .18s ease
+            img_cell:
+            - background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(255,255,255,0.02))
+            - border-radius: 50%
+            - width: 42px
+            - height: 42px
+            - margin-right: 6px
+            - box-shadow: inset 0 2px 3px rgba(255,255,255,0.24), inset 0 -2px 3px rgba(0,0,0,0.35), 0 4px 10px rgba(0,0,0,0.5)
+            icon:
+            - color: '#cfe2ff'
+            - width: 22px
+            name:
+            - font-size: 12px
+            - font-weight: '600'
+            - color: '#f2f5ff'
+            - text-align: start
+            - justify-self: start
+            - white-space: nowrap
+            - overflow: hidden
+            - text-overflow: ellipsis
+            state:
+            - font-size: 10px
+            - opacity: '0.72'
+            - text-align: start
+            - justify-self: start
+            grid:
+            - grid-template-areas: '"i n" "i s"'
+            - grid-template-columns: auto 1fr
+            - grid-template-rows: 1fr 1fr
+          state:
+          - value: 'on'
+            styles:
+              card:
+              - background: linear-gradient(145deg, rgba(255,221,120,0.58), rgba(255,150,0,0.28))
+              - box-shadow: 0 12px 30px rgba(255,170,60,0.45), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45)
+              icon:
+              - color: '#fff4c2'
+              img_cell:
+              - background: radial-gradient(circle at 30% 30%, rgba(255,240,200,0.95), rgba(255,165,0,0.35))
+          - value: open
+            styles:
+              card:
+              - background: linear-gradient(145deg, rgba(120,200,255,0.45), rgba(60,100,200,0.25))
+              icon:
+              - color: '#d9efff'
+          name: Kitchen
+          icon: mdi:countertop
+          tap_action:
+            action: toggle
+        - type: custom:button-card
+          entity: light.bar_7
+          show_name: true
+          show_icon: true
+          show_state: true
+          styles:
+            card:
+            - border-radius: 20px
+            - padding: 10px
+            - background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(0,0,0,0.28))
+            - box-shadow: 0 10px 22px rgba(0,0,0,0.55), -5px -5px 12px rgba(255,255,255,0.05), 5px 5px 12px rgba(0,0,0,0.55),
+                inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.35)
+            - border: 1px solid rgba(255,255,255,0.10)
+            - color: '#eef2ff'
+            - transition: transform .18s ease, box-shadow .18s ease
+            img_cell:
+            - background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(255,255,255,0.02))
+            - border-radius: 50%
+            - width: 42px
+            - height: 42px
+            - margin-right: 6px
+            - box-shadow: inset 0 2px 3px rgba(255,255,255,0.24), inset 0 -2px 3px rgba(0,0,0,0.35), 0 4px 10px rgba(0,0,0,0.5)
+            icon:
+            - color: '#cfe2ff'
+            - width: 22px
+            name:
+            - font-size: 12px
+            - font-weight: '600'
+            - color: '#f2f5ff'
+            - text-align: start
+            - justify-self: start
+            - white-space: nowrap
+            - overflow: hidden
+            - text-overflow: ellipsis
+            state:
+            - font-size: 10px
+            - opacity: '0.72'
+            - text-align: start
+            - justify-self: start
+            grid:
+            - grid-template-areas: '"i n" "i s"'
+            - grid-template-columns: auto 1fr
+            - grid-template-rows: 1fr 1fr
+          state:
+          - value: 'on'
+            styles:
+              card:
+              - background: linear-gradient(145deg, rgba(255,221,120,0.58), rgba(255,150,0,0.28))
+              - box-shadow: 0 12px 30px rgba(255,170,60,0.45), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45)
+              icon:
+              - color: '#fff4c2'
+              img_cell:
+              - background: radial-gradient(circle at 30% 30%, rgba(255,240,200,0.95), rgba(255,165,0,0.35))
+          - value: open
+            styles:
+              card:
+              - background: linear-gradient(145deg, rgba(120,200,255,0.45), rgba(60,100,200,0.25))
+              icon:
+              - color: '#d9efff'
+          name: Bar
+          icon: mdi:glass-cocktail
+          tap_action:
+            action: toggle
+    - type: grid
+      columns: 2
+      square: true
+      cards:
+      - type: custom:button-card
+        entity: switch.kitchen_kitchen_torch_switch
+        show_name: true
+        show_icon: true
+        show_state: true
+        styles:
+          card:
+          - border-radius: 20px
+          - padding: 10px
+          - background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(0,0,0,0.28))
+          - box-shadow: 0 10px 22px rgba(0,0,0,0.55), -5px -5px 12px rgba(255,255,255,0.05), 5px 5px 12px rgba(0,0,0,0.55),
+              inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.35)
+          - border: 1px solid rgba(255,255,255,0.10)
+          - color: '#eef2ff'
+          - transition: transform .18s ease, box-shadow .18s ease
+          img_cell:
+          - background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(255,255,255,0.02))
+          - border-radius: 50%
+          - width: 42px
+          - height: 42px
+          - margin-right: 6px
+          - box-shadow: inset 0 2px 3px rgba(255,255,255,0.24), inset 0 -2px 3px rgba(0,0,0,0.35), 0 4px 10px rgba(0,0,0,0.5)
+          icon:
+          - color: '#cfe2ff'
+          - width: 22px
+          name:
+          - font-size: 12px
+          - font-weight: '600'
+          - color: '#f2f5ff'
+          - text-align: start
+          - justify-self: start
+          - white-space: nowrap
+          - overflow: hidden
+          - text-overflow: ellipsis
+          state:
+          - font-size: 10px
+          - opacity: '0.72'
+          - text-align: start
+          - justify-self: start
+          grid:
+          - grid-template-areas: '"i n" "i s"'
+          - grid-template-columns: auto 1fr
+          - grid-template-rows: 1fr 1fr
+        state:
+        - value: 'on'
+          styles:
+            card:
+            - background: linear-gradient(145deg, rgba(255,221,120,0.58), rgba(255,150,0,0.28))
+            - box-shadow: 0 12px 30px rgba(255,170,60,0.45), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45)
+            icon:
+            - color: '#fff4c2'
+            img_cell:
+            - background: radial-gradient(circle at 30% 30%, rgba(255,240,200,0.95), rgba(255,165,0,0.35))
+        - value: open
+          styles:
+            card:
+            - background: linear-gradient(145deg, rgba(120,200,255,0.45), rgba(60,100,200,0.25))
+            icon:
+            - color: '#d9efff'
+        name: Kitchen Torch
+        icon: mdi:torch
+        tap_action:
+          action: toggle
+      - type: custom:button-card
+        entity: switch.foyer_light
+        show_name: true
+        show_icon: true
+        show_state: true
+        styles:
+          card:
+          - border-radius: 20px
+          - padding: 10px
+          - background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(0,0,0,0.28))
+          - box-shadow: 0 10px 22px rgba(0,0,0,0.55), -5px -5px 12px rgba(255,255,255,0.05), 5px 5px 12px rgba(0,0,0,0.55),
+              inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.35)
+          - border: 1px solid rgba(255,255,255,0.10)
+          - color: '#eef2ff'
+          - transition: transform .18s ease, box-shadow .18s ease
+          img_cell:
+          - background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(255,255,255,0.02))
+          - border-radius: 50%
+          - width: 42px
+          - height: 42px
+          - margin-right: 6px
+          - box-shadow: inset 0 2px 3px rgba(255,255,255,0.24), inset 0 -2px 3px rgba(0,0,0,0.35), 0 4px 10px rgba(0,0,0,0.5)
+          icon:
+          - color: '#cfe2ff'
+          - width: 22px
+          name:
+          - font-size: 12px
+          - font-weight: '600'
+          - color: '#f2f5ff'
+          - text-align: start
+          - justify-self: start
+          - white-space: nowrap
+          - overflow: hidden
+          - text-overflow: ellipsis
+          state:
+          - font-size: 10px
+          - opacity: '0.72'
+          - text-align: start
+          - justify-self: start
+          grid:
+          - grid-template-areas: '"i n" "i s"'
+          - grid-template-columns: auto 1fr
+          - grid-template-rows: 1fr 1fr
+        state:
+        - value: 'on'
+          styles:
+            card:
+            - background: linear-gradient(145deg, rgba(255,221,120,0.58), rgba(255,150,0,0.28))
+            - box-shadow: 0 12px 30px rgba(255,170,60,0.45), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45)
+            icon:
+            - color: '#fff4c2'
+            img_cell:
+            - background: radial-gradient(circle at 30% 30%, rgba(255,240,200,0.95), rgba(255,165,0,0.35))
+        - value: open
+          styles:
+            card:
+            - background: linear-gradient(145deg, rgba(120,200,255,0.45), rgba(60,100,200,0.25))
+            icon:
+            - color: '#d9efff'
+        name: Foyer
+        icon: mdi:door
+        tap_action:
+          action: toggle
+      - type: custom:button-card
+        entity: light.living_room_lights
+        show_name: true
+        show_icon: true
+        show_state: true
+        styles:
+          card:
+          - border-radius: 20px
+          - padding: 10px
+          - background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(0,0,0,0.28))
+          - box-shadow: 0 10px 22px rgba(0,0,0,0.55), -5px -5px 12px rgba(255,255,255,0.05), 5px 5px 12px rgba(0,0,0,0.55),
+              inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.35)
+          - border: 1px solid rgba(255,255,255,0.10)
+          - color: '#eef2ff'
+          - transition: transform .18s ease, box-shadow .18s ease
+          img_cell:
+          - background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(255,255,255,0.02))
+          - border-radius: 50%
+          - width: 42px
+          - height: 42px
+          - margin-right: 6px
+          - box-shadow: inset 0 2px 3px rgba(255,255,255,0.24), inset 0 -2px 3px rgba(0,0,0,0.35), 0 4px 10px rgba(0,0,0,0.5)
+          icon:
+          - color: '#cfe2ff'
+          - width: 22px
+          name:
+          - font-size: 12px
+          - font-weight: '600'
+          - color: '#f2f5ff'
+          - text-align: start
+          - justify-self: start
+          - white-space: nowrap
+          - overflow: hidden
+          - text-overflow: ellipsis
+          state:
+          - font-size: 10px
+          - opacity: '0.72'
+          - text-align: start
+          - justify-self: start
+          grid:
+          - grid-template-areas: '"i n" "i s"'
+          - grid-template-columns: auto 1fr
+          - grid-template-rows: 1fr 1fr
+        state:
+        - value: 'on'
+          styles:
+            card:
+            - background: linear-gradient(145deg, rgba(255,221,120,0.58), rgba(255,150,0,0.28))
+            - box-shadow: 0 12px 30px rgba(255,170,60,0.45), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45)
+            icon:
+            - color: '#fff4c2'
+            img_cell:
+            - background: radial-gradient(circle at 30% 30%, rgba(255,240,200,0.95), rgba(255,165,0,0.35))
+        - value: open
+          styles:
+            card:
+            - background: linear-gradient(145deg, rgba(120,200,255,0.45), rgba(60,100,200,0.25))
+            icon:
+            - color: '#d9efff'
+        name: Living Room
+        icon: mdi:sofa
+        tap_action:
+          action: toggle
+      - type: custom:button-card
+        entity: switch.living_room_plug
+        show_name: true
+        show_icon: true
+        show_state: true
+        styles:
+          card:
+          - border-radius: 20px
+          - padding: 10px
+          - background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(0,0,0,0.28))
+          - box-shadow: 0 10px 22px rgba(0,0,0,0.55), -5px -5px 12px rgba(255,255,255,0.05), 5px 5px 12px rgba(0,0,0,0.55),
+              inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.35)
+          - border: 1px solid rgba(255,255,255,0.10)
+          - color: '#eef2ff'
+          - transition: transform .18s ease, box-shadow .18s ease
+          img_cell:
+          - background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(255,255,255,0.02))
+          - border-radius: 50%
+          - width: 42px
+          - height: 42px
+          - margin-right: 6px
+          - box-shadow: inset 0 2px 3px rgba(255,255,255,0.24), inset 0 -2px 3px rgba(0,0,0,0.35), 0 4px 10px rgba(0,0,0,0.5)
+          icon:
+          - color: '#cfe2ff'
+          - width: 22px
+          name:
+          - font-size: 12px
+          - font-weight: '600'
+          - color: '#f2f5ff'
+          - text-align: start
+          - justify-self: start
+          - white-space: nowrap
+          - overflow: hidden
+          - text-overflow: ellipsis
+          state:
+          - font-size: 10px
+          - opacity: '0.72'
+          - text-align: start
+          - justify-self: start
+          grid:
+          - grid-template-areas: '"i n" "i s"'
+          - grid-template-columns: auto 1fr
+          - grid-template-rows: 1fr 1fr
+        state:
+        - value: 'on'
+          styles:
+            card:
+            - background: linear-gradient(145deg, rgba(255,221,120,0.58), rgba(255,150,0,0.28))
+            - box-shadow: 0 12px 30px rgba(255,170,60,0.45), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45)
+            icon:
+            - color: '#fff4c2'
+            img_cell:
+            - background: radial-gradient(circle at 30% 30%, rgba(255,240,200,0.95), rgba(255,165,0,0.35))
+        - value: open
+          styles:
+            card:
+            - background: linear-gradient(145deg, rgba(120,200,255,0.45), rgba(60,100,200,0.25))
+            icon:
+            - color: '#d9efff'
+        name: Side Lamp
+        icon: mdi:floor-lamp
+        tap_action:
+          action: toggle
+      - type: custom:button-card
+        entity: light.dining_room_lights
+        show_name: true
+        show_icon: true
+        show_state: true
+        styles:
+          card:
+          - border-radius: 20px
+          - padding: 10px
+          - background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(0,0,0,0.28))
+          - box-shadow: 0 10px 22px rgba(0,0,0,0.55), -5px -5px 12px rgba(255,255,255,0.05), 5px 5px 12px rgba(0,0,0,0.55),
+              inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.35)
+          - border: 1px solid rgba(255,255,255,0.10)
+          - color: '#eef2ff'
+          - transition: transform .18s ease, box-shadow .18s ease
+          img_cell:
+          - background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(255,255,255,0.02))
+          - border-radius: 50%
+          - width: 42px
+          - height: 42px
+          - margin-right: 6px
+          - box-shadow: inset 0 2px 3px rgba(255,255,255,0.24), inset 0 -2px 3px rgba(0,0,0,0.35), 0 4px 10px rgba(0,0,0,0.5)
+          icon:
+          - color: '#cfe2ff'
+          - width: 22px
+          name:
+          - font-size: 12px
+          - font-weight: '600'
+          - color: '#f2f5ff'
+          - text-align: start
+          - justify-self: start
+          - white-space: nowrap
+          - overflow: hidden
+          - text-overflow: ellipsis
+          state:
+          - font-size: 10px
+          - opacity: '0.72'
+          - text-align: start
+          - justify-self: start
+          grid:
+          - grid-template-areas: '"i n" "i s"'
+          - grid-template-columns: auto 1fr
+          - grid-template-rows: 1fr 1fr
+        state:
+        - value: 'on'
+          styles:
+            card:
+            - background: linear-gradient(145deg, rgba(255,221,120,0.58), rgba(255,150,0,0.28))
+            - box-shadow: 0 12px 30px rgba(255,170,60,0.45), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45)
+            icon:
+            - color: '#fff4c2'
+            img_cell:
+            - background: radial-gradient(circle at 30% 30%, rgba(255,240,200,0.95), rgba(255,165,0,0.35))
+        - value: open
+          styles:
+            card:
+            - background: linear-gradient(145deg, rgba(120,200,255,0.45), rgba(60,100,200,0.25))
+            icon:
+            - color: '#d9efff'
+        name: Dining
+        icon: mdi:silverware-fork-knife
+        tap_action:
+          action: toggle
+      - type: custom:button-card
+        entity: light.cupboard
+        show_name: true
+        show_icon: true
+        show_state: true
+        styles:
+          card:
+          - border-radius: 20px
+          - padding: 10px
+          - background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(0,0,0,0.28))
+          - box-shadow: 0 10px 22px rgba(0,0,0,0.55), -5px -5px 12px rgba(255,255,255,0.05), 5px 5px 12px rgba(0,0,0,0.55),
+              inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.35)
+          - border: 1px solid rgba(255,255,255,0.10)
+          - color: '#eef2ff'
+          - transition: transform .18s ease, box-shadow .18s ease
+          img_cell:
+          - background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(255,255,255,0.02))
+          - border-radius: 50%
+          - width: 42px
+          - height: 42px
+          - margin-right: 6px
+          - box-shadow: inset 0 2px 3px rgba(255,255,255,0.24), inset 0 -2px 3px rgba(0,0,0,0.35), 0 4px 10px rgba(0,0,0,0.5)
+          icon:
+          - color: '#cfe2ff'
+          - width: 22px
+          name:
+          - font-size: 12px
+          - font-weight: '600'
+          - color: '#f2f5ff'
+          - text-align: start
+          - justify-self: start
+          - white-space: nowrap
+          - overflow: hidden
+          - text-overflow: ellipsis
+          state:
+          - font-size: 10px
+          - opacity: '0.72'
+          - text-align: start
+          - justify-self: start
+          grid:
+          - grid-template-areas: '"i n" "i s"'
+          - grid-template-columns: auto 1fr
+          - grid-template-rows: 1fr 1fr
+        state:
+        - value: 'on'
+          styles:
+            card:
+            - background: linear-gradient(145deg, rgba(255,221,120,0.58), rgba(255,150,0,0.28))
+            - box-shadow: 0 12px 30px rgba(255,170,60,0.45), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45)
+            icon:
+            - color: '#fff4c2'
+            img_cell:
+            - background: radial-gradient(circle at 30% 30%, rgba(255,240,200,0.95), rgba(255,165,0,0.35))
+        - value: open
+          styles:
+            card:
+            - background: linear-gradient(145deg, rgba(120,200,255,0.45), rgba(60,100,200,0.25))
+            icon:
+            - color: '#d9efff'
+        name: Cupboard
+        icon: mdi:cupboard
+        tap_action:
+          action: toggle
+      - type: custom:button-card
+        entity: switch.balcony_lights
+        show_name: true
+        show_icon: true
+        show_state: true
+        styles:
+          card:
+          - border-radius: 20px
+          - padding: 10px
+          - background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(0,0,0,0.28))
+          - box-shadow: 0 10px 22px rgba(0,0,0,0.55), -5px -5px 12px rgba(255,255,255,0.05), 5px 5px 12px rgba(0,0,0,0.55),
+              inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.35)
+          - border: 1px solid rgba(255,255,255,0.10)
+          - color: '#eef2ff'
+          - transition: transform .18s ease, box-shadow .18s ease
+          img_cell:
+          - background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(255,255,255,0.02))
+          - border-radius: 50%
+          - width: 42px
+          - height: 42px
+          - margin-right: 6px
+          - box-shadow: inset 0 2px 3px rgba(255,255,255,0.24), inset 0 -2px 3px rgba(0,0,0,0.35), 0 4px 10px rgba(0,0,0,0.5)
+          icon:
+          - color: '#cfe2ff'
+          - width: 22px
+          name:
+          - font-size: 12px
+          - font-weight: '600'
+          - color: '#f2f5ff'
+          - text-align: start
+          - justify-self: start
+          - white-space: nowrap
+          - overflow: hidden
+          - text-overflow: ellipsis
+          state:
+          - font-size: 10px
+          - opacity: '0.72'
+          - text-align: start
+          - justify-self: start
+          grid:
+          - grid-template-areas: '"i n" "i s"'
+          - grid-template-columns: auto 1fr
+          - grid-template-rows: 1fr 1fr
+        state:
+        - value: 'on'
+          styles:
+            card:
+            - background: linear-gradient(145deg, rgba(255,221,120,0.58), rgba(255,150,0,0.28))
+            - box-shadow: 0 12px 30px rgba(255,170,60,0.45), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45)
+            icon:
+            - color: '#fff4c2'
+            img_cell:
+            - background: radial-gradient(circle at 30% 30%, rgba(255,240,200,0.95), rgba(255,165,0,0.35))
+        - value: open
+          styles:
+            card:
+            - background: linear-gradient(145deg, rgba(120,200,255,0.45), rgba(60,100,200,0.25))
+            icon:
+            - color: '#d9efff'
+        name: Balcony
+        icon: mdi:balcony
+        tap_action:
+          action: toggle
+      - type: custom:button-card
+        entity: switch.balcony_plug
+        show_name: true
+        show_icon: true
+        show_state: true
+        styles:
+          card:
+          - border-radius: 20px
+          - padding: 10px
+          - background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(0,0,0,0.28))
+          - box-shadow: 0 10px 22px rgba(0,0,0,0.55), -5px -5px 12px rgba(255,255,255,0.05), 5px 5px 12px rgba(0,0,0,0.55),
+              inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.35)
+          - border: 1px solid rgba(255,255,255,0.10)
+          - color: '#eef2ff'
+          - transition: transform .18s ease, box-shadow .18s ease
+          img_cell:
+          - background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(255,255,255,0.02))
+          - border-radius: 50%
+          - width: 42px
+          - height: 42px
+          - margin-right: 6px
+          - box-shadow: inset 0 2px 3px rgba(255,255,255,0.24), inset 0 -2px 3px rgba(0,0,0,0.35), 0 4px 10px rgba(0,0,0,0.5)
+          icon:
+          - color: '#cfe2ff'
+          - width: 22px
+          name:
+          - font-size: 12px
+          - font-weight: '600'
+          - color: '#f2f5ff'
+          - text-align: start
+          - justify-self: start
+          - white-space: nowrap
+          - overflow: hidden
+          - text-overflow: ellipsis
+          state:
+          - font-size: 10px
+          - opacity: '0.72'
+          - text-align: start
+          - justify-self: start
+          grid:
+          - grid-template-areas: '"i n" "i s"'
+          - grid-template-columns: auto 1fr
+          - grid-template-rows: 1fr 1fr
+        state:
+        - value: 'on'
+          styles:
+            card:
+            - background: linear-gradient(145deg, rgba(255,221,120,0.58), rgba(255,150,0,0.28))
+            - box-shadow: 0 12px 30px rgba(255,170,60,0.45), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45)
+            icon:
+            - color: '#fff4c2'
+            img_cell:
+            - background: radial-gradient(circle at 30% 30%, rgba(255,240,200,0.95), rgba(255,165,0,0.35))
+        - value: open
+          styles:
+            card:
+            - background: linear-gradient(145deg, rgba(120,200,255,0.45), rgba(60,100,200,0.25))
+            icon:
+            - color: '#d9efff'
+        name: Xmas Lights
+        icon: mdi:string-lights
+        tap_action:
+          action: toggle
+    card_mod:
+      style: |2
+
+        ha-card { background: transparent; border: none; box-shadow: none; }
