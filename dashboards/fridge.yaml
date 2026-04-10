@@ -156,7 +156,7 @@ views:
             icon:
             - color: '#d9efff'
       - type: custom:mini-media-player
-        entity: media_player.samsung
+        entity: media_player.my_tv
         source: icon
         sound_mode: full
         info: scroll
