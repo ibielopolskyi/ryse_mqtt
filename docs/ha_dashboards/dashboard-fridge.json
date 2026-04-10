@@ -73,48 +73,40 @@
                   "type": "todo-list",
                   "entity": "todo.shopping_list",
                   "title": "Shopping"
-                },
-                {
-                  "type": "horizontal-stack",
-                  "cards": [
-                    {
-                      "type": "tile",
-                      "entity": "light.kitchen_lights",
-                      "name": "Kitchen",
-                      "icon": "mdi:countertop",
-                      "color": "amber",
-                      "vertical": true,
-                      "tap_action": {
-                        "action": "toggle"
-                      }
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "light.bar_7",
-                      "name": "Bar",
-                      "icon": "mdi:glass-cocktail",
-                      "color": "amber",
-                      "vertical": true,
-                      "tap_action": {
-                        "action": "toggle"
-                      }
-                    }
-                  ]
                 }
               ]
             },
             {
               "type": "grid",
               "columns": 2,
-              "square": true,
+              "square": false,
               "cards": [
                 {
                   "type": "tile",
+                  "entity": "light.kitchen_lights",
+                  "name": "Kitchen",
+                  "icon": "mdi:countertop",
+                  "color": "amber",
+                  "tap_action": {
+                    "action": "toggle"
+                  }
+                },
+                {
+                  "type": "tile",
+                  "entity": "light.bar_7",
+                  "name": "Bar",
+                  "icon": "mdi:glass-cocktail",
+                  "color": "amber",
+                  "tap_action": {
+                    "action": "toggle"
+                  }
+                },
+                {
+                  "type": "tile",
                   "entity": "switch.kitchen_kitchen_torch_switch",
-                  "name": "Kitchen Torch",
+                  "name": "Torch",
                   "icon": "mdi:torch",
                   "color": "amber",
-                  "vertical": true,
                   "tap_action": {
                     "action": "toggle"
                   }
@@ -125,7 +117,6 @@
                   "name": "Foyer",
                   "icon": "mdi:door",
                   "color": "amber",
-                  "vertical": true,
                   "tap_action": {
                     "action": "toggle"
                   }
@@ -133,10 +124,9 @@
                 {
                   "type": "tile",
                   "entity": "light.living_room_lights",
-                  "name": "Living Room",
+                  "name": "Living",
                   "icon": "mdi:sofa",
                   "color": "amber",
-                  "vertical": true,
                   "tap_action": {
                     "action": "toggle"
                   }
@@ -144,10 +134,9 @@
                 {
                   "type": "tile",
                   "entity": "switch.living_room_plug",
-                  "name": "Side Lamp",
+                  "name": "Lamp",
                   "icon": "mdi:floor-lamp",
                   "color": "amber",
-                  "vertical": true,
                   "tap_action": {
                     "action": "toggle"
                   }
@@ -158,7 +147,6 @@
                   "name": "Dining",
                   "icon": "mdi:silverware-fork-knife",
                   "color": "amber",
-                  "vertical": true,
                   "tap_action": {
                     "action": "toggle"
                   }
@@ -169,7 +157,6 @@
                   "name": "Cupboard",
                   "icon": "mdi:cupboard",
                   "color": "amber",
-                  "vertical": true,
                   "tap_action": {
                     "action": "toggle"
                   }
@@ -180,7 +167,6 @@
                   "name": "Balcony",
                   "icon": "mdi:balcony",
                   "color": "amber",
-                  "vertical": true,
                   "tap_action": {
                     "action": "toggle"
                   }
@@ -188,10 +174,9 @@
                 {
                   "type": "tile",
                   "entity": "switch.balcony_plug",
-                  "name": "Xmas Lights",
+                  "name": "Xmas",
                   "icon": "mdi:string-lights",
                   "color": "amber",
-                  "vertical": true,
                   "tap_action": {
                     "action": "toggle"
                   }
