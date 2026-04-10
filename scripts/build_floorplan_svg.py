@@ -17,12 +17,19 @@ import math
 from collections import Counter
 
 # ------------------------------------------------------------------
-# Geometry: top-down grid, then isometric projection
+# Geometry: top-down grid, then isometric projection.
+#
+# Projection angle was 30° (the classic isometric). We pull it down to
+# 26° so the resulting image is roughly 16:9 — which matches landscape
+# tablet / desktop viewports and lets the floor plan fill a full-screen
+# panel view with minimal letterbox. A bigger displayed image means
+# bigger pixel distance between icons at the same grid positions.
 # ------------------------------------------------------------------
-cos30 = math.cos(math.radians(30))
-sin30 = math.sin(math.radians(30))
+ISO_ANGLE_DEG = 26
+cos_a = math.cos(math.radians(ISO_ANGLE_DEG))
+sin_a = math.sin(math.radians(ISO_ANGLE_DEG))
 
-SCALE = 52
+SCALE = 64
 WALL_H = 1.4  # extrusion height in grid units
 
 ROOMS = [
@@ -48,8 +55,8 @@ ROOMS = [
 
 
 def iso(x, y, z=0, ox=0, oy=0):
-    sx = (x - y) * cos30 * SCALE + ox
-    sy = ((x + y) * sin30 - z) * SCALE + oy
+    sx = (x - y) * cos_a * SCALE + ox
+    sy = ((x + y) * sin_a - z) * SCALE + oy
     return sx, sy
 
 
@@ -240,29 +247,56 @@ def pct(x, y, z=0):
     return (sx / WIDTH * 100, sy / HEIGHT * 100)
 
 
-def room_pct(name, dx=0.5, dy=0.5, z=WALL_H + 0.1):
+# z offsets per domain so icons at the same floor-grid position still
+# separate vertically in the iso projection (lights hang high, curtains
+# and thermostats sit lower on the wall).
+Z_BY_DOMAIN = {
+    "light":   WALL_H + 0.45,
+    "cover":   WALL_H + 0.05,
+    "climate": WALL_H - 0.30,
+}
+
+
+def room_pct(name, dx=0.5, dy=0.5, z=None, domain=None):
     r = next(r for r in ROOMS if r["name"] == name)
+    if z is None:
+        z = Z_BY_DOMAIN.get(domain, WALL_H + 0.1)
     return pct(r["x"] + r["w"] * dx, r["y"] + r["h"] * dy, z)
 
 
-# Entities we want to pin to rooms
+# Entities we want to pin to rooms.
+#
+# Multi-icon rooms (Kitchen, Living, Dining, Balcony, Foyer) use opposite
+# edges/corners so touchable areas are maximally spread while keeping every
+# icon inside its room.
+def _rp(room, dx, dy, entity, icon):
+    domain = entity.split(".")[0]
+    x, y = room_pct(room, dx, dy, domain=domain)
+    return (x, y, icon)
+
+
 icon_positions = {
-    # format: entity -> (top_pct, left_pct, icon)
-    "light.balcony_lights":        (*room_pct("Balcony"),       "mdi:lightbulb"),
-    "cover.balcony_curtain_none":  (*room_pct("Balcony", 0.3, 0.2), "mdi:blinds-horizontal"),
-    "light.kitchen_switch":        (*room_pct("Kitchen"),       "mdi:countertop"),
-    "light.kitchen_torch":         (*room_pct("Kitchen", 0.75, 0.25), "mdi:lightbulb-on"),
-    "cover.curtains":              (*room_pct("Kitchen", 0.25, 0.25), "mdi:curtains"),
-    "light.dining_room_lights":    (*room_pct("Dining"),        "mdi:silverware-fork-knife"),
-    "cover.dining_shade_none":     (*room_pct("Dining", 0.2, 0.25),   "mdi:blinds-horizontal"),
-    "light.living_room_lights":    (*room_pct("Living"),        "mdi:sofa"),
-    "cover.living_room_shade_none":(*room_pct("Living", 0.2, 0.25),   "mdi:blinds-horizontal"),
-    "climate.living_room":         (*room_pct("Living", 0.8, 0.8),    "mdi:thermostat"),
-    "light.corridor":              (*room_pct("Corridor"),      "mdi:lightbulb"),
-    "cover.office_shade_none":     (*room_pct("Office", 0.5, 0.2),    "mdi:blinds-horizontal"),
-    "light.mysh_bedroom_lights":   (*room_pct("Master BR"),     "mdi:bed"),
-    "light.foyer_light":           (*room_pct("Foyer", 0.25, 0.5),    "mdi:door"),
-    "light.top":                   (*room_pct("Foyer", 0.75, 0.5),    "mdi:ceiling-light"),
+    # Balcony (3x2)
+    "light.balcony_lights":        _rp("Balcony",  0.22, 0.55, "light.balcony_lights",        "mdi:lightbulb"),
+    "cover.balcony_curtain_none":  _rp("Balcony",  0.78, 0.55, "cover.balcony_curtain_none",  "mdi:blinds-horizontal"),
+    # Kitchen (4x3)
+    "light.kitchen_switch":        _rp("Kitchen",  0.15, 0.20, "light.kitchen_switch",        "mdi:countertop"),
+    "light.kitchen_torch":         _rp("Kitchen",  0.85, 0.20, "light.kitchen_torch",         "mdi:lightbulb-on"),
+    "cover.curtains":              _rp("Kitchen",  0.50, 0.85, "cover.curtains",              "mdi:curtains"),
+    # Dining (4x2)
+    "light.dining_room_lights":    _rp("Dining",   0.22, 0.50, "light.dining_room_lights",    "mdi:silverware-fork-knife"),
+    "cover.dining_shade_none":     _rp("Dining",   0.78, 0.50, "cover.dining_shade_none",     "mdi:blinds-horizontal"),
+    # Living (3x5)
+    "light.living_room_lights":    _rp("Living",   0.50, 0.18, "light.living_room_lights",    "mdi:sofa"),
+    "cover.living_room_shade_none":_rp("Living",   0.50, 0.52, "cover.living_room_shade_none","mdi:blinds-horizontal"),
+    "climate.living_room":         _rp("Living",   0.50, 0.86, "climate.living_room",         "mdi:thermostat"),
+    # Single-icon rooms
+    "light.corridor":              _rp("Corridor", 0.50, 0.50, "light.corridor",              "mdi:lightbulb"),
+    "cover.office_shade_none":     _rp("Office",   0.50, 0.50, "cover.office_shade_none",     "mdi:blinds-horizontal"),
+    "light.mysh_bedroom_lights":   _rp("Master BR",0.50, 0.50, "light.mysh_bedroom_lights",   "mdi:bed"),
+    # Foyer (11x2) — stretched along the wide hall
+    "light.foyer_light":           _rp("Foyer",    0.10, 0.55, "light.foyer_light",           "mdi:door"),
+    "light.top":                   _rp("Foyer",    0.90, 0.55, "light.top",                   "mdi:ceiling-light"),
 }
 
 with open("/tmp/floorplan_icons.json", "w") as f:

@@ -2,339 +2,27 @@ title: Overview 3D
 views:
 - title: Home
   path: home
-  icon: mdi:home-variant
-  type: masonry
-  theme: Backend-selected
-  background: 'radial-gradient(1200px 600px at 10% -10%, rgba(90,140,255,0.18), transparent 60%), radial-gradient(1000px 500px
-    at 110% 10%, rgba(255,140,80,0.18), transparent 55%), linear-gradient(160deg, #0a0d1c 0%, #10152b 40%, #0a0d1c 100%) fixed'
+  icon: mdi:cube-outline
+  type: panel
   cards:
-  - type: markdown
-    content: |-
-      <ha-icon icon="mdi:weather-partly-cloudy" style="--mdc-icon-size: 72px; color: #ffd479; filter: drop-shadow(0 8px 20px rgba(255,170,60,0.45));"></ha-icon>
-
-      ## Hello, Igor
-      ### {{ now().strftime('%A, %B %d') }} · {{ now().strftime('%H:%M') }}
-      **{{ states('weather.forecast_home') | title }}** · {{ state_attr('weather.forecast_home','temperature') }}°C · Humidity {{ state_attr('weather.forecast_home','humidity') }}% · Wind {{ state_attr('weather.forecast_home','wind_speed') }} km/h
-    card_mod:
-      style: |2
-
-        ha-card {
-          background:
-            radial-gradient(120% 120% at 0% 0%, rgba(255,200,120,0.20), transparent 55%),
-            radial-gradient(120% 120% at 100% 100%, rgba(80,130,255,0.25), transparent 60%),
-            linear-gradient(160deg, rgba(18,22,40,0.85), rgba(10,12,24,0.92));
-          border-radius: 28px;
-          border: 1px solid rgba(255,255,255,0.10);
-          box-shadow:
-            0 24px 60px rgba(0,0,0,0.55),
-            inset 0 1px 0 rgba(255,255,255,0.18);
-          color: #f5f7ff;
-          padding: 22px 26px;
-          transform: perspective(1200px) rotateX(1deg);
-          transform-origin: top center;
-        }
-        ha-markdown h2 { margin: 6px 0 2px 0; font-size: 28px; letter-spacing: .3px; }
-        ha-markdown h3 { margin: 0 0 10px 0; font-weight: 400; opacity: .8; }
-        ha-markdown p { margin: 6px 0; opacity: .92; }
-  - type: horizontal-stack
-    cards:
-    - type: custom:button-card
-      entity: scene.curtains_open
-      name: Open curtains
-      icon: mdi:blinds-horizontal
-      show_state: false
-      tap_action:
-        action: call-service
-        service: scene.turn_on
-        service_data:
-          entity_id: scene.curtains_open
-      styles:
-        card:
-        - border-radius: 24px
-        - padding: 14px
-        - background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(0,0,0,0.25))
-        - box-shadow: 0 12px 30px rgba(0,0,0,0.55), -6px -6px 16px rgba(255,255,255,0.05), 6px 6px 16px rgba(0,0,0,0.55),
-            inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.35)
-        - border: 1px solid rgba(255,255,255,0.10)
-        - color: '#eef2ff'
-        - transition: transform .2s ease, box-shadow .2s ease
-        - transform-style: preserve-3d
-        - perspective: 600px
-        img_cell:
-        - background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(255,255,255,0.02))
-        - border-radius: 50%
-        - width: 54px
-        - height: 54px
-        - margin-right: 8px
-        - box-shadow: inset 0 2px 4px rgba(255,255,255,0.25), inset 0 -2px 4px rgba(0,0,0,0.35), 0 6px 14px rgba(0,0,0,0.45)
-        icon:
-        - color: '#cfe2ff'
-        - width: 30px
-        name:
-        - font-size: 14px
-        - font-weight: '600'
-        - color: '#f2f5ff'
-        - text-align: start
-        - justify-self: start
-        state:
-        - font-size: 11px
-        - opacity: '0.75'
-        - text-align: start
-        - justify-self: start
-        grid:
-        - grid-template-areas: '"i n" "i s"'
-        - grid-template-columns: auto 1fr
-        - grid-template-rows: 1fr 1fr
-      state:
-      - value: 'on'
-        styles:
-          card:
-          - background: linear-gradient(145deg, rgba(255,221,120,0.55), rgba(255,150,0,0.25))
-          - box-shadow: 0 14px 38px rgba(255,170,60,0.45), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45),
-              inset 0 -1px 0 rgba(0,0,0,0.30)
-          icon:
-          - color: '#fff4c2'
-          img_cell:
-          - background: radial-gradient(circle at 30% 30%, rgba(255,240,200,0.95), rgba(255,165,0,0.35))
-      - value: open
-        styles:
-          card:
-          - background: linear-gradient(145deg, rgba(120,200,255,0.45), rgba(60,100,200,0.25))
-          - box-shadow: 0 14px 38px rgba(60,140,255,0.4), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45)
-          icon:
-          - color: '#d9efff'
-      - value: playing
-        styles:
-          card:
-          - background: linear-gradient(145deg, rgba(140,240,180,0.45), rgba(30,140,90,0.25))
-          icon:
-          - color: '#c6ffd9'
-    - type: custom:button-card
-      entity: scene.curtains_closed
-      name: Close curtains
-      icon: mdi:blinds-horizontal-closed
-      show_state: false
-      tap_action:
-        action: call-service
-        service: scene.turn_on
-        service_data:
-          entity_id: scene.curtains_closed
-      styles:
-        card:
-        - border-radius: 24px
-        - padding: 14px
-        - background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(0,0,0,0.25))
-        - box-shadow: 0 12px 30px rgba(0,0,0,0.55), -6px -6px 16px rgba(255,255,255,0.05), 6px 6px 16px rgba(0,0,0,0.55),
-            inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.35)
-        - border: 1px solid rgba(255,255,255,0.10)
-        - color: '#eef2ff'
-        - transition: transform .2s ease, box-shadow .2s ease
-        - transform-style: preserve-3d
-        - perspective: 600px
-        img_cell:
-        - background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(255,255,255,0.02))
-        - border-radius: 50%
-        - width: 54px
-        - height: 54px
-        - margin-right: 8px
-        - box-shadow: inset 0 2px 4px rgba(255,255,255,0.25), inset 0 -2px 4px rgba(0,0,0,0.35), 0 6px 14px rgba(0,0,0,0.45)
-        icon:
-        - color: '#cfe2ff'
-        - width: 30px
-        name:
-        - font-size: 14px
-        - font-weight: '600'
-        - color: '#f2f5ff'
-        - text-align: start
-        - justify-self: start
-        state:
-        - font-size: 11px
-        - opacity: '0.75'
-        - text-align: start
-        - justify-self: start
-        grid:
-        - grid-template-areas: '"i n" "i s"'
-        - grid-template-columns: auto 1fr
-        - grid-template-rows: 1fr 1fr
-      state:
-      - value: 'on'
-        styles:
-          card:
-          - background: linear-gradient(145deg, rgba(255,221,120,0.55), rgba(255,150,0,0.25))
-          - box-shadow: 0 14px 38px rgba(255,170,60,0.45), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45),
-              inset 0 -1px 0 rgba(0,0,0,0.30)
-          icon:
-          - color: '#fff4c2'
-          img_cell:
-          - background: radial-gradient(circle at 30% 30%, rgba(255,240,200,0.95), rgba(255,165,0,0.35))
-      - value: open
-        styles:
-          card:
-          - background: linear-gradient(145deg, rgba(120,200,255,0.45), rgba(60,100,200,0.25))
-          - box-shadow: 0 14px 38px rgba(60,140,255,0.4), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45)
-          icon:
-          - color: '#d9efff'
-      - value: playing
-        styles:
-          card:
-          - background: linear-gradient(145deg, rgba(140,240,180,0.45), rgba(30,140,90,0.25))
-          icon:
-          - color: '#c6ffd9'
-    - type: custom:button-card
-      entity: scene.dimmed_lights_for_tv
-      name: Movie mode
-      icon: mdi:movie-open
-      show_state: false
-      tap_action:
-        action: call-service
-        service: scene.turn_on
-        service_data:
-          entity_id: scene.dimmed_lights_for_tv
-      styles:
-        card:
-        - border-radius: 24px
-        - padding: 14px
-        - background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(0,0,0,0.25))
-        - box-shadow: 0 12px 30px rgba(0,0,0,0.55), -6px -6px 16px rgba(255,255,255,0.05), 6px 6px 16px rgba(0,0,0,0.55),
-            inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.35)
-        - border: 1px solid rgba(255,255,255,0.10)
-        - color: '#eef2ff'
-        - transition: transform .2s ease, box-shadow .2s ease
-        - transform-style: preserve-3d
-        - perspective: 600px
-        img_cell:
-        - background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(255,255,255,0.02))
-        - border-radius: 50%
-        - width: 54px
-        - height: 54px
-        - margin-right: 8px
-        - box-shadow: inset 0 2px 4px rgba(255,255,255,0.25), inset 0 -2px 4px rgba(0,0,0,0.35), 0 6px 14px rgba(0,0,0,0.45)
-        icon:
-        - color: '#cfe2ff'
-        - width: 30px
-        name:
-        - font-size: 14px
-        - font-weight: '600'
-        - color: '#f2f5ff'
-        - text-align: start
-        - justify-self: start
-        state:
-        - font-size: 11px
-        - opacity: '0.75'
-        - text-align: start
-        - justify-self: start
-        grid:
-        - grid-template-areas: '"i n" "i s"'
-        - grid-template-columns: auto 1fr
-        - grid-template-rows: 1fr 1fr
-      state:
-      - value: 'on'
-        styles:
-          card:
-          - background: linear-gradient(145deg, rgba(255,221,120,0.55), rgba(255,150,0,0.25))
-          - box-shadow: 0 14px 38px rgba(255,170,60,0.45), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45),
-              inset 0 -1px 0 rgba(0,0,0,0.30)
-          icon:
-          - color: '#fff4c2'
-          img_cell:
-          - background: radial-gradient(circle at 30% 30%, rgba(255,240,200,0.95), rgba(255,165,0,0.35))
-      - value: open
-        styles:
-          card:
-          - background: linear-gradient(145deg, rgba(120,200,255,0.45), rgba(60,100,200,0.25))
-          - box-shadow: 0 14px 38px rgba(60,140,255,0.4), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45)
-          icon:
-          - color: '#d9efff'
-      - value: playing
-        styles:
-          card:
-          - background: linear-gradient(145deg, rgba(140,240,180,0.45), rgba(30,140,90,0.25))
-          icon:
-          - color: '#c6ffd9'
-    - type: custom:button-card
-      entity: scene.after_tv
-      name: After TV
-      icon: mdi:weather-night
-      show_state: false
-      tap_action:
-        action: call-service
-        service: scene.turn_on
-        service_data:
-          entity_id: scene.after_tv
-      styles:
-        card:
-        - border-radius: 24px
-        - padding: 14px
-        - background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(0,0,0,0.25))
-        - box-shadow: 0 12px 30px rgba(0,0,0,0.55), -6px -6px 16px rgba(255,255,255,0.05), 6px 6px 16px rgba(0,0,0,0.55),
-            inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.35)
-        - border: 1px solid rgba(255,255,255,0.10)
-        - color: '#eef2ff'
-        - transition: transform .2s ease, box-shadow .2s ease
-        - transform-style: preserve-3d
-        - perspective: 600px
-        img_cell:
-        - background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(255,255,255,0.02))
-        - border-radius: 50%
-        - width: 54px
-        - height: 54px
-        - margin-right: 8px
-        - box-shadow: inset 0 2px 4px rgba(255,255,255,0.25), inset 0 -2px 4px rgba(0,0,0,0.35), 0 6px 14px rgba(0,0,0,0.45)
-        icon:
-        - color: '#cfe2ff'
-        - width: 30px
-        name:
-        - font-size: 14px
-        - font-weight: '600'
-        - color: '#f2f5ff'
-        - text-align: start
-        - justify-self: start
-        state:
-        - font-size: 11px
-        - opacity: '0.75'
-        - text-align: start
-        - justify-self: start
-        grid:
-        - grid-template-areas: '"i n" "i s"'
-        - grid-template-columns: auto 1fr
-        - grid-template-rows: 1fr 1fr
-      state:
-      - value: 'on'
-        styles:
-          card:
-          - background: linear-gradient(145deg, rgba(255,221,120,0.55), rgba(255,150,0,0.25))
-          - box-shadow: 0 14px 38px rgba(255,170,60,0.45), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45),
-              inset 0 -1px 0 rgba(0,0,0,0.30)
-          icon:
-          - color: '#fff4c2'
-          img_cell:
-          - background: radial-gradient(circle at 30% 30%, rgba(255,240,200,0.95), rgba(255,165,0,0.35))
-      - value: open
-        styles:
-          card:
-          - background: linear-gradient(145deg, rgba(120,200,255,0.45), rgba(60,100,200,0.25))
-          - box-shadow: 0 14px 38px rgba(60,140,255,0.4), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45)
-          icon:
-          - color: '#d9efff'
-      - value: playing
-        styles:
-          card:
-          - background: linear-gradient(145deg, rgba(140,240,180,0.45), rgba(30,140,90,0.25))
-          icon:
-          - color: '#c6ffd9'
   - type: picture-elements
-    image: data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjkxIDgwMSIgd2lkdGg9IjEyOTEiIGhlaWdodD0iODAxIj4KPGRlZnM+Cgo8ZmlsdGVyIGlkPSJzb2Z0IiB4PSItMzAlIiB5PSItMzAlIiB3aWR0aD0iMTYwJSIgaGVpZ2h0PSIxNjAlIj4KICA8ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSIyIiByZXN1bHQ9ImIiLz4KICA8ZmVNZXJnZT48ZmVNZXJnZU5vZGUgaW49ImIiLz48ZmVNZXJnZU5vZGUgaW49IlNvdXJjZUdyYXBoaWMiLz48L2ZlTWVyZ2U+CjwvZmlsdGVyPgo8ZmlsdGVyIGlkPSJkcm9wIiB4PSItNTAlIiB5PSItNTAlIiB3aWR0aD0iMjAwJSIgaGVpZ2h0PSIyMDAlIj4KICA8ZmVHYXVzc2lhbkJsdXIgaW49IlNvdXJjZUFscGhhIiBzdGREZXZpYXRpb249IjYiLz4KICA8ZmVPZmZzZXQgZHg9IjAiIGR5PSIxOCIgcmVzdWx0PSJvZmYiLz4KICA8ZmVDb21wb25lbnRUcmFuc2Zlcj48ZmVGdW5jQSB0eXBlPSJsaW5lYXIiIHNsb3BlPSIwLjU1Ii8+PC9mZUNvbXBvbmVudFRyYW5zZmVyPgogIDxmZU1lcmdlPjxmZU1lcmdlTm9kZS8+PGZlTWVyZ2VOb2RlIGluPSJTb3VyY2VHcmFwaGljIi8+PC9mZU1lcmdlPgo8L2ZpbHRlcj4KPHJhZGlhbEdyYWRpZW50IGlkPSJoYWxvIiBjeD0iNTAlIiBjeT0iNTAlIiByPSI2MCUiPgogIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMxYTJhNGEiIHN0b3Atb3BhY2l0eT0iMC45Ii8+CiAgPHN0b3Agb2Zmc2V0PSI2MCUiIHN0b3AtY29sb3I9IiMwYTEwMjAiIHN0b3Atb3BhY2l0eT0iMC42Ii8+CiAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMDUwNzBmIiBzdG9wLW9wYWNpdHk9IjAiLz4KPC9yYWRpYWxHcmFkaWVudD4KCjxsaW5lYXJHcmFkaWVudCBpZD0iZ19iYWxjb255IiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMmI0YTZiIiBzdG9wLW9wYWNpdHk9IjAuOTUiLz4KICA8c3RvcCBvZmZzZXQ9IjU1JSIgc3RvcC1jb2xvcj0iIzJiNGE2YiIgc3RvcC1vcGFjaXR5PSIwLjgyIi8+CiAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMWUzMzRhIiBzdG9wLW9wYWNpdHk9IjAuOTIiLz4KPC9saW5lYXJHcmFkaWVudD4KCjxsaW5lYXJHcmFkaWVudCBpZD0iZ19raXRjaGVuIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjN2E1MjMwIiBzdG9wLW9wYWNpdHk9IjAuOTUiLz4KICA8c3RvcCBvZmZzZXQ9IjU1JSIgc3RvcC1jb2xvcj0iIzdhNTIzMCIgc3RvcC1vcGFjaXR5PSIwLjgyIi8+CiAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjNGUzNDFlIiBzdG9wLW9wYWNpdHk9IjAuOTIiLz4KPC9saW5lYXJHcmFkaWVudD4KCjxsaW5lYXJHcmFkaWVudCBpZD0iZ19tYXN0ZXJfYnIiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMzNTUwNGEiIHN0b3Atb3BhY2l0eT0iMC45NSIvPgogIDxzdG9wIG9mZnNldD0iNTUlIiBzdG9wLWNvbG9yPSIjMzU1MDRhIiBzdG9wLW9wYWNpdHk9IjAuODIiLz4KICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMyMDMwMmMiIHN0b3Atb3BhY2l0eT0iMC45MiIvPgo8L2xpbmVhckdyYWRpZW50PgoKPGxpbmVhckdyYWRpZW50IGlkPSJnX2RpbmluZyIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzdhM2EzYSIgc3RvcC1vcGFjaXR5PSIwLjk1Ii8+CiAgPHN0b3Agb2Zmc2V0PSI1NSUiIHN0b3AtY29sb3I9IiM3YTNhM2EiIHN0b3Atb3BhY2l0eT0iMC44MiIvPgogIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzRhMjMyMyIgc3RvcC1vcGFjaXR5PSIwLjkyIi8+CjwvbGluZWFyR3JhZGllbnQ+Cgo8bGluZWFyR3JhZGllbnQgaWQ9ImdfbGl2aW5nIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjM2E0ZDc1IiBzdG9wLW9wYWNpdHk9IjAuOTUiLz4KICA8c3RvcCBvZmZzZXQ9IjU1JSIgc3RvcC1jb2xvcj0iIzNhNGQ3NSIgc3RvcC1vcGFjaXR5PSIwLjgyIi8+CiAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMjMyZjRhIiBzdG9wLW9wYWNpdHk9IjAuOTIiLz4KPC9saW5lYXJHcmFkaWVudD4KCjxsaW5lYXJHcmFkaWVudCBpZD0iZ19jb3JyaWRvciIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzRhNGE1OCIgc3RvcC1vcGFjaXR5PSIwLjk1Ii8+CiAgPHN0b3Agb2Zmc2V0PSI1NSUiIHN0b3AtY29sb3I9IiM0YTRhNTgiIHN0b3Atb3BhY2l0eT0iMC44MiIvPgogIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzJkMmQzOCIgc3RvcC1vcGFjaXR5PSIwLjkyIi8+CjwvbGluZWFyR3JhZGllbnQ+Cgo8bGluZWFyR3JhZGllbnQgaWQ9ImdfYmF0aCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzJmNWE2YSIgc3RvcC1vcGFjaXR5PSIwLjk1Ii8+CiAgPHN0b3Agb2Zmc2V0PSI1NSUiIHN0b3AtY29sb3I9IiMyZjVhNmEiIHN0b3Atb3BhY2l0eT0iMC44MiIvPgogIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzFjMzY0MCIgc3RvcC1vcGFjaXR5PSIwLjkyIi8+CjwvbGluZWFyR3JhZGllbnQ+Cgo8bGluZWFyR3JhZGllbnQgaWQ9Imdfb2ZmaWNlIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjNTMzMDcwIiBzdG9wLW9wYWNpdHk9IjAuOTUiLz4KICA8c3RvcCBvZmZzZXQ9IjU1JSIgc3RvcC1jb2xvcj0iIzUzMzA3MCIgc3RvcC1vcGFjaXR5PSIwLjgyIi8+CiAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMzQxZjQ2IiBzdG9wLW9wYWNpdHk9IjAuOTIiLz4KPC9saW5lYXJHcmFkaWVudD4KCjxsaW5lYXJHcmFkaWVudCBpZD0iZ19mb3llciIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzVhNDUzMCIgc3RvcC1vcGFjaXR5PSIwLjk1Ii8+CiAgPHN0b3Agb2Zmc2V0PSI1NSUiIHN0b3AtY29sb3I9IiM1YTQ1MzAiIHN0b3Atb3BhY2l0eT0iMC44MiIvPgogIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzM5MmExZCIgc3RvcC1vcGFjaXR5PSIwLjkyIi8+CjwvbGluZWFyR3JhZGllbnQ+CjwvZGVmcz4KPHBvbHlnb24gcG9pbnRzPSI2MDAuNCw1NC44IDEyMzAuOSw0MTguOCA2OTAuNSw3MzAuOCA2MC4wLDM2Ni44IiBmaWxsPSJ1cmwoI2hhbG8pIiBmaWx0ZXI9InVybCgjc29mdCkiLz4KPHBvbHlnb24gcG9pbnRzPSI2MDAuNCwxMzIuOCA3MzUuNSwyMTAuOCA2NDUuNCwyNjIuOCA1MTAuMywxODQuOCIgZmlsbD0idXJsKCNnX2JhbGNvbnkpIiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC42IiBvcGFjaXR5PSIwLjk1Ii8+Cjxwb2x5Z29uIHBvaW50cz0iNTEwLjMsMTg0LjggNjQ1LjQsMjYyLjggNDIwLjMsMzkyLjggMjg1LjIsMzE0LjgiIGZpbGw9InVybCgjZ19saXZpbmcpIiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC42IiBvcGFjaXR5PSIwLjk1Ii8+Cjxwb2x5Z29uIHBvaW50cz0iNzM1LjUsMjEwLjggOTE1LjYsMzE0LjggNzgwLjUsMzkyLjggNjAwLjQsMjg4LjgiIGZpbGw9InVybCgjZ19raXRjaGVuKSIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuNiIgb3BhY2l0eT0iMC45NSIvPgo8cG9seWdvbiBwb2ludHM9IjYwMC40LDI4OC44IDc4MC41LDM5Mi44IDY5MC41LDQ0NC44IDUxMC4zLDM0MC44IiBmaWxsPSJ1cmwoI2dfZGluaW5nKSIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuNiIgb3BhY2l0eT0iMC45NSIvPgo8cG9seWdvbiBwb2ludHM9IjkxNS42LDMxNC44IDEwOTUuOCw0MTguOCA4NzAuNiw1NDguOCA2OTAuNSw0NDQuOCIgZmlsbD0idXJsKCNnX21hc3Rlcl9icikiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjYiIG9wYWNpdHk9IjAuOTUiLz4KPHBvbHlnb24gcG9pbnRzPSIyODUuMiwzMTQuOCA3ODAuNSw2MDAuOCA2OTAuNSw2NTIuOCAxOTUuMSwzNjYuOCIgZmlsbD0idXJsKCNnX2ZveWVyKSIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuNiIgb3BhY2l0eT0iMC45NSIvPgo8cG9seWdvbiBwb2ludHM9IjUxMC4zLDM0MC44IDY5MC41LDQ0NC44IDYwMC40LDQ5Ni44IDQyMC4zLDM5Mi44IiBmaWxsPSJ1cmwoI2dfY29ycmlkb3IpIiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC42IiBvcGFjaXR5PSIwLjk1Ii8+Cjxwb2x5Z29uIHBvaW50cz0iNjkwLjUsNDQ0LjggNzgwLjUsNDk2LjggNjkwLjUsNTQ4LjggNjAwLjQsNDk2LjgiIGZpbGw9InVybCgjZ19iYXRoKSIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuNiIgb3BhY2l0eT0iMC45NSIvPgo8cG9seWdvbiBwb2ludHM9Ijc4MC41LDQ5Ni44IDg3MC42LDU0OC44IDc4MC41LDYwMC44IDY5MC41LDU0OC44IiBmaWxsPSJ1cmwoI2dfb2ZmaWNlKSIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuNiIgb3BhY2l0eT0iMC45NSIvPgo8cG9seWdvbiBwb2ludHM9IjYwMC40LDEzMi44IDY0NS40LDE1OC44IDY0NS40LDg2LjAgNjAwLjQsNjAuMCIgZmlsbD0iIzFkMjQzNSIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuOCIvPgo8bGluZSB4MT0iNjAwLjQiIHkxPSI2MC4wIiB4Mj0iNjQ1LjQiIHkyPSI4Ni4wIiBzdHJva2U9IiMzNzQyNjAiIHN0cm9rZS13aWR0aD0iMS40IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPHBvbHlnb24gcG9pbnRzPSI2MDAuNCwxMzIuOCA1NTUuNCwxNTguOCA1NTUuNCw4Ni4wIDYwMC40LDYwLjAiIGZpbGw9IiMyYTMzNDgiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KPGxpbmUgeDE9IjYwMC40IiB5MT0iNjAuMCIgeDI9IjU1NS40IiB5Mj0iODYuMCIgc3Ryb2tlPSIjNDc1Mjc0IiBzdHJva2Utd2lkdGg9IjEuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+Cjxwb2x5Z29uIHBvaW50cz0iNjQ1LjQsMTU4LjggNjkwLjUsMTg0LjggNjkwLjUsMTEyLjAgNjQ1LjQsODYuMCIgZmlsbD0iIzFkMjQzNSIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuOCIvPgo8bGluZSB4MT0iNjQ1LjQiIHkxPSI4Ni4wIiB4Mj0iNjkwLjUiIHkyPSIxMTIuMCIgc3Ryb2tlPSIjMzc0MjYwIiBzdHJva2Utd2lkdGg9IjEuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+Cjxwb2x5Z29uIHBvaW50cz0iNTU1LjQsMTU4LjggNTEwLjMsMTg0LjggNTEwLjMsMTEyLjAgNTU1LjQsODYuMCIgZmlsbD0iIzJhMzM0OCIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuOCIvPgo8bGluZSB4MT0iNTU1LjQiIHkxPSI4Ni4wIiB4Mj0iNTEwLjMiIHkyPSIxMTIuMCIgc3Ryb2tlPSIjNDc1Mjc0IiBzdHJva2Utd2lkdGg9IjEuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+Cjxwb2x5Z29uIHBvaW50cz0iNjkwLjUsMTg0LjggNzM1LjUsMjEwLjggNzM1LjUsMTM4LjAgNjkwLjUsMTEyLjAiIGZpbGw9IiMxZDI0MzUiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KPGxpbmUgeDE9IjY5MC41IiB5MT0iMTEyLjAiIHgyPSI3MzUuNSIgeTI9IjEzOC4wIiBzdHJva2U9IiMzNzQyNjAiIHN0cm9rZS13aWR0aD0iMS40IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPHBvbHlnb24gcG9pbnRzPSI1MTAuMywxODQuOCA0NjUuMywyMTAuOCA0NjUuMywxMzguMCA1MTAuMywxMTIuMCIgZmlsbD0iIzJhMzM0OCIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuOCIvPgo8bGluZSB4MT0iNTEwLjMiIHkxPSIxMTIuMCIgeDI9IjQ2NS4zIiB5Mj0iMTM4LjAiIHN0cm9rZT0iIzQ3NTI3NCIgc3Ryb2tlLXdpZHRoPSIxLjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cG9seWdvbiBwb2ludHM9IjczNS41LDIxMC44IDc4MC41LDIzNi44IDc4MC41LDE2NC4wIDczNS41LDEzOC4wIiBmaWxsPSIjMWQyNDM1IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC44Ii8+CjxsaW5lIHgxPSI3MzUuNSIgeTE9IjEzOC4wIiB4Mj0iNzgwLjUiIHkyPSIxNjQuMCIgc3Ryb2tlPSIjMzc0MjYwIiBzdHJva2Utd2lkdGg9IjEuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+Cjxwb2x5Z29uIHBvaW50cz0iNDY1LjMsMjEwLjggNDIwLjMsMjM2LjggNDIwLjMsMTY0LjAgNDY1LjMsMTM4LjAiIGZpbGw9IiMyYTMzNDgiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KPGxpbmUgeDE9IjQ2NS4zIiB5MT0iMTM4LjAiIHgyPSI0MjAuMyIgeTI9IjE2NC4wIiBzdHJva2U9IiM0NzUyNzQiIHN0cm9rZS13aWR0aD0iMS40IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPHBvbHlnb24gcG9pbnRzPSI3ODAuNSwyMzYuOCA4MjUuNiwyNjIuOCA4MjUuNiwxOTAuMCA3ODAuNSwxNjQuMCIgZmlsbD0iIzFkMjQzNSIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuOCIvPgo8bGluZSB4MT0iNzgwLjUiIHkxPSIxNjQuMCIgeDI9IjgyNS42IiB5Mj0iMTkwLjAiIHN0cm9rZT0iIzM3NDI2MCIgc3Ryb2tlLXdpZHRoPSIxLjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cG9seWdvbiBwb2ludHM9IjQyMC4zLDIzNi44IDM3NS4yLDI2Mi44IDM3NS4yLDE5MC4wIDQyMC4zLDE2NC4wIiBmaWxsPSIjMmEzMzQ4IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC44Ii8+CjxsaW5lIHgxPSI0MjAuMyIgeTE9IjE2NC4wIiB4Mj0iMzc1LjIiIHkyPSIxOTAuMCIgc3Ryb2tlPSIjNDc1Mjc0IiBzdHJva2Utd2lkdGg9IjEuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+Cjxwb2x5Z29uIHBvaW50cz0iODI1LjYsMjYyLjggODcwLjYsMjg4LjggODcwLjYsMjE2LjAgODI1LjYsMTkwLjAiIGZpbGw9IiMxZDI0MzUiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KPGxpbmUgeDE9IjgyNS42IiB5MT0iMTkwLjAiIHgyPSI4NzAuNiIgeTI9IjIxNi4wIiBzdHJva2U9IiMzNzQyNjAiIHN0cm9rZS13aWR0aD0iMS40IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPHBvbHlnb24gcG9pbnRzPSIzNzUuMiwyNjIuOCAzMzAuMiwyODguOCAzMzAuMiwyMTYuMCAzNzUuMiwxOTAuMCIgZmlsbD0iIzJhMzM0OCIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuOCIvPgo8bGluZSB4MT0iMzc1LjIiIHkxPSIxOTAuMCIgeDI9IjMzMC4yIiB5Mj0iMjE2LjAiIHN0cm9rZT0iIzQ3NTI3NCIgc3Ryb2tlLXdpZHRoPSIxLjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cG9seWdvbiBwb2ludHM9Ijg3MC42LDI4OC44IDkxNS42LDMxNC44IDkxNS42LDI0Mi4wIDg3MC42LDIxNi4wIiBmaWxsPSIjMWQyNDM1IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC44Ii8+CjxsaW5lIHgxPSI4NzAuNiIgeTE9IjIxNi4wIiB4Mj0iOTE1LjYiIHkyPSIyNDIuMCIgc3Ryb2tlPSIjMzc0MjYwIiBzdHJva2Utd2lkdGg9IjEuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+Cjxwb2x5Z29uIHBvaW50cz0iMzMwLjIsMjg4LjggMjg1LjIsMzE0LjggMjg1LjIsMjQyLjAgMzMwLjIsMjE2LjAiIGZpbGw9IiMyYTMzNDgiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KPGxpbmUgeDE9IjMzMC4yIiB5MT0iMjE2LjAiIHgyPSIyODUuMiIgeTI9IjI0Mi4wIiBzdHJva2U9IiM0NzUyNzQiIHN0cm9rZS13aWR0aD0iMS40IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPHBvbHlnb24gcG9pbnRzPSI5MTUuNiwzMTQuOCA5NjAuNywzNDAuOCA5NjAuNywyNjguMCA5MTUuNiwyNDIuMCIgZmlsbD0iIzFkMjQzNSIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuOCIvPgo8bGluZSB4MT0iOTE1LjYiIHkxPSIyNDIuMCIgeDI9Ijk2MC43IiB5Mj0iMjY4LjAiIHN0cm9rZT0iIzM3NDI2MCIgc3Ryb2tlLXdpZHRoPSIxLjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cG9seWdvbiBwb2ludHM9IjI4NS4yLDMxNC44IDI0MC4xLDM0MC44IDI0MC4xLDI2OC4wIDI4NS4yLDI0Mi4wIiBmaWxsPSIjMmEzMzQ4IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC44Ii8+CjxsaW5lIHgxPSIyODUuMiIgeTE9IjI0Mi4wIiB4Mj0iMjQwLjEiIHkyPSIyNjguMCIgc3Ryb2tlPSIjNDc1Mjc0IiBzdHJva2Utd2lkdGg9IjEuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+Cjxwb2x5Z29uIHBvaW50cz0iOTYwLjcsMzQwLjggMTAwNS43LDM2Ni44IDEwMDUuNywyOTQuMCA5NjAuNywyNjguMCIgZmlsbD0iIzFkMjQzNSIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuOCIvPgo8bGluZSB4MT0iOTYwLjciIHkxPSIyNjguMCIgeDI9IjEwMDUuNyIgeTI9IjI5NC4wIiBzdHJva2U9IiMzNzQyNjAiIHN0cm9rZS13aWR0aD0iMS40IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPHBvbHlnb24gcG9pbnRzPSIyNDAuMSwzNDAuOCAxOTUuMSwzNjYuOCAxOTUuMSwyOTQuMCAyNDAuMSwyNjguMCIgZmlsbD0iIzJhMzM0OCIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuOCIvPgo8bGluZSB4MT0iMjQwLjEiIHkxPSIyNjguMCIgeDI9IjE5NS4xIiB5Mj0iMjk0LjAiIHN0cm9rZT0iIzQ3NTI3NCIgc3Ryb2tlLXdpZHRoPSIxLjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cG9seWdvbiBwb2ludHM9IjEwMDUuNywzNjYuOCAxMDUwLjcsMzkyLjggMTA1MC43LDMyMC4wIDEwMDUuNywyOTQuMCIgZmlsbD0iIzFkMjQzNSIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuOCIvPgo8bGluZSB4MT0iMTAwNS43IiB5MT0iMjk0LjAiIHgyPSIxMDUwLjciIHkyPSIzMjAuMCIgc3Ryb2tlPSIjMzc0MjYwIiBzdHJva2Utd2lkdGg9IjEuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+Cjxwb2x5Z29uIHBvaW50cz0iMTk1LjEsMzY2LjggMjQwLjEsMzkyLjggMjQwLjEsMzIwLjAgMTk1LjEsMjk0LjAiIGZpbGw9IiMxZDI0MzUiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KPGxpbmUgeDE9IjE5NS4xIiB5MT0iMjk0LjAiIHgyPSIyNDAuMSIgeTI9IjMyMC4wIiBzdHJva2U9IiMzNzQyNjAiIHN0cm9rZS13aWR0aD0iMS40IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPHBvbHlnb24gcG9pbnRzPSIxMDUwLjcsMzkyLjggMTA5NS44LDQxOC44IDEwOTUuOCwzNDYuMCAxMDUwLjcsMzIwLjAiIGZpbGw9IiMxZDI0MzUiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KPGxpbmUgeDE9IjEwNTAuNyIgeTE9IjMyMC4wIiB4Mj0iMTA5NS44IiB5Mj0iMzQ2LjAiIHN0cm9rZT0iIzM3NDI2MCIgc3Ryb2tlLXdpZHRoPSIxLjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cG9seWdvbiBwb2ludHM9IjI0MC4xLDM5Mi44IDI4NS4yLDQxOC44IDI4NS4yLDM0Ni4wIDI0MC4xLDMyMC4wIiBmaWxsPSIjMWQyNDM1IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC44Ii8+CjxsaW5lIHgxPSIyNDAuMSIgeTE9IjMyMC4wIiB4Mj0iMjg1LjIiIHkyPSIzNDYuMCIgc3Ryb2tlPSIjMzc0MjYwIiBzdHJva2Utd2lkdGg9IjEuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+Cjxwb2x5Z29uIHBvaW50cz0iMTA5NS44LDQxOC44IDEwNTAuNyw0NDQuOCAxMDUwLjcsMzcyLjAgMTA5NS44LDM0Ni4wIiBmaWxsPSIjMmEzMzQ4IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC44Ii8+CjxsaW5lIHgxPSIxMDk1LjgiIHkxPSIzNDYuMCIgeDI9IjEwNTAuNyIgeTI9IjM3Mi4wIiBzdHJva2U9IiM0NzUyNzQiIHN0cm9rZS13aWR0aD0iMS40IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPHBvbHlnb24gcG9pbnRzPSIyODUuMiw0MTguOCAzMzAuMiw0NDQuOCAzMzAuMiwzNzIuMCAyODUuMiwzNDYuMCIgZmlsbD0iIzFkMjQzNSIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuOCIvPgo8bGluZSB4MT0iMjg1LjIiIHkxPSIzNDYuMCIgeDI9IjMzMC4yIiB5Mj0iMzcyLjAiIHN0cm9rZT0iIzM3NDI2MCIgc3Ryb2tlLXdpZHRoPSIxLjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cG9seWdvbiBwb2ludHM9IjEwNTAuNyw0NDQuOCAxMDA1LjcsNDcwLjggMTAwNS43LDM5OC4wIDEwNTAuNywzNzIuMCIgZmlsbD0iIzJhMzM0OCIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuOCIvPgo8bGluZSB4MT0iMTA1MC43IiB5MT0iMzcyLjAiIHgyPSIxMDA1LjciIHkyPSIzOTguMCIgc3Ryb2tlPSIjNDc1Mjc0IiBzdHJva2Utd2lkdGg9IjEuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+Cjxwb2x5Z29uIHBvaW50cz0iMzMwLjIsNDQ0LjggMzc1LjIsNDcwLjggMzc1LjIsMzk4LjAgMzMwLjIsMzcyLjAiIGZpbGw9IiMxZDI0MzUiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KPGxpbmUgeDE9IjMzMC4yIiB5MT0iMzcyLjAiIHgyPSIzNzUuMiIgeTI9IjM5OC4wIiBzdHJva2U9IiMzNzQyNjAiIHN0cm9rZS13aWR0aD0iMS40IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPHBvbHlnb24gcG9pbnRzPSIxMDA1LjcsNDcwLjggOTYwLjcsNDk2LjggOTYwLjcsNDI0LjAgMTAwNS43LDM5OC4wIiBmaWxsPSIjMmEzMzQ4IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC44Ii8+CjxsaW5lIHgxPSIxMDA1LjciIHkxPSIzOTguMCIgeDI9Ijk2MC43IiB5Mj0iNDI0LjAiIHN0cm9rZT0iIzQ3NTI3NCIgc3Ryb2tlLXdpZHRoPSIxLjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cG9seWdvbiBwb2ludHM9IjM3NS4yLDQ3MC44IDQyMC4zLDQ5Ni44IDQyMC4zLDQyNC4wIDM3NS4yLDM5OC4wIiBmaWxsPSIjMWQyNDM1IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC44Ii8+CjxsaW5lIHgxPSIzNzUuMiIgeTE9IjM5OC4wIiB4Mj0iNDIwLjMiIHkyPSI0MjQuMCIgc3Ryb2tlPSIjMzc0MjYwIiBzdHJva2Utd2lkdGg9IjEuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+Cjxwb2x5Z29uIHBvaW50cz0iOTYwLjcsNDk2LjggOTE1LjYsNTIyLjggOTE1LjYsNDUwLjAgOTYwLjcsNDI0LjAiIGZpbGw9IiMyYTMzNDgiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KPGxpbmUgeDE9Ijk2MC43IiB5MT0iNDI0LjAiIHgyPSI5MTUuNiIgeTI9IjQ1MC4wIiBzdHJva2U9IiM0NzUyNzQiIHN0cm9rZS13aWR0aD0iMS40IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPHBvbHlnb24gcG9pbnRzPSI0MjAuMyw0OTYuOCA0NjUuMyw1MjIuOCA0NjUuMyw0NTAuMCA0MjAuMyw0MjQuMCIgZmlsbD0iIzFkMjQzNSIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuOCIvPgo8bGluZSB4MT0iNDIwLjMiIHkxPSI0MjQuMCIgeDI9IjQ2NS4zIiB5Mj0iNDUwLjAiIHN0cm9rZT0iIzM3NDI2MCIgc3Ryb2tlLXdpZHRoPSIxLjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cG9seWdvbiBwb2ludHM9IjkxNS42LDUyMi44IDg3MC42LDU0OC44IDg3MC42LDQ3Ni4wIDkxNS42LDQ1MC4wIiBmaWxsPSIjMmEzMzQ4IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC44Ii8+CjxsaW5lIHgxPSI5MTUuNiIgeTE9IjQ1MC4wIiB4Mj0iODcwLjYiIHkyPSI0NzYuMCIgc3Ryb2tlPSIjNDc1Mjc0IiBzdHJva2Utd2lkdGg9IjEuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+Cjxwb2x5Z29uIHBvaW50cz0iNDY1LjMsNTIyLjggNTEwLjMsNTQ4LjggNTEwLjMsNDc2LjAgNDY1LjMsNDUwLjAiIGZpbGw9IiMxZDI0MzUiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KPGxpbmUgeDE9IjQ2NS4zIiB5MT0iNDUwLjAiIHgyPSI1MTAuMyIgeTI9IjQ3Ni4wIiBzdHJva2U9IiMzNzQyNjAiIHN0cm9rZS13aWR0aD0iMS40IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPHBvbHlnb24gcG9pbnRzPSI4NzAuNiw1NDguOCA4MjUuNiw1NzQuOCA4MjUuNiw1MDIuMCA4NzAuNiw0NzYuMCIgZmlsbD0iIzJhMzM0OCIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuOCIvPgo8bGluZSB4MT0iODcwLjYiIHkxPSI0NzYuMCIgeDI9IjgyNS42IiB5Mj0iNTAyLjAiIHN0cm9rZT0iIzQ3NTI3NCIgc3Ryb2tlLXdpZHRoPSIxLjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cG9seWdvbiBwb2ludHM9IjUxMC4zLDU0OC44IDU1NS40LDU3NC44IDU1NS40LDUwMi4wIDUxMC4zLDQ3Ni4wIiBmaWxsPSIjMWQyNDM1IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC44Ii8+CjxsaW5lIHgxPSI1MTAuMyIgeTE9IjQ3Ni4wIiB4Mj0iNTU1LjQiIHkyPSI1MDIuMCIgc3Ryb2tlPSIjMzc0MjYwIiBzdHJva2Utd2lkdGg9IjEuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+Cjxwb2x5Z29uIHBvaW50cz0iODI1LjYsNTc0LjggNzgwLjUsNjAwLjggNzgwLjUsNTI4LjAgODI1LjYsNTAyLjAiIGZpbGw9IiMyYTMzNDgiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KPGxpbmUgeDE9IjgyNS42IiB5MT0iNTAyLjAiIHgyPSI3ODAuNSIgeTI9IjUyOC4wIiBzdHJva2U9IiM0NzUyNzQiIHN0cm9rZS13aWR0aD0iMS40IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPHBvbHlnb24gcG9pbnRzPSI1NTUuNCw1NzQuOCA2MDAuNCw2MDAuOCA2MDAuNCw1MjguMCA1NTUuNCw1MDIuMCIgZmlsbD0iIzFkMjQzNSIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuOCIvPgo8bGluZSB4MT0iNTU1LjQiIHkxPSI1MDIuMCIgeDI9IjYwMC40IiB5Mj0iNTI4LjAiIHN0cm9rZT0iIzM3NDI2MCIgc3Ryb2tlLXdpZHRoPSIxLjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cG9seWdvbiBwb2ludHM9IjYwMC40LDYwMC44IDY0NS40LDYyNi44IDY0NS40LDU1NC4wIDYwMC40LDUyOC4wIiBmaWxsPSIjMWQyNDM1IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC44Ii8+CjxsaW5lIHgxPSI2MDAuNCIgeTE9IjUyOC4wIiB4Mj0iNjQ1LjQiIHkyPSI1NTQuMCIgc3Ryb2tlPSIjMzc0MjYwIiBzdHJva2Utd2lkdGg9IjEuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+Cjxwb2x5Z29uIHBvaW50cz0iNzgwLjUsNjAwLjggNzM1LjUsNjI2LjggNzM1LjUsNTU0LjAgNzgwLjUsNTI4LjAiIGZpbGw9IiMyYTMzNDgiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KPGxpbmUgeDE9Ijc4MC41IiB5MT0iNTI4LjAiIHgyPSI3MzUuNSIgeTI9IjU1NC4wIiBzdHJva2U9IiM0NzUyNzQiIHN0cm9rZS13aWR0aD0iMS40IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPHBvbHlnb24gcG9pbnRzPSI2NDUuNCw2MjYuOCA2OTAuNSw2NTIuOCA2OTAuNSw1ODAuMCA2NDUuNCw1NTQuMCIgZmlsbD0iIzFkMjQzNSIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuOCIvPgo8bGluZSB4MT0iNjQ1LjQiIHkxPSI1NTQuMCIgeDI9IjY5MC41IiB5Mj0iNTgwLjAiIHN0cm9rZT0iIzM3NDI2MCIgc3Ryb2tlLXdpZHRoPSIxLjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cG9seWdvbiBwb2ludHM9IjczNS41LDYyNi44IDY5MC41LDY1Mi44IDY5MC41LDU4MC4wIDczNS41LDU1NC4wIiBmaWxsPSIjMmEzMzQ4IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC44Ii8+CjxsaW5lIHgxPSI3MzUuNSIgeTE9IjU1NC4wIiB4Mj0iNjkwLjUiIHkyPSI1ODAuMCIgc3Ryb2tlPSIjNDc1Mjc0IiBzdHJva2Utd2lkdGg9IjEuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+Cjxwb2x5Z29uIHBvaW50cz0iNTEwLjMsMTg0LjggNTU1LjQsMjEwLjggNTU1LjQsMTkyLjYgNTEwLjMsMTY2LjYiIGZpbGw9IiMxMzE4MjYiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjQiIG9wYWNpdHk9IjAuODUiLz4KPHBvbHlnb24gcG9pbnRzPSI1NTUuNCwyMTAuOCA2MDAuNCwyMzYuOCA2MDAuNCwyMTguNiA1NTUuNCwxOTIuNiIgZmlsbD0iIzEzMTgyNiIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuNCIgb3BhY2l0eT0iMC44NSIvPgo8cG9seWdvbiBwb2ludHM9IjYwMC40LDIzNi44IDY0NS40LDI2Mi44IDY0NS40LDI0NC42IDYwMC40LDIxOC42IiBmaWxsPSIjMTMxODI2IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC40IiBvcGFjaXR5PSIwLjg1Ii8+Cjxwb2x5Z29uIHBvaW50cz0iNzM1LjUsMjEwLjggNjkwLjUsMjM2LjggNjkwLjUsMjE4LjYgNzM1LjUsMTkyLjYiIGZpbGw9IiMxMzE4MjYiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjQiIG9wYWNpdHk9IjAuODUiLz4KPHBvbHlnb24gcG9pbnRzPSI2OTAuNSwyMzYuOCA2NDUuNCwyNjIuOCA2NDUuNCwyNDQuNiA2OTAuNSwyMTguNiIgZmlsbD0iIzEzMTgyNiIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuNCIgb3BhY2l0eT0iMC44NSIvPgo8cG9seWdvbiBwb2ludHM9IjYwMC40LDI4OC44IDY0NS40LDMxNC44IDY0NS40LDI5Ni42IDYwMC40LDI3MC42IiBmaWxsPSIjMTMxODI2IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC40IiBvcGFjaXR5PSIwLjg1Ii8+Cjxwb2x5Z29uIHBvaW50cz0iNjQ1LjQsMzE0LjggNjkwLjUsMzQwLjggNjkwLjUsMzIyLjYgNjQ1LjQsMjk2LjYiIGZpbGw9IiMxMzE4MjYiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjQiIG9wYWNpdHk9IjAuODUiLz4KPHBvbHlnb24gcG9pbnRzPSI2OTAuNSwzNDAuOCA3MzUuNSwzNjYuOCA3MzUuNSwzNDguNiA2OTAuNSwzMjIuNiIgZmlsbD0iIzEzMTgyNiIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuNCIgb3BhY2l0eT0iMC44NSIvPgo8cG9seWdvbiBwb2ludHM9IjczNS41LDM2Ni44IDc4MC41LDM5Mi44IDc4MC41LDM3NC42IDczNS41LDM0OC42IiBmaWxsPSIjMTMxODI2IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC40IiBvcGFjaXR5PSIwLjg1Ii8+Cjxwb2x5Z29uIHBvaW50cz0iOTE1LjYsMzE0LjggODcwLjYsMzQwLjggODcwLjYsMzIyLjYgOTE1LjYsMjk2LjYiIGZpbGw9IiMxMzE4MjYiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjQiIG9wYWNpdHk9IjAuODUiLz4KPHBvbHlnb24gcG9pbnRzPSI4NzAuNiwzNDAuOCA4MjUuNiwzNjYuOCA4MjUuNiwzNDguNiA4NzAuNiwzMjIuNiIgZmlsbD0iIzEzMTgyNiIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuNCIgb3BhY2l0eT0iMC44NSIvPgo8cG9seWdvbiBwb2ludHM9IjgyNS42LDM2Ni44IDc4MC41LDM5Mi44IDc4MC41LDM3NC42IDgyNS42LDM0OC42IiBmaWxsPSIjMTMxODI2IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC40IiBvcGFjaXR5PSIwLjg1Ii8+Cjxwb2x5Z29uIHBvaW50cz0iNjQ1LjQsMjYyLjggNjAwLjQsMjg4LjggNjAwLjQsMjcwLjYgNjQ1LjQsMjQ0LjYiIGZpbGw9IiMxMzE4MjYiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjQiIG9wYWNpdHk9IjAuODUiLz4KPHBvbHlnb24gcG9pbnRzPSI2OTAuNSw0NDQuOCA3MzUuNSw0NzAuOCA3MzUuNSw0NTIuNiA2OTAuNSw0MjYuNiIgZmlsbD0iIzEzMTgyNiIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuNCIgb3BhY2l0eT0iMC44NSIvPgo8cG9seWdvbiBwb2ludHM9IjczNS41LDQ3MC44IDc4MC41LDQ5Ni44IDc4MC41LDQ3OC42IDczNS41LDQ1Mi42IiBmaWxsPSIjMTMxODI2IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC40IiBvcGFjaXR5PSIwLjg1Ii8+Cjxwb2x5Z29uIHBvaW50cz0iNzgwLjUsNDk2LjggODI1LjYsNTIyLjggODI1LjYsNTA0LjYgNzgwLjUsNDc4LjYiIGZpbGw9IiMxMzE4MjYiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjQiIG9wYWNpdHk9IjAuODUiLz4KPHBvbHlnb24gcG9pbnRzPSI4MjUuNiw1MjIuOCA4NzAuNiw1NDguOCA4NzAuNiw1MzAuNiA4MjUuNiw1MDQuNiIgZmlsbD0iIzEzMTgyNiIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuNCIgb3BhY2l0eT0iMC44NSIvPgo8cG9seWdvbiBwb2ludHM9Ijc4MC41LDM5Mi44IDczNS41LDQxOC44IDczNS41LDQwMC42IDc4MC41LDM3NC42IiBmaWxsPSIjMTMxODI2IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC40IiBvcGFjaXR5PSIwLjg1Ii8+Cjxwb2x5Z29uIHBvaW50cz0iNzM1LjUsNDE4LjggNjkwLjUsNDQ0LjggNjkwLjUsNDI2LjYgNzM1LjUsNDAwLjYiIGZpbGw9IiMxMzE4MjYiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjQiIG9wYWNpdHk9IjAuODUiLz4KPHBvbHlnb24gcG9pbnRzPSI1MTAuMywzNDAuOCA1NTUuNCwzNjYuOCA1NTUuNCwzNDguNiA1MTAuMywzMjIuNiIgZmlsbD0iIzEzMTgyNiIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuNCIgb3BhY2l0eT0iMC44NSIvPgo8cG9seWdvbiBwb2ludHM9IjU1NS40LDM2Ni44IDYwMC40LDM5Mi44IDYwMC40LDM3NC42IDU1NS40LDM0OC42IiBmaWxsPSIjMTMxODI2IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC40IiBvcGFjaXR5PSIwLjg1Ii8+Cjxwb2x5Z29uIHBvaW50cz0iNjAwLjQsMzkyLjggNjQ1LjQsNDE4LjggNjQ1LjQsNDAwLjYgNjAwLjQsMzc0LjYiIGZpbGw9IiMxMzE4MjYiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjQiIG9wYWNpdHk9IjAuODUiLz4KPHBvbHlnb24gcG9pbnRzPSI2NDUuNCw0MTguOCA2OTAuNSw0NDQuOCA2OTAuNSw0MjYuNiA2NDUuNCw0MDAuNiIgZmlsbD0iIzEzMTgyNiIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuNCIgb3BhY2l0eT0iMC44NSIvPgo8cG9seWdvbiBwb2ludHM9IjYwMC40LDI4OC44IDU1NS40LDMxNC44IDU1NS40LDI5Ni42IDYwMC40LDI3MC42IiBmaWxsPSIjMTMxODI2IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC40IiBvcGFjaXR5PSIwLjg1Ii8+Cjxwb2x5Z29uIHBvaW50cz0iNTU1LjQsMzE0LjggNTEwLjMsMzQwLjggNTEwLjMsMzIyLjYgNTU1LjQsMjk2LjYiIGZpbGw9IiMxMzE4MjYiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjQiIG9wYWNpdHk9IjAuODUiLz4KPHBvbHlnb24gcG9pbnRzPSIyODUuMiwzMTQuOCAzMzAuMiwzNDAuOCAzMzAuMiwzMjIuNiAyODUuMiwyOTYuNiIgZmlsbD0iIzEzMTgyNiIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuNCIgb3BhY2l0eT0iMC44NSIvPgo8cG9seWdvbiBwb2ludHM9IjMzMC4yLDM0MC44IDM3NS4yLDM2Ni44IDM3NS4yLDM0OC42IDMzMC4yLDMyMi42IiBmaWxsPSIjMTMxODI2IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC40IiBvcGFjaXR5PSIwLjg1Ii8+Cjxwb2x5Z29uIHBvaW50cz0iMzc1LjIsMzY2LjggNDIwLjMsMzkyLjggNDIwLjMsMzc0LjYgMzc1LjIsMzQ4LjYiIGZpbGw9IiMxMzE4MjYiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjQiIG9wYWNpdHk9IjAuODUiLz4KPHBvbHlnb24gcG9pbnRzPSI1MTAuMywzNDAuOCA0NjUuMywzNjYuOCA0NjUuMywzNDguNiA1MTAuMywzMjIuNiIgZmlsbD0iIzEzMTgyNiIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuNCIgb3BhY2l0eT0iMC44NSIvPgo8cG9seWdvbiBwb2ludHM9IjQ2NS4zLDM2Ni44IDQyMC4zLDM5Mi44IDQyMC4zLDM3NC42IDQ2NS4zLDM0OC42IiBmaWxsPSIjMTMxODI2IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC40IiBvcGFjaXR5PSIwLjg1Ii8+Cjxwb2x5Z29uIHBvaW50cz0iNDIwLjMsMzkyLjggNDY1LjMsNDE4LjggNDY1LjMsNDAwLjYgNDIwLjMsMzc0LjYiIGZpbGw9IiMxMzE4MjYiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjQiIG9wYWNpdHk9IjAuODUiLz4KPHBvbHlnb24gcG9pbnRzPSI0NjUuMyw0MTguOCA1MTAuMyw0NDQuOCA1MTAuMyw0MjYuNiA0NjUuMyw0MDAuNiIgZmlsbD0iIzEzMTgyNiIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuNCIgb3BhY2l0eT0iMC44NSIvPgo8cG9seWdvbiBwb2ludHM9IjUxMC4zLDQ0NC44IDU1NS40LDQ3MC44IDU1NS40LDQ1Mi42IDUxMC4zLDQyNi42IiBmaWxsPSIjMTMxODI2IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC40IiBvcGFjaXR5PSIwLjg1Ii8+Cjxwb2x5Z29uIHBvaW50cz0iNTU1LjQsNDcwLjggNjAwLjQsNDk2LjggNjAwLjQsNDc4LjYgNTU1LjQsNDUyLjYiIGZpbGw9IiMxMzE4MjYiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjQiIG9wYWNpdHk9IjAuODUiLz4KPHBvbHlnb24gcG9pbnRzPSI2OTAuNSw0NDQuOCA2NDUuNCw0NzAuOCA2NDUuNCw0NTIuNiA2OTAuNSw0MjYuNiIgZmlsbD0iIzEzMTgyNiIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuNCIgb3BhY2l0eT0iMC44NSIvPgo8cG9seWdvbiBwb2ludHM9IjY0NS40LDQ3MC44IDYwMC40LDQ5Ni44IDYwMC40LDQ3OC42IDY0NS40LDQ1Mi42IiBmaWxsPSIjMTMxODI2IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC40IiBvcGFjaXR5PSIwLjg1Ii8+Cjxwb2x5Z29uIHBvaW50cz0iNjAwLjQsNDk2LjggNjQ1LjQsNTIyLjggNjQ1LjQsNTA0LjYgNjAwLjQsNDc4LjYiIGZpbGw9IiMxMzE4MjYiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjQiIG9wYWNpdHk9IjAuODUiLz4KPHBvbHlnb24gcG9pbnRzPSI2NDUuNCw1MjIuOCA2OTAuNSw1NDguOCA2OTAuNSw1MzAuNiA2NDUuNCw1MDQuNiIgZmlsbD0iIzEzMTgyNiIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuNCIgb3BhY2l0eT0iMC44NSIvPgo8cG9seWdvbiBwb2ludHM9Ijc4MC41LDQ5Ni44IDczNS41LDUyMi44IDczNS41LDUwNC42IDc4MC41LDQ3OC42IiBmaWxsPSIjMTMxODI2IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC40IiBvcGFjaXR5PSIwLjg1Ii8+Cjxwb2x5Z29uIHBvaW50cz0iNzM1LjUsNTIyLjggNjkwLjUsNTQ4LjggNjkwLjUsNTMwLjYgNzM1LjUsNTA0LjYiIGZpbGw9IiMxMzE4MjYiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjQiIG9wYWNpdHk9IjAuODUiLz4KPHBvbHlnb24gcG9pbnRzPSI2OTAuNSw1NDguOCA3MzUuNSw1NzQuOCA3MzUuNSw1NTYuNiA2OTAuNSw1MzAuNiIgZmlsbD0iIzEzMTgyNiIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuNCIgb3BhY2l0eT0iMC44NSIvPgo8cG9seWdvbiBwb2ludHM9IjczNS41LDU3NC44IDc4MC41LDYwMC44IDc4MC41LDU4Mi42IDczNS41LDU1Ni42IiBmaWxsPSIjMTMxODI2IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC40IiBvcGFjaXR5PSIwLjg1Ii8+Cjx0ZXh0IHg9IjYyMi45IiB5PSIxOTYuMiIgZmlsbD0iI2ZmZmZmZiIgZm9udC1mYW1pbHk9IkludGVyLFNlZ29lIFVJLEFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZvbnQtd2VpZ2h0PSI3MDAiIGxldHRlci1zcGFjaW5nPSIxLjIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIG9wYWNpdHk9IjAuODgiIGZpbHRlcj0idXJsKCNzb2Z0KSI+QkFMQ09OWTwvdGV4dD4KPHRleHQgeD0iNzU4LjAiIHk9IjMwMC4yIiBmaWxsPSIjZmZmZmZmIiBmb250LWZhbWlseT0iSW50ZXIsU2Vnb2UgVUksQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZm9udC13ZWlnaHQ9IjcwMCIgbGV0dGVyLXNwYWNpbmc9IjEuMiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgb3BhY2l0eT0iMC44OCIgZmlsdGVyPSJ1cmwoI3NvZnQpIj5LSVRDSEVOPC90ZXh0Pgo8dGV4dCB4PSI4OTMuMSIgeT0iNDMwLjIiIGZpbGw9IiNmZmZmZmYiIGZvbnQtZmFtaWx5PSJJbnRlcixTZWdvZSBVSSxBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmb250LXdlaWdodD0iNzAwIiBsZXR0ZXItc3BhY2luZz0iMS4yIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBvcGFjaXR5PSIwLjg4IiBmaWx0ZXI9InVybCgjc29mdCkiPk1BU1RFUiBCUjwvdGV4dD4KPHRleHQgeD0iNjQ1LjQiIHk9IjM2NS4yIiBmaWxsPSIjZmZmZmZmIiBmb250LWZhbWlseT0iSW50ZXIsU2Vnb2UgVUksQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZm9udC13ZWlnaHQ9IjcwMCIgbGV0dGVyLXNwYWNpbmc9IjEuMiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgb3BhY2l0eT0iMC44OCIgZmlsdGVyPSJ1cmwoI3NvZnQpIj5ESU5JTkc8L3RleHQ+Cjx0ZXh0IHg9IjQ2NS4zIiB5PSIyODcuMiIgZmlsbD0iI2ZmZmZmZiIgZm9udC1mYW1pbHk9IkludGVyLFNlZ29lIFVJLEFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZvbnQtd2VpZ2h0PSI3MDAiIGxldHRlci1zcGFjaW5nPSIxLjIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIG9wYWNpdHk9IjAuODgiIGZpbHRlcj0idXJsKCNzb2Z0KSI+TElWSU5HPC90ZXh0Pgo8dGV4dCB4PSI1NTUuNCIgeT0iNDE3LjIiIGZpbGw9IiNmZmZmZmYiIGZvbnQtZmFtaWx5PSJJbnRlcixTZWdvZSBVSSxBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmb250LXdlaWdodD0iNzAwIiBsZXR0ZXItc3BhY2luZz0iMS4yIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBvcGFjaXR5PSIwLjg4IiBmaWx0ZXI9InVybCgjc29mdCkiPkNPUlJJRE9SPC90ZXh0Pgo8dGV4dCB4PSI2OTAuNSIgeT0iNDk1LjIiIGZpbGw9IiNmZmZmZmYiIGZvbnQtZmFtaWx5PSJJbnRlcixTZWdvZSBVSSxBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmb250LXdlaWdodD0iNzAwIiBsZXR0ZXItc3BhY2luZz0iMS4yIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBvcGFjaXR5PSIwLjg4IiBmaWx0ZXI9InVybCgjc29mdCkiPkJBVEg8L3RleHQ+Cjx0ZXh0IHg9Ijc4MC41IiB5PSI1NDcuMiIgZmlsbD0iI2ZmZmZmZiIgZm9udC1mYW1pbHk9IkludGVyLFNlZ29lIFVJLEFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZvbnQtd2VpZ2h0PSI3MDAiIGxldHRlci1zcGFjaW5nPSIxLjIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIG9wYWNpdHk9IjAuODgiIGZpbHRlcj0idXJsKCNzb2Z0KSI+T0ZGSUNFPC90ZXh0Pgo8dGV4dCB4PSI0ODcuOCIgeT0iNDgyLjIiIGZpbGw9IiNmZmZmZmYiIGZvbnQtZmFtaWx5PSJJbnRlcixTZWdvZSBVSSxBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmb250LXdlaWdodD0iNzAwIiBsZXR0ZXItc3BhY2luZz0iMS4yIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBvcGFjaXR5PSIwLjg4IiBmaWx0ZXI9InVybCgjc29mdCkiPkZPWUVSPC90ZXh0Pgo8L3N2Zz4=
+    image: data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNjE2IDg2OCIgd2lkdGg9IjE2MTYiIGhlaWdodD0iODY4Ij4KPGRlZnM+Cgo8ZmlsdGVyIGlkPSJzb2Z0IiB4PSItMzAlIiB5PSItMzAlIiB3aWR0aD0iMTYwJSIgaGVpZ2h0PSIxNjAlIj4KICA8ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSIyIiByZXN1bHQ9ImIiLz4KICA8ZmVNZXJnZT48ZmVNZXJnZU5vZGUgaW49ImIiLz48ZmVNZXJnZU5vZGUgaW49IlNvdXJjZUdyYXBoaWMiLz48L2ZlTWVyZ2U+CjwvZmlsdGVyPgo8ZmlsdGVyIGlkPSJkcm9wIiB4PSItNTAlIiB5PSItNTAlIiB3aWR0aD0iMjAwJSIgaGVpZ2h0PSIyMDAlIj4KICA8ZmVHYXVzc2lhbkJsdXIgaW49IlNvdXJjZUFscGhhIiBzdGREZXZpYXRpb249IjYiLz4KICA8ZmVPZmZzZXQgZHg9IjAiIGR5PSIxOCIgcmVzdWx0PSJvZmYiLz4KICA8ZmVDb21wb25lbnRUcmFuc2Zlcj48ZmVGdW5jQSB0eXBlPSJsaW5lYXIiIHNsb3BlPSIwLjU1Ii8+PC9mZUNvbXBvbmVudFRyYW5zZmVyPgogIDxmZU1lcmdlPjxmZU1lcmdlTm9kZS8+PGZlTWVyZ2VOb2RlIGluPSJTb3VyY2VHcmFwaGljIi8+PC9mZU1lcmdlPgo8L2ZpbHRlcj4KPHJhZGlhbEdyYWRpZW50IGlkPSJoYWxvIiBjeD0iNTAlIiBjeT0iNTAlIiByPSI2MCUiPgogIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMxYTJhNGEiIHN0b3Atb3BhY2l0eT0iMC45Ii8+CiAgPHN0b3Agb2Zmc2V0PSI2MCUiIHN0b3AtY29sb3I9IiMwYTEwMjAiIHN0b3Atb3BhY2l0eT0iMC42Ii8+CiAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMDUwNzBmIiBzdG9wLW9wYWNpdHk9IjAiLz4KPC9yYWRpYWxHcmFkaWVudD4KCjxsaW5lYXJHcmFkaWVudCBpZD0iZ19iYWxjb255IiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMmI0YTZiIiBzdG9wLW9wYWNpdHk9IjAuOTUiLz4KICA8c3RvcCBvZmZzZXQ9IjU1JSIgc3RvcC1jb2xvcj0iIzJiNGE2YiIgc3RvcC1vcGFjaXR5PSIwLjgyIi8+CiAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMWUzMzRhIiBzdG9wLW9wYWNpdHk9IjAuOTIiLz4KPC9saW5lYXJHcmFkaWVudD4KCjxsaW5lYXJHcmFkaWVudCBpZD0iZ19raXRjaGVuIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjN2E1MjMwIiBzdG9wLW9wYWNpdHk9IjAuOTUiLz4KICA8c3RvcCBvZmZzZXQ9IjU1JSIgc3RvcC1jb2xvcj0iIzdhNTIzMCIgc3RvcC1vcGFjaXR5PSIwLjgyIi8+CiAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjNGUzNDFlIiBzdG9wLW9wYWNpdHk9IjAuOTIiLz4KPC9saW5lYXJHcmFkaWVudD4KCjxsaW5lYXJHcmFkaWVudCBpZD0iZ19tYXN0ZXJfYnIiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMzNTUwNGEiIHN0b3Atb3BhY2l0eT0iMC45NSIvPgogIDxzdG9wIG9mZnNldD0iNTUlIiBzdG9wLWNvbG9yPSIjMzU1MDRhIiBzdG9wLW9wYWNpdHk9IjAuODIiLz4KICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMyMDMwMmMiIHN0b3Atb3BhY2l0eT0iMC45MiIvPgo8L2xpbmVhckdyYWRpZW50PgoKPGxpbmVhckdyYWRpZW50IGlkPSJnX2RpbmluZyIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzdhM2EzYSIgc3RvcC1vcGFjaXR5PSIwLjk1Ii8+CiAgPHN0b3Agb2Zmc2V0PSI1NSUiIHN0b3AtY29sb3I9IiM3YTNhM2EiIHN0b3Atb3BhY2l0eT0iMC44MiIvPgogIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzRhMjMyMyIgc3RvcC1vcGFjaXR5PSIwLjkyIi8+CjwvbGluZWFyR3JhZGllbnQ+Cgo8bGluZWFyR3JhZGllbnQgaWQ9ImdfbGl2aW5nIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjM2E0ZDc1IiBzdG9wLW9wYWNpdHk9IjAuOTUiLz4KICA8c3RvcCBvZmZzZXQ9IjU1JSIgc3RvcC1jb2xvcj0iIzNhNGQ3NSIgc3RvcC1vcGFjaXR5PSIwLjgyIi8+CiAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMjMyZjRhIiBzdG9wLW9wYWNpdHk9IjAuOTIiLz4KPC9saW5lYXJHcmFkaWVudD4KCjxsaW5lYXJHcmFkaWVudCBpZD0iZ19jb3JyaWRvciIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzRhNGE1OCIgc3RvcC1vcGFjaXR5PSIwLjk1Ii8+CiAgPHN0b3Agb2Zmc2V0PSI1NSUiIHN0b3AtY29sb3I9IiM0YTRhNTgiIHN0b3Atb3BhY2l0eT0iMC44MiIvPgogIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzJkMmQzOCIgc3RvcC1vcGFjaXR5PSIwLjkyIi8+CjwvbGluZWFyR3JhZGllbnQ+Cgo8bGluZWFyR3JhZGllbnQgaWQ9ImdfYmF0aCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzJmNWE2YSIgc3RvcC1vcGFjaXR5PSIwLjk1Ii8+CiAgPHN0b3Agb2Zmc2V0PSI1NSUiIHN0b3AtY29sb3I9IiMyZjVhNmEiIHN0b3Atb3BhY2l0eT0iMC44MiIvPgogIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzFjMzY0MCIgc3RvcC1vcGFjaXR5PSIwLjkyIi8+CjwvbGluZWFyR3JhZGllbnQ+Cgo8bGluZWFyR3JhZGllbnQgaWQ9Imdfb2ZmaWNlIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjNTMzMDcwIiBzdG9wLW9wYWNpdHk9IjAuOTUiLz4KICA8c3RvcCBvZmZzZXQ9IjU1JSIgc3RvcC1jb2xvcj0iIzUzMzA3MCIgc3RvcC1vcGFjaXR5PSIwLjgyIi8+CiAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMzQxZjQ2IiBzdG9wLW9wYWNpdHk9IjAuOTIiLz4KPC9saW5lYXJHcmFkaWVudD4KCjxsaW5lYXJHcmFkaWVudCBpZD0iZ19mb3llciIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzVhNDUzMCIgc3RvcC1vcGFjaXR5PSIwLjk1Ii8+CiAgPHN0b3Agb2Zmc2V0PSI1NSUiIHN0b3AtY29sb3I9IiM1YTQ1MzAiIHN0b3Atb3BhY2l0eT0iMC44MiIvPgogIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzM5MmExZCIgc3RvcC1vcGFjaXR5PSIwLjkyIi8+CjwvbGluZWFyR3JhZGllbnQ+CjwvZGVmcz4KPHBvbHlnb24gcG9pbnRzPSI3NTAuMyw2NS40IDE1NTUuNiw0NTguMiA4NjUuMyw3OTQuOSA2MC4wLDQwMi4xIiBmaWxsPSJ1cmwoI2hhbG8pIiBmaWx0ZXI9InVybCgjc29mdCkiLz4KPHBvbHlnb24gcG9pbnRzPSI3NTAuMywxNDkuNiA5MjIuOCwyMzMuOCA4MDcuOCwyODkuOSA2MzUuMiwyMDUuNyIgZmlsbD0idXJsKCNnX2JhbGNvbnkpIiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC42IiBvcGFjaXR5PSIwLjk1Ii8+Cjxwb2x5Z29uIHBvaW50cz0iNjM1LjIsMjA1LjcgODA3LjgsMjg5LjkgNTIwLjIsNDMwLjIgMzQ3LjYsMzQ2LjAiIGZpbGw9InVybCgjZ19saXZpbmcpIiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC42IiBvcGFjaXR5PSIwLjk1Ii8+Cjxwb2x5Z29uIHBvaW50cz0iOTIyLjgsMjMzLjggMTE1Mi45LDM0Ni4wIDk4MC40LDQzMC4yIDc1MC4zLDMxNy45IiBmaWxsPSJ1cmwoI2dfa2l0Y2hlbikiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjYiIG9wYWNpdHk9IjAuOTUiLz4KPHBvbHlnb24gcG9pbnRzPSI3NTAuMywzMTcuOSA5ODAuNCw0MzAuMiA4NjUuMyw0ODYuMyA2MzUuMiwzNzQuMCIgZmlsbD0idXJsKCNnX2RpbmluZykiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjYiIG9wYWNpdHk9IjAuOTUiLz4KPHBvbHlnb24gcG9pbnRzPSIxMTUyLjksMzQ2LjAgMTM4My4wLDQ1OC4yIDEwOTUuNCw1OTguNSA4NjUuMyw0ODYuMyIgZmlsbD0idXJsKCNnX21hc3Rlcl9icikiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjYiIG9wYWNpdHk9IjAuOTUiLz4KPHBvbHlnb24gcG9pbnRzPSIzNDcuNiwzNDYuMCA5ODAuNCw2NTQuNiA4NjUuMyw3MTAuNyAyMzIuNiw0MDIuMSIgZmlsbD0idXJsKCNnX2ZveWVyKSIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuNiIgb3BhY2l0eT0iMC45NSIvPgo8cG9seWdvbiBwb2ludHM9IjYzNS4yLDM3NC4wIDg2NS4zLDQ4Ni4zIDc1MC4zLDU0Mi40IDUyMC4yLDQzMC4yIiBmaWxsPSJ1cmwoI2dfY29ycmlkb3IpIiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC42IiBvcGFjaXR5PSIwLjk1Ii8+Cjxwb2x5Z29uIHBvaW50cz0iODY1LjMsNDg2LjMgOTgwLjQsNTQyLjQgODY1LjMsNTk4LjUgNzUwLjMsNTQyLjQiIGZpbGw9InVybCgjZ19iYXRoKSIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuNiIgb3BhY2l0eT0iMC45NSIvPgo8cG9seWdvbiBwb2ludHM9Ijk4MC40LDU0Mi40IDEwOTUuNCw1OTguNSA5ODAuNCw2NTQuNiA4NjUuMyw1OTguNSIgZmlsbD0idXJsKCNnX29mZmljZSkiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjYiIG9wYWNpdHk9IjAuOTUiLz4KPHBvbHlnb24gcG9pbnRzPSI3NTAuMywxNDkuNiA4MDcuOCwxNzcuNyA4MDcuOCw4OC4xIDc1MC4zLDYwLjAiIGZpbGw9IiMxZDI0MzUiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KPGxpbmUgeDE9Ijc1MC4zIiB5MT0iNjAuMCIgeDI9IjgwNy44IiB5Mj0iODguMSIgc3Ryb2tlPSIjMzc0MjYwIiBzdHJva2Utd2lkdGg9IjEuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+Cjxwb2x5Z29uIHBvaW50cz0iNzUwLjMsMTQ5LjYgNjkyLjgsMTc3LjcgNjkyLjgsODguMSA3NTAuMyw2MC4wIiBmaWxsPSIjMmEzMzQ4IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC44Ii8+CjxsaW5lIHgxPSI3NTAuMyIgeTE9IjYwLjAiIHgyPSI2OTIuOCIgeTI9Ijg4LjEiIHN0cm9rZT0iIzQ3NTI3NCIgc3Ryb2tlLXdpZHRoPSIxLjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cG9seWdvbiBwb2ludHM9IjgwNy44LDE3Ny43IDg2NS4zLDIwNS43IDg2NS4zLDExNi4xIDgwNy44LDg4LjEiIGZpbGw9IiMxZDI0MzUiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KPGxpbmUgeDE9IjgwNy44IiB5MT0iODguMSIgeDI9Ijg2NS4zIiB5Mj0iMTE2LjEiIHN0cm9rZT0iIzM3NDI2MCIgc3Ryb2tlLXdpZHRoPSIxLjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cG9seWdvbiBwb2ludHM9IjY5Mi44LDE3Ny43IDYzNS4yLDIwNS43IDYzNS4yLDExNi4xIDY5Mi44LDg4LjEiIGZpbGw9IiMyYTMzNDgiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KPGxpbmUgeDE9IjY5Mi44IiB5MT0iODguMSIgeDI9IjYzNS4yIiB5Mj0iMTE2LjEiIHN0cm9rZT0iIzQ3NTI3NCIgc3Ryb2tlLXdpZHRoPSIxLjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cG9seWdvbiBwb2ludHM9Ijg2NS4zLDIwNS43IDkyMi44LDIzMy44IDkyMi44LDE0NC4yIDg2NS4zLDExNi4xIiBmaWxsPSIjMWQyNDM1IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC44Ii8+CjxsaW5lIHgxPSI4NjUuMyIgeTE9IjExNi4xIiB4Mj0iOTIyLjgiIHkyPSIxNDQuMiIgc3Ryb2tlPSIjMzc0MjYwIiBzdHJva2Utd2lkdGg9IjEuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+Cjxwb2x5Z29uIHBvaW50cz0iNjM1LjIsMjA1LjcgNTc3LjcsMjMzLjggNTc3LjcsMTQ0LjIgNjM1LjIsMTE2LjEiIGZpbGw9IiMyYTMzNDgiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KPGxpbmUgeDE9IjYzNS4yIiB5MT0iMTE2LjEiIHgyPSI1NzcuNyIgeTI9IjE0NC4yIiBzdHJva2U9IiM0NzUyNzQiIHN0cm9rZS13aWR0aD0iMS40IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPHBvbHlnb24gcG9pbnRzPSI5MjIuOCwyMzMuOCA5ODAuNCwyNjEuOCA5ODAuNCwxNzIuMiA5MjIuOCwxNDQuMiIgZmlsbD0iIzFkMjQzNSIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuOCIvPgo8bGluZSB4MT0iOTIyLjgiIHkxPSIxNDQuMiIgeDI9Ijk4MC40IiB5Mj0iMTcyLjIiIHN0cm9rZT0iIzM3NDI2MCIgc3Ryb2tlLXdpZHRoPSIxLjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cG9seWdvbiBwb2ludHM9IjU3Ny43LDIzMy44IDUyMC4yLDI2MS44IDUyMC4yLDE3Mi4yIDU3Ny43LDE0NC4yIiBmaWxsPSIjMmEzMzQ4IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC44Ii8+CjxsaW5lIHgxPSI1NzcuNyIgeTE9IjE0NC4yIiB4Mj0iNTIwLjIiIHkyPSIxNzIuMiIgc3Ryb2tlPSIjNDc1Mjc0IiBzdHJva2Utd2lkdGg9IjEuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+Cjxwb2x5Z29uIHBvaW50cz0iOTgwLjQsMjYxLjggMTAzNy45LDI4OS45IDEwMzcuOSwyMDAuMyA5ODAuNCwxNzIuMiIgZmlsbD0iIzFkMjQzNSIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuOCIvPgo8bGluZSB4MT0iOTgwLjQiIHkxPSIxNzIuMiIgeDI9IjEwMzcuOSIgeTI9IjIwMC4zIiBzdHJva2U9IiMzNzQyNjAiIHN0cm9rZS13aWR0aD0iMS40IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPHBvbHlnb24gcG9pbnRzPSI1MjAuMiwyNjEuOCA0NjIuNywyODkuOSA0NjIuNywyMDAuMyA1MjAuMiwxNzIuMiIgZmlsbD0iIzJhMzM0OCIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuOCIvPgo8bGluZSB4MT0iNTIwLjIiIHkxPSIxNzIuMiIgeDI9IjQ2Mi43IiB5Mj0iMjAwLjMiIHN0cm9rZT0iIzQ3NTI3NCIgc3Ryb2tlLXdpZHRoPSIxLjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cG9seWdvbiBwb2ludHM9IjEwMzcuOSwyODkuOSAxMDk1LjQsMzE3LjkgMTA5NS40LDIyOC4zIDEwMzcuOSwyMDAuMyIgZmlsbD0iIzFkMjQzNSIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuOCIvPgo8bGluZSB4MT0iMTAzNy45IiB5MT0iMjAwLjMiIHgyPSIxMDk1LjQiIHkyPSIyMjguMyIgc3Ryb2tlPSIjMzc0MjYwIiBzdHJva2Utd2lkdGg9IjEuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+Cjxwb2x5Z29uIHBvaW50cz0iNDYyLjcsMjg5LjkgNDA1LjEsMzE3LjkgNDA1LjEsMjI4LjMgNDYyLjcsMjAwLjMiIGZpbGw9IiMyYTMzNDgiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KPGxpbmUgeDE9IjQ2Mi43IiB5MT0iMjAwLjMiIHgyPSI0MDUuMSIgeTI9IjIyOC4zIiBzdHJva2U9IiM0NzUyNzQiIHN0cm9rZS13aWR0aD0iMS40IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPHBvbHlnb24gcG9pbnRzPSIxMDk1LjQsMzE3LjkgMTE1Mi45LDM0Ni4wIDExNTIuOSwyNTYuNCAxMDk1LjQsMjI4LjMiIGZpbGw9IiMxZDI0MzUiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KPGxpbmUgeDE9IjEwOTUuNCIgeTE9IjIyOC4zIiB4Mj0iMTE1Mi45IiB5Mj0iMjU2LjQiIHN0cm9rZT0iIzM3NDI2MCIgc3Ryb2tlLXdpZHRoPSIxLjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cG9seWdvbiBwb2ludHM9IjQwNS4xLDMxNy45IDM0Ny42LDM0Ni4wIDM0Ny42LDI1Ni40IDQwNS4xLDIyOC4zIiBmaWxsPSIjMmEzMzQ4IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC44Ii8+CjxsaW5lIHgxPSI0MDUuMSIgeTE9IjIyOC4zIiB4Mj0iMzQ3LjYiIHkyPSIyNTYuNCIgc3Ryb2tlPSIjNDc1Mjc0IiBzdHJva2Utd2lkdGg9IjEuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+Cjxwb2x5Z29uIHBvaW50cz0iMTE1Mi45LDM0Ni4wIDEyMTAuNSwzNzQuMCAxMjEwLjUsMjg0LjQgMTE1Mi45LDI1Ni40IiBmaWxsPSIjMWQyNDM1IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC44Ii8+CjxsaW5lIHgxPSIxMTUyLjkiIHkxPSIyNTYuNCIgeDI9IjEyMTAuNSIgeTI9IjI4NC40IiBzdHJva2U9IiMzNzQyNjAiIHN0cm9rZS13aWR0aD0iMS40IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPHBvbHlnb24gcG9pbnRzPSIzNDcuNiwzNDYuMCAyOTAuMSwzNzQuMCAyOTAuMSwyODQuNCAzNDcuNiwyNTYuNCIgZmlsbD0iIzJhMzM0OCIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuOCIvPgo8bGluZSB4MT0iMzQ3LjYiIHkxPSIyNTYuNCIgeDI9IjI5MC4xIiB5Mj0iMjg0LjQiIHN0cm9rZT0iIzQ3NTI3NCIgc3Ryb2tlLXdpZHRoPSIxLjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cG9seWdvbiBwb2ludHM9IjEyMTAuNSwzNzQuMCAxMjY4LjAsNDAyLjEgMTI2OC4wLDMxMi41IDEyMTAuNSwyODQuNCIgZmlsbD0iIzFkMjQzNSIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuOCIvPgo8bGluZSB4MT0iMTIxMC41IiB5MT0iMjg0LjQiIHgyPSIxMjY4LjAiIHkyPSIzMTIuNSIgc3Ryb2tlPSIjMzc0MjYwIiBzdHJva2Utd2lkdGg9IjEuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+Cjxwb2x5Z29uIHBvaW50cz0iMjkwLjEsMzc0LjAgMjMyLjYsNDAyLjEgMjMyLjYsMzEyLjUgMjkwLjEsMjg0LjQiIGZpbGw9IiMyYTMzNDgiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KPGxpbmUgeDE9IjI5MC4xIiB5MT0iMjg0LjQiIHgyPSIyMzIuNiIgeTI9IjMxMi41IiBzdHJva2U9IiM0NzUyNzQiIHN0cm9rZS13aWR0aD0iMS40IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPHBvbHlnb24gcG9pbnRzPSIxMjY4LjAsNDAyLjEgMTMyNS41LDQzMC4yIDEzMjUuNSwzNDAuNiAxMjY4LjAsMzEyLjUiIGZpbGw9IiMxZDI0MzUiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KPGxpbmUgeDE9IjEyNjguMCIgeTE9IjMxMi41IiB4Mj0iMTMyNS41IiB5Mj0iMzQwLjYiIHN0cm9rZT0iIzM3NDI2MCIgc3Ryb2tlLXdpZHRoPSIxLjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cG9seWdvbiBwb2ludHM9IjIzMi42LDQwMi4xIDI5MC4xLDQzMC4yIDI5MC4xLDM0MC42IDIzMi42LDMxMi41IiBmaWxsPSIjMWQyNDM1IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC44Ii8+CjxsaW5lIHgxPSIyMzIuNiIgeTE9IjMxMi41IiB4Mj0iMjkwLjEiIHkyPSIzNDAuNiIgc3Ryb2tlPSIjMzc0MjYwIiBzdHJva2Utd2lkdGg9IjEuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+Cjxwb2x5Z29uIHBvaW50cz0iMTMyNS41LDQzMC4yIDEzODMuMCw0NTguMiAxMzgzLjAsMzY4LjYgMTMyNS41LDM0MC42IiBmaWxsPSIjMWQyNDM1IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC44Ii8+CjxsaW5lIHgxPSIxMzI1LjUiIHkxPSIzNDAuNiIgeDI9IjEzODMuMCIgeTI9IjM2OC42IiBzdHJva2U9IiMzNzQyNjAiIHN0cm9rZS13aWR0aD0iMS40IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPHBvbHlnb24gcG9pbnRzPSIyOTAuMSw0MzAuMiAzNDcuNiw0NTguMiAzNDcuNiwzNjguNiAyOTAuMSwzNDAuNiIgZmlsbD0iIzFkMjQzNSIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuOCIvPgo8bGluZSB4MT0iMjkwLjEiIHkxPSIzNDAuNiIgeDI9IjM0Ny42IiB5Mj0iMzY4LjYiIHN0cm9rZT0iIzM3NDI2MCIgc3Ryb2tlLXdpZHRoPSIxLjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cG9seWdvbiBwb2ludHM9IjEzODMuMCw0NTguMiAxMzI1LjUsNDg2LjMgMTMyNS41LDM5Ni43IDEzODMuMCwzNjguNiIgZmlsbD0iIzJhMzM0OCIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuOCIvPgo8bGluZSB4MT0iMTM4My4wIiB5MT0iMzY4LjYiIHgyPSIxMzI1LjUiIHkyPSIzOTYuNyIgc3Ryb2tlPSIjNDc1Mjc0IiBzdHJva2Utd2lkdGg9IjEuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+Cjxwb2x5Z29uIHBvaW50cz0iMzQ3LjYsNDU4LjIgNDA1LjEsNDg2LjMgNDA1LjEsMzk2LjcgMzQ3LjYsMzY4LjYiIGZpbGw9IiMxZDI0MzUiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KPGxpbmUgeDE9IjM0Ny42IiB5MT0iMzY4LjYiIHgyPSI0MDUuMSIgeTI9IjM5Ni43IiBzdHJva2U9IiMzNzQyNjAiIHN0cm9rZS13aWR0aD0iMS40IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPHBvbHlnb24gcG9pbnRzPSIxMzI1LjUsNDg2LjMgMTI2OC4wLDUxNC4zIDEyNjguMCw0MjQuNyAxMzI1LjUsMzk2LjciIGZpbGw9IiMyYTMzNDgiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KPGxpbmUgeDE9IjEzMjUuNSIgeTE9IjM5Ni43IiB4Mj0iMTI2OC4wIiB5Mj0iNDI0LjciIHN0cm9rZT0iIzQ3NTI3NCIgc3Ryb2tlLXdpZHRoPSIxLjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cG9seWdvbiBwb2ludHM9IjQwNS4xLDQ4Ni4zIDQ2Mi43LDUxNC4zIDQ2Mi43LDQyNC43IDQwNS4xLDM5Ni43IiBmaWxsPSIjMWQyNDM1IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC44Ii8+CjxsaW5lIHgxPSI0MDUuMSIgeTE9IjM5Ni43IiB4Mj0iNDYyLjciIHkyPSI0MjQuNyIgc3Ryb2tlPSIjMzc0MjYwIiBzdHJva2Utd2lkdGg9IjEuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+Cjxwb2x5Z29uIHBvaW50cz0iMTI2OC4wLDUxNC4zIDEyMTAuNSw1NDIuNCAxMjEwLjUsNDUyLjggMTI2OC4wLDQyNC43IiBmaWxsPSIjMmEzMzQ4IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC44Ii8+CjxsaW5lIHgxPSIxMjY4LjAiIHkxPSI0MjQuNyIgeDI9IjEyMTAuNSIgeTI9IjQ1Mi44IiBzdHJva2U9IiM0NzUyNzQiIHN0cm9rZS13aWR0aD0iMS40IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPHBvbHlnb24gcG9pbnRzPSI0NjIuNyw1MTQuMyA1MjAuMiw1NDIuNCA1MjAuMiw0NTIuOCA0NjIuNyw0MjQuNyIgZmlsbD0iIzFkMjQzNSIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuOCIvPgo8bGluZSB4MT0iNDYyLjciIHkxPSI0MjQuNyIgeDI9IjUyMC4yIiB5Mj0iNDUyLjgiIHN0cm9rZT0iIzM3NDI2MCIgc3Ryb2tlLXdpZHRoPSIxLjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cG9seWdvbiBwb2ludHM9IjEyMTAuNSw1NDIuNCAxMTUyLjksNTcwLjQgMTE1Mi45LDQ4MC44IDEyMTAuNSw0NTIuOCIgZmlsbD0iIzJhMzM0OCIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuOCIvPgo8bGluZSB4MT0iMTIxMC41IiB5MT0iNDUyLjgiIHgyPSIxMTUyLjkiIHkyPSI0ODAuOCIgc3Ryb2tlPSIjNDc1Mjc0IiBzdHJva2Utd2lkdGg9IjEuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+Cjxwb2x5Z29uIHBvaW50cz0iNTIwLjIsNTQyLjQgNTc3LjcsNTcwLjQgNTc3LjcsNDgwLjggNTIwLjIsNDUyLjgiIGZpbGw9IiMxZDI0MzUiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KPGxpbmUgeDE9IjUyMC4yIiB5MT0iNDUyLjgiIHgyPSI1NzcuNyIgeTI9IjQ4MC44IiBzdHJva2U9IiMzNzQyNjAiIHN0cm9rZS13aWR0aD0iMS40IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPHBvbHlnb24gcG9pbnRzPSIxMTUyLjksNTcwLjQgMTA5NS40LDU5OC41IDEwOTUuNCw1MDguOSAxMTUyLjksNDgwLjgiIGZpbGw9IiMyYTMzNDgiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KPGxpbmUgeDE9IjExNTIuOSIgeTE9IjQ4MC44IiB4Mj0iMTA5NS40IiB5Mj0iNTA4LjkiIHN0cm9rZT0iIzQ3NTI3NCIgc3Ryb2tlLXdpZHRoPSIxLjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cG9seWdvbiBwb2ludHM9IjU3Ny43LDU3MC40IDYzNS4yLDU5OC41IDYzNS4yLDUwOC45IDU3Ny43LDQ4MC44IiBmaWxsPSIjMWQyNDM1IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC44Ii8+CjxsaW5lIHgxPSI1NzcuNyIgeTE9IjQ4MC44IiB4Mj0iNjM1LjIiIHkyPSI1MDguOSIgc3Ryb2tlPSIjMzc0MjYwIiBzdHJva2Utd2lkdGg9IjEuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+Cjxwb2x5Z29uIHBvaW50cz0iMTA5NS40LDU5OC41IDEwMzcuOSw2MjYuNSAxMDM3LjksNTM2LjkgMTA5NS40LDUwOC45IiBmaWxsPSIjMmEzMzQ4IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC44Ii8+CjxsaW5lIHgxPSIxMDk1LjQiIHkxPSI1MDguOSIgeDI9IjEwMzcuOSIgeTI9IjUzNi45IiBzdHJva2U9IiM0NzUyNzQiIHN0cm9rZS13aWR0aD0iMS40IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPHBvbHlnb24gcG9pbnRzPSI2MzUuMiw1OTguNSA2OTIuOCw2MjYuNSA2OTIuOCw1MzYuOSA2MzUuMiw1MDguOSIgZmlsbD0iIzFkMjQzNSIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuOCIvPgo8bGluZSB4MT0iNjM1LjIiIHkxPSI1MDguOSIgeDI9IjY5Mi44IiB5Mj0iNTM2LjkiIHN0cm9rZT0iIzM3NDI2MCIgc3Ryb2tlLXdpZHRoPSIxLjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cG9seWdvbiBwb2ludHM9IjEwMzcuOSw2MjYuNSA5ODAuNCw2NTQuNiA5ODAuNCw1NjUuMCAxMDM3LjksNTM2LjkiIGZpbGw9IiMyYTMzNDgiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KPGxpbmUgeDE9IjEwMzcuOSIgeTE9IjUzNi45IiB4Mj0iOTgwLjQiIHkyPSI1NjUuMCIgc3Ryb2tlPSIjNDc1Mjc0IiBzdHJva2Utd2lkdGg9IjEuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+Cjxwb2x5Z29uIHBvaW50cz0iNjkyLjgsNjI2LjUgNzUwLjMsNjU0LjYgNzUwLjMsNTY1LjAgNjkyLjgsNTM2LjkiIGZpbGw9IiMxZDI0MzUiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KPGxpbmUgeDE9IjY5Mi44IiB5MT0iNTM2LjkiIHgyPSI3NTAuMyIgeTI9IjU2NS4wIiBzdHJva2U9IiMzNzQyNjAiIHN0cm9rZS13aWR0aD0iMS40IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPHBvbHlnb24gcG9pbnRzPSI3NTAuMyw2NTQuNiA4MDcuOCw2ODIuNyA4MDcuOCw1OTMuMSA3NTAuMyw1NjUuMCIgZmlsbD0iIzFkMjQzNSIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuOCIvPgo8bGluZSB4MT0iNzUwLjMiIHkxPSI1NjUuMCIgeDI9IjgwNy44IiB5Mj0iNTkzLjEiIHN0cm9rZT0iIzM3NDI2MCIgc3Ryb2tlLXdpZHRoPSIxLjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cG9seWdvbiBwb2ludHM9Ijk4MC40LDY1NC42IDkyMi44LDY4Mi43IDkyMi44LDU5My4xIDk4MC40LDU2NS4wIiBmaWxsPSIjMmEzMzQ4IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC44Ii8+CjxsaW5lIHgxPSI5ODAuNCIgeTE9IjU2NS4wIiB4Mj0iOTIyLjgiIHkyPSI1OTMuMSIgc3Ryb2tlPSIjNDc1Mjc0IiBzdHJva2Utd2lkdGg9IjEuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+Cjxwb2x5Z29uIHBvaW50cz0iODA3LjgsNjgyLjcgODY1LjMsNzEwLjcgODY1LjMsNjIxLjEgODA3LjgsNTkzLjEiIGZpbGw9IiMxZDI0MzUiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KPGxpbmUgeDE9IjgwNy44IiB5MT0iNTkzLjEiIHgyPSI4NjUuMyIgeTI9IjYyMS4xIiBzdHJva2U9IiMzNzQyNjAiIHN0cm9rZS13aWR0aD0iMS40IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPHBvbHlnb24gcG9pbnRzPSI5MjIuOCw2ODIuNyA4NjUuMyw3MTAuNyA4NjUuMyw2MjEuMSA5MjIuOCw1OTMuMSIgZmlsbD0iIzJhMzM0OCIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuOCIvPgo8bGluZSB4MT0iOTIyLjgiIHkxPSI1OTMuMSIgeDI9Ijg2NS4zIiB5Mj0iNjIxLjEiIHN0cm9rZT0iIzQ3NTI3NCIgc3Ryb2tlLXdpZHRoPSIxLjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cG9seWdvbiBwb2ludHM9IjYzNS4yLDIwNS43IDY5Mi44LDIzMy44IDY5Mi44LDIxMS40IDYzNS4yLDE4My4zIiBmaWxsPSIjMTMxODI2IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC40IiBvcGFjaXR5PSIwLjg1Ii8+Cjxwb2x5Z29uIHBvaW50cz0iNjkyLjgsMjMzLjggNzUwLjMsMjYxLjggNzUwLjMsMjM5LjQgNjkyLjgsMjExLjQiIGZpbGw9IiMxMzE4MjYiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjQiIG9wYWNpdHk9IjAuODUiLz4KPHBvbHlnb24gcG9pbnRzPSI3NTAuMywyNjEuOCA4MDcuOCwyODkuOSA4MDcuOCwyNjcuNSA3NTAuMywyMzkuNCIgZmlsbD0iIzEzMTgyNiIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuNCIgb3BhY2l0eT0iMC44NSIvPgo8cG9seWdvbiBwb2ludHM9IjkyMi44LDIzMy44IDg2NS4zLDI2MS44IDg2NS4zLDIzOS40IDkyMi44LDIxMS40IiBmaWxsPSIjMTMxODI2IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC40IiBvcGFjaXR5PSIwLjg1Ii8+Cjxwb2x5Z29uIHBvaW50cz0iODY1LjMsMjYxLjggODA3LjgsMjg5LjkgODA3LjgsMjY3LjUgODY1LjMsMjM5LjQiIGZpbGw9IiMxMzE4MjYiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjQiIG9wYWNpdHk9IjAuODUiLz4KPHBvbHlnb24gcG9pbnRzPSI3NTAuMywzMTcuOSA4MDcuOCwzNDYuMCA4MDcuOCwzMjMuNiA3NTAuMywyOTUuNSIgZmlsbD0iIzEzMTgyNiIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuNCIgb3BhY2l0eT0iMC44NSIvPgo8cG9seWdvbiBwb2ludHM9IjgwNy44LDM0Ni4wIDg2NS4zLDM3NC4wIDg2NS4zLDM1MS42IDgwNy44LDMyMy42IiBmaWxsPSIjMTMxODI2IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC40IiBvcGFjaXR5PSIwLjg1Ii8+Cjxwb2x5Z29uIHBvaW50cz0iODY1LjMsMzc0LjAgOTIyLjgsNDAyLjEgOTIyLjgsMzc5LjcgODY1LjMsMzUxLjYiIGZpbGw9IiMxMzE4MjYiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjQiIG9wYWNpdHk9IjAuODUiLz4KPHBvbHlnb24gcG9pbnRzPSI5MjIuOCw0MDIuMSA5ODAuNCw0MzAuMiA5ODAuNCw0MDcuOCA5MjIuOCwzNzkuNyIgZmlsbD0iIzEzMTgyNiIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuNCIgb3BhY2l0eT0iMC44NSIvPgo8cG9seWdvbiBwb2ludHM9IjExNTIuOSwzNDYuMCAxMDk1LjQsMzc0LjAgMTA5NS40LDM1MS42IDExNTIuOSwzMjMuNiIgZmlsbD0iIzEzMTgyNiIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuNCIgb3BhY2l0eT0iMC44NSIvPgo8cG9seWdvbiBwb2ludHM9IjEwOTUuNCwzNzQuMCAxMDM3LjksNDAyLjEgMTAzNy45LDM3OS43IDEwOTUuNCwzNTEuNiIgZmlsbD0iIzEzMTgyNiIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuNCIgb3BhY2l0eT0iMC44NSIvPgo8cG9seWdvbiBwb2ludHM9IjEwMzcuOSw0MDIuMSA5ODAuNCw0MzAuMiA5ODAuNCw0MDcuOCAxMDM3LjksMzc5LjciIGZpbGw9IiMxMzE4MjYiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjQiIG9wYWNpdHk9IjAuODUiLz4KPHBvbHlnb24gcG9pbnRzPSI4MDcuOCwyODkuOSA3NTAuMywzMTcuOSA3NTAuMywyOTUuNSA4MDcuOCwyNjcuNSIgZmlsbD0iIzEzMTgyNiIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuNCIgb3BhY2l0eT0iMC44NSIvPgo8cG9seWdvbiBwb2ludHM9Ijg2NS4zLDQ4Ni4zIDkyMi44LDUxNC4zIDkyMi44LDQ5MS45IDg2NS4zLDQ2My45IiBmaWxsPSIjMTMxODI2IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC40IiBvcGFjaXR5PSIwLjg1Ii8+Cjxwb2x5Z29uIHBvaW50cz0iOTIyLjgsNTE0LjMgOTgwLjQsNTQyLjQgOTgwLjQsNTIwLjAgOTIyLjgsNDkxLjkiIGZpbGw9IiMxMzE4MjYiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjQiIG9wYWNpdHk9IjAuODUiLz4KPHBvbHlnb24gcG9pbnRzPSI5ODAuNCw1NDIuNCAxMDM3LjksNTcwLjQgMTAzNy45LDU0OC4wIDk4MC40LDUyMC4wIiBmaWxsPSIjMTMxODI2IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC40IiBvcGFjaXR5PSIwLjg1Ii8+Cjxwb2x5Z29uIHBvaW50cz0iMTAzNy45LDU3MC40IDEwOTUuNCw1OTguNSAxMDk1LjQsNTc2LjEgMTAzNy45LDU0OC4wIiBmaWxsPSIjMTMxODI2IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC40IiBvcGFjaXR5PSIwLjg1Ii8+Cjxwb2x5Z29uIHBvaW50cz0iOTgwLjQsNDMwLjIgOTIyLjgsNDU4LjIgOTIyLjgsNDM1LjggOTgwLjQsNDA3LjgiIGZpbGw9IiMxMzE4MjYiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjQiIG9wYWNpdHk9IjAuODUiLz4KPHBvbHlnb24gcG9pbnRzPSI5MjIuOCw0NTguMiA4NjUuMyw0ODYuMyA4NjUuMyw0NjMuOSA5MjIuOCw0MzUuOCIgZmlsbD0iIzEzMTgyNiIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuNCIgb3BhY2l0eT0iMC44NSIvPgo8cG9seWdvbiBwb2ludHM9IjYzNS4yLDM3NC4wIDY5Mi44LDQwMi4xIDY5Mi44LDM3OS43IDYzNS4yLDM1MS42IiBmaWxsPSIjMTMxODI2IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC40IiBvcGFjaXR5PSIwLjg1Ii8+Cjxwb2x5Z29uIHBvaW50cz0iNjkyLjgsNDAyLjEgNzUwLjMsNDMwLjIgNzUwLjMsNDA3LjggNjkyLjgsMzc5LjciIGZpbGw9IiMxMzE4MjYiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjQiIG9wYWNpdHk9IjAuODUiLz4KPHBvbHlnb24gcG9pbnRzPSI3NTAuMyw0MzAuMiA4MDcuOCw0NTguMiA4MDcuOCw0MzUuOCA3NTAuMyw0MDcuOCIgZmlsbD0iIzEzMTgyNiIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuNCIgb3BhY2l0eT0iMC44NSIvPgo8cG9seWdvbiBwb2ludHM9IjgwNy44LDQ1OC4yIDg2NS4zLDQ4Ni4zIDg2NS4zLDQ2My45IDgwNy44LDQzNS44IiBmaWxsPSIjMTMxODI2IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC40IiBvcGFjaXR5PSIwLjg1Ii8+Cjxwb2x5Z29uIHBvaW50cz0iNzUwLjMsMzE3LjkgNjkyLjgsMzQ2LjAgNjkyLjgsMzIzLjYgNzUwLjMsMjk1LjUiIGZpbGw9IiMxMzE4MjYiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjQiIG9wYWNpdHk9IjAuODUiLz4KPHBvbHlnb24gcG9pbnRzPSI2OTIuOCwzNDYuMCA2MzUuMiwzNzQuMCA2MzUuMiwzNTEuNiA2OTIuOCwzMjMuNiIgZmlsbD0iIzEzMTgyNiIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuNCIgb3BhY2l0eT0iMC44NSIvPgo8cG9seWdvbiBwb2ludHM9IjM0Ny42LDM0Ni4wIDQwNS4xLDM3NC4wIDQwNS4xLDM1MS42IDM0Ny42LDMyMy42IiBmaWxsPSIjMTMxODI2IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC40IiBvcGFjaXR5PSIwLjg1Ii8+Cjxwb2x5Z29uIHBvaW50cz0iNDA1LjEsMzc0LjAgNDYyLjcsNDAyLjEgNDYyLjcsMzc5LjcgNDA1LjEsMzUxLjYiIGZpbGw9IiMxMzE4MjYiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjQiIG9wYWNpdHk9IjAuODUiLz4KPHBvbHlnb24gcG9pbnRzPSI0NjIuNyw0MDIuMSA1MjAuMiw0MzAuMiA1MjAuMiw0MDcuOCA0NjIuNywzNzkuNyIgZmlsbD0iIzEzMTgyNiIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuNCIgb3BhY2l0eT0iMC44NSIvPgo8cG9seWdvbiBwb2ludHM9IjYzNS4yLDM3NC4wIDU3Ny43LDQwMi4xIDU3Ny43LDM3OS43IDYzNS4yLDM1MS42IiBmaWxsPSIjMTMxODI2IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC40IiBvcGFjaXR5PSIwLjg1Ii8+Cjxwb2x5Z29uIHBvaW50cz0iNTc3LjcsNDAyLjEgNTIwLjIsNDMwLjIgNTIwLjIsNDA3LjggNTc3LjcsMzc5LjciIGZpbGw9IiMxMzE4MjYiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjQiIG9wYWNpdHk9IjAuODUiLz4KPHBvbHlnb24gcG9pbnRzPSI1MjAuMiw0MzAuMiA1NzcuNyw0NTguMiA1NzcuNyw0MzUuOCA1MjAuMiw0MDcuOCIgZmlsbD0iIzEzMTgyNiIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuNCIgb3BhY2l0eT0iMC44NSIvPgo8cG9seWdvbiBwb2ludHM9IjU3Ny43LDQ1OC4yIDYzNS4yLDQ4Ni4zIDYzNS4yLDQ2My45IDU3Ny43LDQzNS44IiBmaWxsPSIjMTMxODI2IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC40IiBvcGFjaXR5PSIwLjg1Ii8+Cjxwb2x5Z29uIHBvaW50cz0iNjM1LjIsNDg2LjMgNjkyLjgsNTE0LjMgNjkyLjgsNDkxLjkgNjM1LjIsNDYzLjkiIGZpbGw9IiMxMzE4MjYiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjQiIG9wYWNpdHk9IjAuODUiLz4KPHBvbHlnb24gcG9pbnRzPSI2OTIuOCw1MTQuMyA3NTAuMyw1NDIuNCA3NTAuMyw1MjAuMCA2OTIuOCw0OTEuOSIgZmlsbD0iIzEzMTgyNiIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuNCIgb3BhY2l0eT0iMC44NSIvPgo8cG9seWdvbiBwb2ludHM9Ijg2NS4zLDQ4Ni4zIDgwNy44LDUxNC4zIDgwNy44LDQ5MS45IDg2NS4zLDQ2My45IiBmaWxsPSIjMTMxODI2IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC40IiBvcGFjaXR5PSIwLjg1Ii8+Cjxwb2x5Z29uIHBvaW50cz0iODA3LjgsNTE0LjMgNzUwLjMsNTQyLjQgNzUwLjMsNTIwLjAgODA3LjgsNDkxLjkiIGZpbGw9IiMxMzE4MjYiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjQiIG9wYWNpdHk9IjAuODUiLz4KPHBvbHlnb24gcG9pbnRzPSI3NTAuMyw1NDIuNCA4MDcuOCw1NzAuNCA4MDcuOCw1NDguMCA3NTAuMyw1MjAuMCIgZmlsbD0iIzEzMTgyNiIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuNCIgb3BhY2l0eT0iMC44NSIvPgo8cG9seWdvbiBwb2ludHM9IjgwNy44LDU3MC40IDg2NS4zLDU5OC41IDg2NS4zLDU3Ni4xIDgwNy44LDU0OC4wIiBmaWxsPSIjMTMxODI2IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC40IiBvcGFjaXR5PSIwLjg1Ii8+Cjxwb2x5Z29uIHBvaW50cz0iOTgwLjQsNTQyLjQgOTIyLjgsNTcwLjQgOTIyLjgsNTQ4LjAgOTgwLjQsNTIwLjAiIGZpbGw9IiMxMzE4MjYiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjQiIG9wYWNpdHk9IjAuODUiLz4KPHBvbHlnb24gcG9pbnRzPSI5MjIuOCw1NzAuNCA4NjUuMyw1OTguNSA4NjUuMyw1NzYuMSA5MjIuOCw1NDguMCIgZmlsbD0iIzEzMTgyNiIgc3Ryb2tlPSIjMGEwZDFjIiBzdHJva2Utd2lkdGg9IjAuNCIgb3BhY2l0eT0iMC44NSIvPgo8cG9seWdvbiBwb2ludHM9Ijg2NS4zLDU5OC41IDkyMi44LDYyNi41IDkyMi44LDYwNC4xIDg2NS4zLDU3Ni4xIiBmaWxsPSIjMTMxODI2IiBzdHJva2U9IiMwYTBkMWMiIHN0cm9rZS13aWR0aD0iMC40IiBvcGFjaXR5PSIwLjg1Ii8+Cjxwb2x5Z29uIHBvaW50cz0iOTIyLjgsNjI2LjUgOTgwLjQsNjU0LjYgOTgwLjQsNjMyLjIgOTIyLjgsNjA0LjEiIGZpbGw9IiMxMzE4MjYiIHN0cm9rZT0iIzBhMGQxYyIgc3Ryb2tlLXdpZHRoPSIwLjQiIG9wYWNpdHk9IjAuODUiLz4KPHRleHQgeD0iNzc5LjAiIHk9IjIxNy44IiBmaWxsPSIjZmZmZmZmIiBmb250LWZhbWlseT0iSW50ZXIsU2Vnb2UgVUksQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZm9udC13ZWlnaHQ9IjcwMCIgbGV0dGVyLXNwYWNpbmc9IjEuMiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgb3BhY2l0eT0iMC44OCIgZmlsdGVyPSJ1cmwoI3NvZnQpIj5CQUxDT05ZPC90ZXh0Pgo8dGV4dCB4PSI5NTEuNiIgeT0iMzMwLjAiIGZpbGw9IiNmZmZmZmYiIGZvbnQtZmFtaWx5PSJJbnRlcixTZWdvZSBVSSxBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmb250LXdlaWdodD0iNzAwIiBsZXR0ZXItc3BhY2luZz0iMS4yIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBvcGFjaXR5PSIwLjg4IiBmaWx0ZXI9InVybCgjc29mdCkiPktJVENIRU48L3RleHQ+Cjx0ZXh0IHg9IjExMjQuMiIgeT0iNDcwLjMiIGZpbGw9IiNmZmZmZmYiIGZvbnQtZmFtaWx5PSJJbnRlcixTZWdvZSBVSSxBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmb250LXdlaWdodD0iNzAwIiBsZXR0ZXItc3BhY2luZz0iMS4yIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBvcGFjaXR5PSIwLjg4IiBmaWx0ZXI9InVybCgjc29mdCkiPk1BU1RFUiBCUjwvdGV4dD4KPHRleHQgeD0iODA3LjgiIHk9IjQwMC4yIiBmaWxsPSIjZmZmZmZmIiBmb250LWZhbWlseT0iSW50ZXIsU2Vnb2UgVUksQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZm9udC13ZWlnaHQ9IjcwMCIgbGV0dGVyLXNwYWNpbmc9IjEuMiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgb3BhY2l0eT0iMC44OCIgZmlsdGVyPSJ1cmwoI3NvZnQpIj5ESU5JTkc8L3RleHQ+Cjx0ZXh0IHg9IjU3Ny43IiB5PSIzMTYuMCIgZmlsbD0iI2ZmZmZmZiIgZm9udC1mYW1pbHk9IkludGVyLFNlZ29lIFVJLEFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZvbnQtd2VpZ2h0PSI3MDAiIGxldHRlci1zcGFjaW5nPSIxLjIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIG9wYWNpdHk9IjAuODgiIGZpbHRlcj0idXJsKCNzb2Z0KSI+TElWSU5HPC90ZXh0Pgo8dGV4dCB4PSI2OTIuOCIgeT0iNDU2LjMiIGZpbGw9IiNmZmZmZmYiIGZvbnQtZmFtaWx5PSJJbnRlcixTZWdvZSBVSSxBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmb250LXdlaWdodD0iNzAwIiBsZXR0ZXItc3BhY2luZz0iMS4yIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBvcGFjaXR5PSIwLjg4IiBmaWx0ZXI9InVybCgjc29mdCkiPkNPUlJJRE9SPC90ZXh0Pgo8dGV4dCB4PSI4NjUuMyIgeT0iNTQwLjUiIGZpbGw9IiNmZmZmZmYiIGZvbnQtZmFtaWx5PSJJbnRlcixTZWdvZSBVSSxBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmb250LXdlaWdodD0iNzAwIiBsZXR0ZXItc3BhY2luZz0iMS4yIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBvcGFjaXR5PSIwLjg4IiBmaWx0ZXI9InVybCgjc29mdCkiPkJBVEg8L3RleHQ+Cjx0ZXh0IHg9Ijk4MC40IiB5PSI1OTYuNiIgZmlsbD0iI2ZmZmZmZiIgZm9udC1mYW1pbHk9IkludGVyLFNlZ29lIFVJLEFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZvbnQtd2VpZ2h0PSI3MDAiIGxldHRlci1zcGFjaW5nPSIxLjIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIG9wYWNpdHk9IjAuODgiIGZpbHRlcj0idXJsKCNzb2Z0KSI+T0ZGSUNFPC90ZXh0Pgo8dGV4dCB4PSI2MDYuNSIgeT0iNTI2LjQiIGZpbGw9IiNmZmZmZmYiIGZvbnQtZmFtaWx5PSJJbnRlcixTZWdvZSBVSSxBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmb250LXdlaWdodD0iNzAwIiBsZXR0ZXItc3BhY2luZz0iMS4yIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBvcGFjaXR5PSIwLjg4IiBmaWx0ZXI9InVybCgjc29mdCkiPkZPWUVSPC90ZXh0Pgo8L3N2Zz4=
     elements:
     - type: state-icon
       entity: light.balcony_lights
       icon: mdi:lightbulb
       style:
-        top: 14.95%
-        left: 48.26%
+        top: 9.29%
+        left: 44.87%
         color: '#ffd479'
-        filter: drop-shadow(0 4px 10px rgba(0,0,0,0.75))
-        transform: translate(-50%, -50%) scale(0.85)
-        --mdc-icon-size: 30px
+        filter: drop-shadow(0 6px 12px rgba(0,0,0,0.85))
+        transform: translate(-50%, -50%) scale(1.15)
+        --mdc-icon-size: 42px
+        background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(0,0,0,0.45))
+        border-radius: 50%
+        padding: 10px
+        box-shadow: 0 8px 18px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.25), inset 0 -1px 0 rgba(0,0,0,0.4)
+        border: 1px solid rgba(255,255,255,0.18)
       tap_action:
         action: toggle
       hold_action:
@@ -343,12 +31,17 @@ views:
       entity: cover.balcony_curtain_none
       icon: mdi:blinds-horizontal
       style:
-        top: 11.06%
-        left: 48.26%
+        top: 17.67%
+        left: 50.85%
         color: '#9fd8ff'
-        filter: drop-shadow(0 4px 10px rgba(0,0,0,0.75))
-        transform: translate(-50%, -50%) scale(0.85)
-        --mdc-icon-size: 30px
+        filter: drop-shadow(0 6px 12px rgba(0,0,0,0.85))
+        transform: translate(-50%, -50%) scale(1.15)
+        --mdc-icon-size: 42px
+        background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(0,0,0,0.45))
+        border-radius: 50%
+        padding: 10px
+        box-shadow: 0 8px 18px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.25), inset 0 -1px 0 rgba(0,0,0,0.4)
+        border: 1px solid rgba(255,255,255,0.18)
       tap_action:
         action: toggle
       hold_action:
@@ -357,12 +50,17 @@ views:
       entity: light.kitchen_switch
       icon: mdi:countertop
       style:
-        top: 27.93%
-        left: 58.72%
+        top: 17.18%
+        left: 57.12%
         color: '#ffd479'
-        filter: drop-shadow(0 4px 10px rgba(0,0,0,0.75))
-        transform: translate(-50%, -50%) scale(0.85)
-        --mdc-icon-size: 30px
+        filter: drop-shadow(0 6px 12px rgba(0,0,0,0.85))
+        transform: translate(-50%, -50%) scale(1.15)
+        --mdc-icon-size: 42px
+        background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(0,0,0,0.45))
+        border-radius: 50%
+        padding: 10px
+        box-shadow: 0 8px 18px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.25), inset 0 -1px 0 rgba(0,0,0,0.4)
+        border: 1px solid rgba(255,255,255,0.18)
       tap_action:
         action: toggle
       hold_action:
@@ -371,12 +69,17 @@ views:
       entity: light.kitchen_torch
       icon: mdi:lightbulb-on
       style:
-        top: 28.74%
-        left: 64.83%
+        top: 26.23%
+        left: 67.09%
         color: '#ffd479'
-        filter: drop-shadow(0 4px 10px rgba(0,0,0,0.75))
-        transform: translate(-50%, -50%) scale(0.85)
-        --mdc-icon-size: 30px
+        filter: drop-shadow(0 6px 12px rgba(0,0,0,0.85))
+        transform: translate(-50%, -50%) scale(1.15)
+        --mdc-icon-size: 42px
+        background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(0,0,0,0.45))
+        border-radius: 50%
+        padding: 10px
+        box-shadow: 0 8px 18px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.25), inset 0 -1px 0 rgba(0,0,0,0.4)
+        border: 1px solid rgba(255,255,255,0.18)
       tap_action:
         action: toggle
       hold_action:
@@ -385,12 +88,17 @@ views:
       entity: cover.curtains
       icon: mdi:curtains
       style:
-        top: 22.25%
-        left: 57.85%
+        top: 30.96%
+        left: 55.16%
         color: '#9fd8ff'
-        filter: drop-shadow(0 4px 10px rgba(0,0,0,0.75))
-        transform: translate(-50%, -50%) scale(0.85)
-        --mdc-icon-size: 30px
+        filter: drop-shadow(0 6px 12px rgba(0,0,0,0.85))
+        transform: translate(-50%, -50%) scale(1.15)
+        --mdc-icon-size: 42px
+        background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(0,0,0,0.45))
+        border-radius: 50%
+        padding: 10px
+        box-shadow: 0 8px 18px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.25), inset 0 -1px 0 rgba(0,0,0,0.4)
+        border: 1px solid rgba(255,255,255,0.18)
       tap_action:
         action: toggle
       hold_action:
@@ -399,12 +107,17 @@ views:
       entity: light.dining_room_lights
       icon: mdi:silverware-fork-knife
       style:
-        top: 36.05%
-        left: 50.0%
+        top: 29.08%
+        left: 46.01%
         color: '#ffd479'
-        filter: drop-shadow(0 4px 10px rgba(0,0,0,0.75))
-        transform: translate(-50%, -50%) scale(0.85)
-        --mdc-icon-size: 30px
+        filter: drop-shadow(0 6px 12px rgba(0,0,0,0.85))
+        transform: translate(-50%, -50%) scale(1.15)
+        --mdc-icon-size: 42px
+        background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(0,0,0,0.45))
+        border-radius: 50%
+        padding: 10px
+        box-shadow: 0 8px 18px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.25), inset 0 -1px 0 rgba(0,0,0,0.4)
+        border: 1px solid rgba(255,255,255,0.18)
       tap_action:
         action: toggle
       hold_action:
@@ -413,12 +126,17 @@ views:
       entity: cover.dining_shade_none
       icon: mdi:blinds-horizontal
       style:
-        top: 30.53%
-        left: 47.56%
+        top: 39.27%
+        left: 53.99%
         color: '#9fd8ff'
-        filter: drop-shadow(0 4px 10px rgba(0,0,0,0.75))
-        transform: translate(-50%, -50%) scale(0.85)
-        --mdc-icon-size: 30px
+        filter: drop-shadow(0 6px 12px rgba(0,0,0,0.85))
+        transform: translate(-50%, -50%) scale(1.15)
+        --mdc-icon-size: 42px
+        background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(0,0,0,0.45))
+        border-radius: 50%
+        padding: 10px
+        box-shadow: 0 8px 18px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.25), inset 0 -1px 0 rgba(0,0,0,0.4)
+        border: 1px solid rgba(255,255,255,0.18)
       tap_action:
         action: toggle
       hold_action:
@@ -427,12 +145,17 @@ views:
       entity: light.living_room_lights
       icon: mdi:sofa
       style:
-        top: 26.31%
-        left: 36.05%
+        top: 17.82%
+        left: 41.45%
         color: '#ffd479'
-        filter: drop-shadow(0 4px 10px rgba(0,0,0,0.75))
-        transform: translate(-50%, -50%) scale(0.85)
-        --mdc-icon-size: 30px
+        filter: drop-shadow(0 6px 12px rgba(0,0,0,0.85))
+        transform: translate(-50%, -50%) scale(1.15)
+        --mdc-icon-size: 42px
+        background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(0,0,0,0.45))
+        border-radius: 50%
+        padding: 10px
+        box-shadow: 0 8px 18px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.25), inset 0 -1px 0 rgba(0,0,0,0.4)
+        border: 1px solid rgba(255,255,255,0.18)
       tap_action:
         action: toggle
       hold_action:
@@ -441,12 +164,17 @@ views:
       entity: cover.living_room_shade_none
       icon: mdi:blinds-horizontal
       style:
-        top: 19.33%
-        left: 37.27%
+        top: 26.27%
+        left: 35.4%
         color: '#9fd8ff'
-        filter: drop-shadow(0 4px 10px rgba(0,0,0,0.75))
-        transform: translate(-50%, -50%) scale(0.85)
-        --mdc-icon-size: 30px
+        filter: drop-shadow(0 6px 12px rgba(0,0,0,0.85))
+        transform: translate(-50%, -50%) scale(1.15)
+        --mdc-icon-size: 42px
+        background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(0,0,0,0.45))
+        border-radius: 50%
+        padding: 10px
+        box-shadow: 0 8px 18px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.25), inset 0 -1px 0 rgba(0,0,0,0.4)
+        border: 1px solid rgba(255,255,255,0.18)
       tap_action:
         action: toggle
       hold_action:
@@ -455,24 +183,36 @@ views:
       entity: climate.living_room
       icon: mdi:thermostat
       style:
-        top: 34.1%
-        left: 33.95%
+        top: 34.35%
+        left: 29.35%
         color: '#ffb38a'
-        filter: drop-shadow(0 4px 10px rgba(0,0,0,0.75))
-        transform: translate(-50%, -50%) scale(0.85)
-        --mdc-icon-size: 30px
+        filter: drop-shadow(0 6px 12px rgba(0,0,0,0.85))
+        transform: translate(-50%, -50%) scale(1.15)
+        --mdc-icon-size: 42px
+        background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(0,0,0,0.45))
+        border-radius: 50%
+        padding: 10px
+        box-shadow: 0 8px 18px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.25), inset 0 -1px 0 rgba(0,0,0,0.4)
+        border: 1px solid rgba(255,255,255,0.18)
       tap_action:
+        action: more-info
+      hold_action:
         action: more-info
     - type: state-icon
       entity: light.corridor
       icon: mdi:lightbulb
       style:
-        top: 42.54%
-        left: 43.02%
+        top: 39.16%
+        left: 42.88%
         color: '#ffd479'
-        filter: drop-shadow(0 4px 10px rgba(0,0,0,0.75))
-        transform: translate(-50%, -50%) scale(0.85)
-        --mdc-icon-size: 30px
+        filter: drop-shadow(0 6px 12px rgba(0,0,0,0.85))
+        transform: translate(-50%, -50%) scale(1.15)
+        --mdc-icon-size: 42px
+        background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(0,0,0,0.45))
+        border-radius: 50%
+        padding: 10px
+        box-shadow: 0 8px 18px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.25), inset 0 -1px 0 rgba(0,0,0,0.4)
+        border: 1px solid rgba(255,255,255,0.18)
       tap_action:
         action: toggle
       hold_action:
@@ -481,12 +221,17 @@ views:
       entity: cover.office_shade_none
       icon: mdi:blinds-horizontal
       style:
-        top: 56.81%
-        left: 62.56%
+        top: 58.28%
+        left: 60.68%
         color: '#9fd8ff'
-        filter: drop-shadow(0 4px 10px rgba(0,0,0,0.75))
-        transform: translate(-50%, -50%) scale(0.85)
-        --mdc-icon-size: 30px
+        filter: drop-shadow(0 6px 12px rgba(0,0,0,0.85))
+        transform: translate(-50%, -50%) scale(1.15)
+        --mdc-icon-size: 42px
+        background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(0,0,0,0.45))
+        border-radius: 50%
+        padding: 10px
+        box-shadow: 0 8px 18px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.25), inset 0 -1px 0 rgba(0,0,0,0.4)
+        border: 1px solid rgba(255,255,255,0.18)
       tap_action:
         action: toggle
       hold_action:
@@ -495,12 +240,17 @@ views:
       entity: light.mysh_bedroom_lights
       icon: mdi:bed
       style:
-        top: 44.16%
-        left: 69.19%
+        top: 40.78%
+        left: 69.58%
         color: '#ffd479'
-        filter: drop-shadow(0 4px 10px rgba(0,0,0,0.75))
-        transform: translate(-50%, -50%) scale(0.85)
-        --mdc-icon-size: 30px
+        filter: drop-shadow(0 6px 12px rgba(0,0,0,0.85))
+        transform: translate(-50%, -50%) scale(1.15)
+        --mdc-icon-size: 42px
+        background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(0,0,0,0.45))
+        border-radius: 50%
+        padding: 10px
+        box-shadow: 0 8px 18px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.25), inset 0 -1px 0 rgba(0,0,0,0.4)
+        border: 1px solid rgba(255,255,255,0.18)
       tap_action:
         action: toggle
       hold_action:
@@ -509,12 +259,17 @@ views:
       entity: light.foyer_light
       icon: mdi:door
       style:
-        top: 41.72%
-        left: 28.2%
+        top: 33.34%
+        left: 21.52%
         color: '#ffd479'
-        filter: drop-shadow(0 4px 10px rgba(0,0,0,0.75))
-        transform: translate(-50%, -50%) scale(0.85)
-        --mdc-icon-size: 30px
+        filter: drop-shadow(0 6px 12px rgba(0,0,0,0.85))
+        transform: translate(-50%, -50%) scale(1.15)
+        --mdc-icon-size: 42px
+        background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(0,0,0,0.45))
+        border-radius: 50%
+        padding: 10px
+        box-shadow: 0 8px 18px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.25), inset 0 -1px 0 rgba(0,0,0,0.4)
+        border: 1px solid rgba(255,255,255,0.18)
       tap_action:
         action: toggle
       hold_action:
@@ -523,12 +278,17 @@ views:
       entity: light.top
       icon: mdi:ceiling-light
       style:
-        top: 59.57%
-        left: 47.38%
+        top: 61.8%
+        left: 52.85%
         color: '#ffd479'
-        filter: drop-shadow(0 4px 10px rgba(0,0,0,0.75))
-        transform: translate(-50%, -50%) scale(0.85)
-        --mdc-icon-size: 30px
+        filter: drop-shadow(0 6px 12px rgba(0,0,0,0.85))
+        transform: translate(-50%, -50%) scale(1.15)
+        --mdc-icon-size: 42px
+        background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(0,0,0,0.45))
+        border-radius: 50%
+        padding: 10px
+        box-shadow: 0 8px 18px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.25), inset 0 -1px 0 rgba(0,0,0,0.4)
+        border: 1px solid rgba(255,255,255,0.18)
       tap_action:
         action: toggle
       hold_action:
@@ -537,1602 +297,37 @@ views:
       style: |2
 
         ha-card {
+          padding: 0 !important;
+          margin: 0 !important;
+          border: none !important;
+          border-radius: 0 !important;
+          box-shadow: none !important;
           background:
-            radial-gradient(120% 80% at 20% 0%, rgba(90,140,255,0.18), transparent 60%),
-            radial-gradient(120% 80% at 80% 100%, rgba(255,140,80,0.18), transparent 60%),
-            linear-gradient(160deg, rgba(18,22,40,0.92), rgba(8,10,22,0.96));
-          border-radius: 28px;
-          border: 1px solid rgba(255,255,255,0.10);
-          box-shadow:
-            0 30px 70px rgba(0,0,0,0.55),
-            inset 0 1px 0 rgba(255,255,255,0.14);
-          padding: 20px 22px;
+            radial-gradient(1400px 700px at 15% -10%, rgba(90,140,255,0.22), transparent 60%),
+            radial-gradient(1200px 600px at 110% 110%, rgba(255,140,80,0.20), transparent 60%),
+            linear-gradient(160deg, #07091a 0%, #0d1228 45%, #07091a 100%) !important;
+          height: 100vh;
+          width: 100%;
           overflow: hidden;
+          position: relative;
         }
-        ha-card img {
-          border-radius: 18px;
-          filter: drop-shadow(0 24px 36px rgba(0,0,0,0.6));
-          transition: transform .6s ease;
+        ha-card hui-image, ha-card .image {
+          height: 100% !important;
+          width: 100% !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
         }
-        .element ha-icon, .element state-badge {
-          transition: transform .2s ease, filter .2s ease;
+        ha-card hui-image img, ha-card img {
+          width: 100% !important;
+          height: 100% !important;
+          object-fit: contain !important;
+          filter: drop-shadow(0 40px 80px rgba(0,0,0,0.75));
         }
-        .element:hover ha-icon { transform: translate(-50%, -50%) scale(1.15) !important; }
-  - type: thermostat
-    entity: climate.living_room
-    name: Living Room Climate
-    card_mod:
-      style: |2
-
-        ha-card {
-          background: linear-gradient(145deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
-          backdrop-filter: blur(18px) saturate(140%);
-          -webkit-backdrop-filter: blur(18px) saturate(140%);
-          border: 1px solid rgba(255,255,255,0.12);
-          border-radius: 24px;
-          box-shadow:
-            0 10px 30px rgba(0,0,0,0.45),
-            inset 0 1px 0 rgba(255,255,255,0.25),
-            inset 0 -1px 0 rgba(0,0,0,0.35);
-          overflow: hidden;
-          color: #f3f6ff;
+        .element ha-icon, .element state-badge, .element state-icon {
+          transition: transform .22s ease, filter .22s ease;
         }
-
-        .card-header {
-          color: #ffffff;
-          letter-spacing: 0.5px;
-          font-weight: 500;
-        }
-  - type: vertical-stack
-    cards:
-    - type: markdown
-      content: '### Lights'
-      card_mod:
-        style: ha-card{background:transparent;border:none;box-shadow:none;color:#e6ecff;padding:4px 6px 0;} h3{margin:0;letter-spacing:1px;text-transform:uppercase;opacity:.8;font-size:12px;}
-    - type: grid
-      columns: 3
-      square: false
-      cards:
-      - type: custom:button-card
-        entity: light.kitchen_switch
-        name: Kitchen
-        icon: mdi:countertop
-        show_state: true
-        tap_action:
-          action: toggle
-        hold_action:
-          action: more-info
-        styles:
-          card:
-          - border-radius: 24px
-          - padding: 14px
-          - background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(0,0,0,0.25))
-          - box-shadow: 0 12px 30px rgba(0,0,0,0.55), -6px -6px 16px rgba(255,255,255,0.05), 6px 6px 16px rgba(0,0,0,0.55),
-              inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.35)
-          - border: 1px solid rgba(255,255,255,0.10)
-          - color: '#eef2ff'
-          - transition: transform .2s ease, box-shadow .2s ease
-          - transform-style: preserve-3d
-          - perspective: 600px
-          img_cell:
-          - background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(255,255,255,0.02))
-          - border-radius: 50%
-          - width: 54px
-          - height: 54px
-          - margin-right: 8px
-          - box-shadow: inset 0 2px 4px rgba(255,255,255,0.25), inset 0 -2px 4px rgba(0,0,0,0.35), 0 6px 14px rgba(0,0,0,0.45)
-          icon:
-          - color: '#cfe2ff'
-          - width: 30px
-          name:
-          - font-size: 14px
-          - font-weight: '600'
-          - color: '#f2f5ff'
-          - text-align: start
-          - justify-self: start
-          state:
-          - font-size: 11px
-          - opacity: '0.75'
-          - text-align: start
-          - justify-self: start
-          grid:
-          - grid-template-areas: '"i n" "i s"'
-          - grid-template-columns: auto 1fr
-          - grid-template-rows: 1fr 1fr
-        state:
-        - value: 'on'
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(255,221,120,0.55), rgba(255,150,0,0.25))
-            - box-shadow: 0 14px 38px rgba(255,170,60,0.45), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45),
-                inset 0 -1px 0 rgba(0,0,0,0.30)
-            icon:
-            - color: '#fff4c2'
-            img_cell:
-            - background: radial-gradient(circle at 30% 30%, rgba(255,240,200,0.95), rgba(255,165,0,0.35))
-        - value: open
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(120,200,255,0.45), rgba(60,100,200,0.25))
-            - box-shadow: 0 14px 38px rgba(60,140,255,0.4), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45)
-            icon:
-            - color: '#d9efff'
-        - value: playing
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(140,240,180,0.45), rgba(30,140,90,0.25))
-            icon:
-            - color: '#c6ffd9'
-      - type: custom:button-card
-        entity: light.dining_room_lights
-        name: Dining
-        icon: mdi:silverware-fork-knife
-        show_state: true
-        tap_action:
-          action: toggle
-        hold_action:
-          action: more-info
-        styles:
-          card:
-          - border-radius: 24px
-          - padding: 14px
-          - background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(0,0,0,0.25))
-          - box-shadow: 0 12px 30px rgba(0,0,0,0.55), -6px -6px 16px rgba(255,255,255,0.05), 6px 6px 16px rgba(0,0,0,0.55),
-              inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.35)
-          - border: 1px solid rgba(255,255,255,0.10)
-          - color: '#eef2ff'
-          - transition: transform .2s ease, box-shadow .2s ease
-          - transform-style: preserve-3d
-          - perspective: 600px
-          img_cell:
-          - background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(255,255,255,0.02))
-          - border-radius: 50%
-          - width: 54px
-          - height: 54px
-          - margin-right: 8px
-          - box-shadow: inset 0 2px 4px rgba(255,255,255,0.25), inset 0 -2px 4px rgba(0,0,0,0.35), 0 6px 14px rgba(0,0,0,0.45)
-          icon:
-          - color: '#cfe2ff'
-          - width: 30px
-          name:
-          - font-size: 14px
-          - font-weight: '600'
-          - color: '#f2f5ff'
-          - text-align: start
-          - justify-self: start
-          state:
-          - font-size: 11px
-          - opacity: '0.75'
-          - text-align: start
-          - justify-self: start
-          grid:
-          - grid-template-areas: '"i n" "i s"'
-          - grid-template-columns: auto 1fr
-          - grid-template-rows: 1fr 1fr
-        state:
-        - value: 'on'
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(255,221,120,0.55), rgba(255,150,0,0.25))
-            - box-shadow: 0 14px 38px rgba(255,170,60,0.45), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45),
-                inset 0 -1px 0 rgba(0,0,0,0.30)
-            icon:
-            - color: '#fff4c2'
-            img_cell:
-            - background: radial-gradient(circle at 30% 30%, rgba(255,240,200,0.95), rgba(255,165,0,0.35))
-        - value: open
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(120,200,255,0.45), rgba(60,100,200,0.25))
-            - box-shadow: 0 14px 38px rgba(60,140,255,0.4), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45)
-            icon:
-            - color: '#d9efff'
-        - value: playing
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(140,240,180,0.45), rgba(30,140,90,0.25))
-            icon:
-            - color: '#c6ffd9'
-      - type: custom:button-card
-        entity: light.living_room_lights
-        name: Living
-        icon: mdi:sofa
-        show_state: true
-        tap_action:
-          action: toggle
-        hold_action:
-          action: more-info
-        styles:
-          card:
-          - border-radius: 24px
-          - padding: 14px
-          - background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(0,0,0,0.25))
-          - box-shadow: 0 12px 30px rgba(0,0,0,0.55), -6px -6px 16px rgba(255,255,255,0.05), 6px 6px 16px rgba(0,0,0,0.55),
-              inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.35)
-          - border: 1px solid rgba(255,255,255,0.10)
-          - color: '#eef2ff'
-          - transition: transform .2s ease, box-shadow .2s ease
-          - transform-style: preserve-3d
-          - perspective: 600px
-          img_cell:
-          - background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(255,255,255,0.02))
-          - border-radius: 50%
-          - width: 54px
-          - height: 54px
-          - margin-right: 8px
-          - box-shadow: inset 0 2px 4px rgba(255,255,255,0.25), inset 0 -2px 4px rgba(0,0,0,0.35), 0 6px 14px rgba(0,0,0,0.45)
-          icon:
-          - color: '#cfe2ff'
-          - width: 30px
-          name:
-          - font-size: 14px
-          - font-weight: '600'
-          - color: '#f2f5ff'
-          - text-align: start
-          - justify-self: start
-          state:
-          - font-size: 11px
-          - opacity: '0.75'
-          - text-align: start
-          - justify-self: start
-          grid:
-          - grid-template-areas: '"i n" "i s"'
-          - grid-template-columns: auto 1fr
-          - grid-template-rows: 1fr 1fr
-        state:
-        - value: 'on'
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(255,221,120,0.55), rgba(255,150,0,0.25))
-            - box-shadow: 0 14px 38px rgba(255,170,60,0.45), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45),
-                inset 0 -1px 0 rgba(0,0,0,0.30)
-            icon:
-            - color: '#fff4c2'
-            img_cell:
-            - background: radial-gradient(circle at 30% 30%, rgba(255,240,200,0.95), rgba(255,165,0,0.35))
-        - value: open
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(120,200,255,0.45), rgba(60,100,200,0.25))
-            - box-shadow: 0 14px 38px rgba(60,140,255,0.4), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45)
-            icon:
-            - color: '#d9efff'
-        - value: playing
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(140,240,180,0.45), rgba(30,140,90,0.25))
-            icon:
-            - color: '#c6ffd9'
-      - type: custom:button-card
-        entity: light.foyer_light
-        name: Foyer
-        icon: mdi:door
-        show_state: true
-        tap_action:
-          action: toggle
-        hold_action:
-          action: more-info
-        styles:
-          card:
-          - border-radius: 24px
-          - padding: 14px
-          - background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(0,0,0,0.25))
-          - box-shadow: 0 12px 30px rgba(0,0,0,0.55), -6px -6px 16px rgba(255,255,255,0.05), 6px 6px 16px rgba(0,0,0,0.55),
-              inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.35)
-          - border: 1px solid rgba(255,255,255,0.10)
-          - color: '#eef2ff'
-          - transition: transform .2s ease, box-shadow .2s ease
-          - transform-style: preserve-3d
-          - perspective: 600px
-          img_cell:
-          - background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(255,255,255,0.02))
-          - border-radius: 50%
-          - width: 54px
-          - height: 54px
-          - margin-right: 8px
-          - box-shadow: inset 0 2px 4px rgba(255,255,255,0.25), inset 0 -2px 4px rgba(0,0,0,0.35), 0 6px 14px rgba(0,0,0,0.45)
-          icon:
-          - color: '#cfe2ff'
-          - width: 30px
-          name:
-          - font-size: 14px
-          - font-weight: '600'
-          - color: '#f2f5ff'
-          - text-align: start
-          - justify-self: start
-          state:
-          - font-size: 11px
-          - opacity: '0.75'
-          - text-align: start
-          - justify-self: start
-          grid:
-          - grid-template-areas: '"i n" "i s"'
-          - grid-template-columns: auto 1fr
-          - grid-template-rows: 1fr 1fr
-        state:
-        - value: 'on'
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(255,221,120,0.55), rgba(255,150,0,0.25))
-            - box-shadow: 0 14px 38px rgba(255,170,60,0.45), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45),
-                inset 0 -1px 0 rgba(0,0,0,0.30)
-            icon:
-            - color: '#fff4c2'
-            img_cell:
-            - background: radial-gradient(circle at 30% 30%, rgba(255,240,200,0.95), rgba(255,165,0,0.35))
-        - value: open
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(120,200,255,0.45), rgba(60,100,200,0.25))
-            - box-shadow: 0 14px 38px rgba(60,140,255,0.4), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45)
-            icon:
-            - color: '#d9efff'
-        - value: playing
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(140,240,180,0.45), rgba(30,140,90,0.25))
-            icon:
-            - color: '#c6ffd9'
-      - type: custom:button-card
-        entity: light.top
-        name: Top
-        icon: mdi:ceiling-light
-        show_state: true
-        tap_action:
-          action: toggle
-        hold_action:
-          action: more-info
-        styles:
-          card:
-          - border-radius: 24px
-          - padding: 14px
-          - background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(0,0,0,0.25))
-          - box-shadow: 0 12px 30px rgba(0,0,0,0.55), -6px -6px 16px rgba(255,255,255,0.05), 6px 6px 16px rgba(0,0,0,0.55),
-              inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.35)
-          - border: 1px solid rgba(255,255,255,0.10)
-          - color: '#eef2ff'
-          - transition: transform .2s ease, box-shadow .2s ease
-          - transform-style: preserve-3d
-          - perspective: 600px
-          img_cell:
-          - background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(255,255,255,0.02))
-          - border-radius: 50%
-          - width: 54px
-          - height: 54px
-          - margin-right: 8px
-          - box-shadow: inset 0 2px 4px rgba(255,255,255,0.25), inset 0 -2px 4px rgba(0,0,0,0.35), 0 6px 14px rgba(0,0,0,0.45)
-          icon:
-          - color: '#cfe2ff'
-          - width: 30px
-          name:
-          - font-size: 14px
-          - font-weight: '600'
-          - color: '#f2f5ff'
-          - text-align: start
-          - justify-self: start
-          state:
-          - font-size: 11px
-          - opacity: '0.75'
-          - text-align: start
-          - justify-self: start
-          grid:
-          - grid-template-areas: '"i n" "i s"'
-          - grid-template-columns: auto 1fr
-          - grid-template-rows: 1fr 1fr
-        state:
-        - value: 'on'
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(255,221,120,0.55), rgba(255,150,0,0.25))
-            - box-shadow: 0 14px 38px rgba(255,170,60,0.45), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45),
-                inset 0 -1px 0 rgba(0,0,0,0.30)
-            icon:
-            - color: '#fff4c2'
-            img_cell:
-            - background: radial-gradient(circle at 30% 30%, rgba(255,240,200,0.95), rgba(255,165,0,0.35))
-        - value: open
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(120,200,255,0.45), rgba(60,100,200,0.25))
-            - box-shadow: 0 14px 38px rgba(60,140,255,0.4), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45)
-            icon:
-            - color: '#d9efff'
-        - value: playing
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(140,240,180,0.45), rgba(30,140,90,0.25))
-            icon:
-            - color: '#c6ffd9'
-      - type: custom:button-card
-        entity: light.corridor
-        name: Corridor
-        icon: mdi:lightbulb
-        show_state: true
-        tap_action:
-          action: toggle
-        hold_action:
-          action: more-info
-        styles:
-          card:
-          - border-radius: 24px
-          - padding: 14px
-          - background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(0,0,0,0.25))
-          - box-shadow: 0 12px 30px rgba(0,0,0,0.55), -6px -6px 16px rgba(255,255,255,0.05), 6px 6px 16px rgba(0,0,0,0.55),
-              inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.35)
-          - border: 1px solid rgba(255,255,255,0.10)
-          - color: '#eef2ff'
-          - transition: transform .2s ease, box-shadow .2s ease
-          - transform-style: preserve-3d
-          - perspective: 600px
-          img_cell:
-          - background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(255,255,255,0.02))
-          - border-radius: 50%
-          - width: 54px
-          - height: 54px
-          - margin-right: 8px
-          - box-shadow: inset 0 2px 4px rgba(255,255,255,0.25), inset 0 -2px 4px rgba(0,0,0,0.35), 0 6px 14px rgba(0,0,0,0.45)
-          icon:
-          - color: '#cfe2ff'
-          - width: 30px
-          name:
-          - font-size: 14px
-          - font-weight: '600'
-          - color: '#f2f5ff'
-          - text-align: start
-          - justify-self: start
-          state:
-          - font-size: 11px
-          - opacity: '0.75'
-          - text-align: start
-          - justify-self: start
-          grid:
-          - grid-template-areas: '"i n" "i s"'
-          - grid-template-columns: auto 1fr
-          - grid-template-rows: 1fr 1fr
-        state:
-        - value: 'on'
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(255,221,120,0.55), rgba(255,150,0,0.25))
-            - box-shadow: 0 14px 38px rgba(255,170,60,0.45), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45),
-                inset 0 -1px 0 rgba(0,0,0,0.30)
-            icon:
-            - color: '#fff4c2'
-            img_cell:
-            - background: radial-gradient(circle at 30% 30%, rgba(255,240,200,0.95), rgba(255,165,0,0.35))
-        - value: open
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(120,200,255,0.45), rgba(60,100,200,0.25))
-            - box-shadow: 0 14px 38px rgba(60,140,255,0.4), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45)
-            icon:
-            - color: '#d9efff'
-        - value: playing
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(140,240,180,0.45), rgba(30,140,90,0.25))
-            icon:
-            - color: '#c6ffd9'
-      - type: custom:button-card
-        entity: light.balcony_lights
-        name: Balcony
-        icon: mdi:balcony
-        show_state: true
-        tap_action:
-          action: toggle
-        hold_action:
-          action: more-info
-        styles:
-          card:
-          - border-radius: 24px
-          - padding: 14px
-          - background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(0,0,0,0.25))
-          - box-shadow: 0 12px 30px rgba(0,0,0,0.55), -6px -6px 16px rgba(255,255,255,0.05), 6px 6px 16px rgba(0,0,0,0.55),
-              inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.35)
-          - border: 1px solid rgba(255,255,255,0.10)
-          - color: '#eef2ff'
-          - transition: transform .2s ease, box-shadow .2s ease
-          - transform-style: preserve-3d
-          - perspective: 600px
-          img_cell:
-          - background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(255,255,255,0.02))
-          - border-radius: 50%
-          - width: 54px
-          - height: 54px
-          - margin-right: 8px
-          - box-shadow: inset 0 2px 4px rgba(255,255,255,0.25), inset 0 -2px 4px rgba(0,0,0,0.35), 0 6px 14px rgba(0,0,0,0.45)
-          icon:
-          - color: '#cfe2ff'
-          - width: 30px
-          name:
-          - font-size: 14px
-          - font-weight: '600'
-          - color: '#f2f5ff'
-          - text-align: start
-          - justify-self: start
-          state:
-          - font-size: 11px
-          - opacity: '0.75'
-          - text-align: start
-          - justify-self: start
-          grid:
-          - grid-template-areas: '"i n" "i s"'
-          - grid-template-columns: auto 1fr
-          - grid-template-rows: 1fr 1fr
-        state:
-        - value: 'on'
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(255,221,120,0.55), rgba(255,150,0,0.25))
-            - box-shadow: 0 14px 38px rgba(255,170,60,0.45), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45),
-                inset 0 -1px 0 rgba(0,0,0,0.30)
-            icon:
-            - color: '#fff4c2'
-            img_cell:
-            - background: radial-gradient(circle at 30% 30%, rgba(255,240,200,0.95), rgba(255,165,0,0.35))
-        - value: open
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(120,200,255,0.45), rgba(60,100,200,0.25))
-            - box-shadow: 0 14px 38px rgba(60,140,255,0.4), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45)
-            icon:
-            - color: '#d9efff'
-        - value: playing
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(140,240,180,0.45), rgba(30,140,90,0.25))
-            icon:
-            - color: '#c6ffd9'
-      - type: custom:button-card
-        entity: light.mysh_bedroom_lights
-        name: Mysh Bed
-        icon: mdi:bed
-        show_state: true
-        tap_action:
-          action: toggle
-        hold_action:
-          action: more-info
-        styles:
-          card:
-          - border-radius: 24px
-          - padding: 14px
-          - background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(0,0,0,0.25))
-          - box-shadow: 0 12px 30px rgba(0,0,0,0.55), -6px -6px 16px rgba(255,255,255,0.05), 6px 6px 16px rgba(0,0,0,0.55),
-              inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.35)
-          - border: 1px solid rgba(255,255,255,0.10)
-          - color: '#eef2ff'
-          - transition: transform .2s ease, box-shadow .2s ease
-          - transform-style: preserve-3d
-          - perspective: 600px
-          img_cell:
-          - background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(255,255,255,0.02))
-          - border-radius: 50%
-          - width: 54px
-          - height: 54px
-          - margin-right: 8px
-          - box-shadow: inset 0 2px 4px rgba(255,255,255,0.25), inset 0 -2px 4px rgba(0,0,0,0.35), 0 6px 14px rgba(0,0,0,0.45)
-          icon:
-          - color: '#cfe2ff'
-          - width: 30px
-          name:
-          - font-size: 14px
-          - font-weight: '600'
-          - color: '#f2f5ff'
-          - text-align: start
-          - justify-self: start
-          state:
-          - font-size: 11px
-          - opacity: '0.75'
-          - text-align: start
-          - justify-self: start
-          grid:
-          - grid-template-areas: '"i n" "i s"'
-          - grid-template-columns: auto 1fr
-          - grid-template-rows: 1fr 1fr
-        state:
-        - value: 'on'
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(255,221,120,0.55), rgba(255,150,0,0.25))
-            - box-shadow: 0 14px 38px rgba(255,170,60,0.45), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45),
-                inset 0 -1px 0 rgba(0,0,0,0.30)
-            icon:
-            - color: '#fff4c2'
-            img_cell:
-            - background: radial-gradient(circle at 30% 30%, rgba(255,240,200,0.95), rgba(255,165,0,0.35))
-        - value: open
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(120,200,255,0.45), rgba(60,100,200,0.25))
-            - box-shadow: 0 14px 38px rgba(60,140,255,0.4), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45)
-            icon:
-            - color: '#d9efff'
-        - value: playing
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(140,240,180,0.45), rgba(30,140,90,0.25))
-            icon:
-            - color: '#c6ffd9'
-      - type: custom:button-card
-        entity: light.dreamview_t1
-        name: TV Back
-        icon: mdi:television-ambient-light
-        show_state: true
-        tap_action:
-          action: toggle
-        hold_action:
-          action: more-info
-        styles:
-          card:
-          - border-radius: 24px
-          - padding: 14px
-          - background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(0,0,0,0.25))
-          - box-shadow: 0 12px 30px rgba(0,0,0,0.55), -6px -6px 16px rgba(255,255,255,0.05), 6px 6px 16px rgba(0,0,0,0.55),
-              inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.35)
-          - border: 1px solid rgba(255,255,255,0.10)
-          - color: '#eef2ff'
-          - transition: transform .2s ease, box-shadow .2s ease
-          - transform-style: preserve-3d
-          - perspective: 600px
-          img_cell:
-          - background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(255,255,255,0.02))
-          - border-radius: 50%
-          - width: 54px
-          - height: 54px
-          - margin-right: 8px
-          - box-shadow: inset 0 2px 4px rgba(255,255,255,0.25), inset 0 -2px 4px rgba(0,0,0,0.35), 0 6px 14px rgba(0,0,0,0.45)
-          icon:
-          - color: '#cfe2ff'
-          - width: 30px
-          name:
-          - font-size: 14px
-          - font-weight: '600'
-          - color: '#f2f5ff'
-          - text-align: start
-          - justify-self: start
-          state:
-          - font-size: 11px
-          - opacity: '0.75'
-          - text-align: start
-          - justify-self: start
-          grid:
-          - grid-template-areas: '"i n" "i s"'
-          - grid-template-columns: auto 1fr
-          - grid-template-rows: 1fr 1fr
-        state:
-        - value: 'on'
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(255,221,120,0.55), rgba(255,150,0,0.25))
-            - box-shadow: 0 14px 38px rgba(255,170,60,0.45), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45),
-                inset 0 -1px 0 rgba(0,0,0,0.30)
-            icon:
-            - color: '#fff4c2'
-            img_cell:
-            - background: radial-gradient(circle at 30% 30%, rgba(255,240,200,0.95), rgba(255,165,0,0.35))
-        - value: open
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(120,200,255,0.45), rgba(60,100,200,0.25))
-            - box-shadow: 0 14px 38px rgba(60,140,255,0.4), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45)
-            icon:
-            - color: '#d9efff'
-        - value: playing
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(140,240,180,0.45), rgba(30,140,90,0.25))
-            icon:
-            - color: '#c6ffd9'
-  - type: vertical-stack
-    cards:
-    - type: markdown
-      content: '### Shades & Doors'
-      card_mod:
-        style: ha-card{background:transparent;border:none;box-shadow:none;color:#e6ecff;padding:4px 6px 0;} h3{margin:0;letter-spacing:1px;text-transform:uppercase;opacity:.8;font-size:12px;}
-    - type: grid
-      columns: 3
-      square: false
-      cards:
-      - type: custom:button-card
-        entity: cover.curtains
-        name: Curtains
-        icon: mdi:curtains
-        show_state: true
-        tap_action:
-          action: toggle
-        hold_action:
-          action: more-info
-        styles:
-          card:
-          - border-radius: 24px
-          - padding: 14px
-          - background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(0,0,0,0.25))
-          - box-shadow: 0 12px 30px rgba(0,0,0,0.55), -6px -6px 16px rgba(255,255,255,0.05), 6px 6px 16px rgba(0,0,0,0.55),
-              inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.35)
-          - border: 1px solid rgba(255,255,255,0.10)
-          - color: '#eef2ff'
-          - transition: transform .2s ease, box-shadow .2s ease
-          - transform-style: preserve-3d
-          - perspective: 600px
-          img_cell:
-          - background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(255,255,255,0.02))
-          - border-radius: 50%
-          - width: 54px
-          - height: 54px
-          - margin-right: 8px
-          - box-shadow: inset 0 2px 4px rgba(255,255,255,0.25), inset 0 -2px 4px rgba(0,0,0,0.35), 0 6px 14px rgba(0,0,0,0.45)
-          icon:
-          - color: '#cfe2ff'
-          - width: 30px
-          name:
-          - font-size: 14px
-          - font-weight: '600'
-          - color: '#f2f5ff'
-          - text-align: start
-          - justify-self: start
-          state:
-          - font-size: 11px
-          - opacity: '0.75'
-          - text-align: start
-          - justify-self: start
-          grid:
-          - grid-template-areas: '"i n" "i s"'
-          - grid-template-columns: auto 1fr
-          - grid-template-rows: 1fr 1fr
-        state:
-        - value: 'on'
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(255,221,120,0.55), rgba(255,150,0,0.25))
-            - box-shadow: 0 14px 38px rgba(255,170,60,0.45), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45),
-                inset 0 -1px 0 rgba(0,0,0,0.30)
-            icon:
-            - color: '#fff4c2'
-            img_cell:
-            - background: radial-gradient(circle at 30% 30%, rgba(255,240,200,0.95), rgba(255,165,0,0.35))
-        - value: open
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(120,200,255,0.45), rgba(60,100,200,0.25))
-            - box-shadow: 0 14px 38px rgba(60,140,255,0.4), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45)
-            icon:
-            - color: '#d9efff'
-        - value: playing
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(140,240,180,0.45), rgba(30,140,90,0.25))
-            icon:
-            - color: '#c6ffd9'
-      - type: custom:button-card
-        entity: cover.dining_shade_none
-        name: Dining Shade
-        icon: mdi:blinds-horizontal
-        show_state: true
-        tap_action:
-          action: toggle
-        hold_action:
-          action: more-info
-        styles:
-          card:
-          - border-radius: 24px
-          - padding: 14px
-          - background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(0,0,0,0.25))
-          - box-shadow: 0 12px 30px rgba(0,0,0,0.55), -6px -6px 16px rgba(255,255,255,0.05), 6px 6px 16px rgba(0,0,0,0.55),
-              inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.35)
-          - border: 1px solid rgba(255,255,255,0.10)
-          - color: '#eef2ff'
-          - transition: transform .2s ease, box-shadow .2s ease
-          - transform-style: preserve-3d
-          - perspective: 600px
-          img_cell:
-          - background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(255,255,255,0.02))
-          - border-radius: 50%
-          - width: 54px
-          - height: 54px
-          - margin-right: 8px
-          - box-shadow: inset 0 2px 4px rgba(255,255,255,0.25), inset 0 -2px 4px rgba(0,0,0,0.35), 0 6px 14px rgba(0,0,0,0.45)
-          icon:
-          - color: '#cfe2ff'
-          - width: 30px
-          name:
-          - font-size: 14px
-          - font-weight: '600'
-          - color: '#f2f5ff'
-          - text-align: start
-          - justify-self: start
-          state:
-          - font-size: 11px
-          - opacity: '0.75'
-          - text-align: start
-          - justify-self: start
-          grid:
-          - grid-template-areas: '"i n" "i s"'
-          - grid-template-columns: auto 1fr
-          - grid-template-rows: 1fr 1fr
-        state:
-        - value: 'on'
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(255,221,120,0.55), rgba(255,150,0,0.25))
-            - box-shadow: 0 14px 38px rgba(255,170,60,0.45), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45),
-                inset 0 -1px 0 rgba(0,0,0,0.30)
-            icon:
-            - color: '#fff4c2'
-            img_cell:
-            - background: radial-gradient(circle at 30% 30%, rgba(255,240,200,0.95), rgba(255,165,0,0.35))
-        - value: open
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(120,200,255,0.45), rgba(60,100,200,0.25))
-            - box-shadow: 0 14px 38px rgba(60,140,255,0.4), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45)
-            icon:
-            - color: '#d9efff'
-        - value: playing
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(140,240,180,0.45), rgba(30,140,90,0.25))
-            icon:
-            - color: '#c6ffd9'
-      - type: custom:button-card
-        entity: cover.living_room_shade_none
-        name: Living Shade
-        icon: mdi:blinds-horizontal
-        show_state: true
-        tap_action:
-          action: toggle
-        hold_action:
-          action: more-info
-        styles:
-          card:
-          - border-radius: 24px
-          - padding: 14px
-          - background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(0,0,0,0.25))
-          - box-shadow: 0 12px 30px rgba(0,0,0,0.55), -6px -6px 16px rgba(255,255,255,0.05), 6px 6px 16px rgba(0,0,0,0.55),
-              inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.35)
-          - border: 1px solid rgba(255,255,255,0.10)
-          - color: '#eef2ff'
-          - transition: transform .2s ease, box-shadow .2s ease
-          - transform-style: preserve-3d
-          - perspective: 600px
-          img_cell:
-          - background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(255,255,255,0.02))
-          - border-radius: 50%
-          - width: 54px
-          - height: 54px
-          - margin-right: 8px
-          - box-shadow: inset 0 2px 4px rgba(255,255,255,0.25), inset 0 -2px 4px rgba(0,0,0,0.35), 0 6px 14px rgba(0,0,0,0.45)
-          icon:
-          - color: '#cfe2ff'
-          - width: 30px
-          name:
-          - font-size: 14px
-          - font-weight: '600'
-          - color: '#f2f5ff'
-          - text-align: start
-          - justify-self: start
-          state:
-          - font-size: 11px
-          - opacity: '0.75'
-          - text-align: start
-          - justify-self: start
-          grid:
-          - grid-template-areas: '"i n" "i s"'
-          - grid-template-columns: auto 1fr
-          - grid-template-rows: 1fr 1fr
-        state:
-        - value: 'on'
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(255,221,120,0.55), rgba(255,150,0,0.25))
-            - box-shadow: 0 14px 38px rgba(255,170,60,0.45), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45),
-                inset 0 -1px 0 rgba(0,0,0,0.30)
-            icon:
-            - color: '#fff4c2'
-            img_cell:
-            - background: radial-gradient(circle at 30% 30%, rgba(255,240,200,0.95), rgba(255,165,0,0.35))
-        - value: open
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(120,200,255,0.45), rgba(60,100,200,0.25))
-            - box-shadow: 0 14px 38px rgba(60,140,255,0.4), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45)
-            icon:
-            - color: '#d9efff'
-        - value: playing
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(140,240,180,0.45), rgba(30,140,90,0.25))
-            icon:
-            - color: '#c6ffd9'
-      - type: custom:button-card
-        entity: cover.office_shade_none
-        name: Office Shade
-        icon: mdi:blinds-horizontal
-        show_state: true
-        tap_action:
-          action: toggle
-        hold_action:
-          action: more-info
-        styles:
-          card:
-          - border-radius: 24px
-          - padding: 14px
-          - background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(0,0,0,0.25))
-          - box-shadow: 0 12px 30px rgba(0,0,0,0.55), -6px -6px 16px rgba(255,255,255,0.05), 6px 6px 16px rgba(0,0,0,0.55),
-              inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.35)
-          - border: 1px solid rgba(255,255,255,0.10)
-          - color: '#eef2ff'
-          - transition: transform .2s ease, box-shadow .2s ease
-          - transform-style: preserve-3d
-          - perspective: 600px
-          img_cell:
-          - background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(255,255,255,0.02))
-          - border-radius: 50%
-          - width: 54px
-          - height: 54px
-          - margin-right: 8px
-          - box-shadow: inset 0 2px 4px rgba(255,255,255,0.25), inset 0 -2px 4px rgba(0,0,0,0.35), 0 6px 14px rgba(0,0,0,0.45)
-          icon:
-          - color: '#cfe2ff'
-          - width: 30px
-          name:
-          - font-size: 14px
-          - font-weight: '600'
-          - color: '#f2f5ff'
-          - text-align: start
-          - justify-self: start
-          state:
-          - font-size: 11px
-          - opacity: '0.75'
-          - text-align: start
-          - justify-self: start
-          grid:
-          - grid-template-areas: '"i n" "i s"'
-          - grid-template-columns: auto 1fr
-          - grid-template-rows: 1fr 1fr
-        state:
-        - value: 'on'
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(255,221,120,0.55), rgba(255,150,0,0.25))
-            - box-shadow: 0 14px 38px rgba(255,170,60,0.45), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45),
-                inset 0 -1px 0 rgba(0,0,0,0.30)
-            icon:
-            - color: '#fff4c2'
-            img_cell:
-            - background: radial-gradient(circle at 30% 30%, rgba(255,240,200,0.95), rgba(255,165,0,0.35))
-        - value: open
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(120,200,255,0.45), rgba(60,100,200,0.25))
-            - box-shadow: 0 14px 38px rgba(60,140,255,0.4), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45)
-            icon:
-            - color: '#d9efff'
-        - value: playing
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(140,240,180,0.45), rgba(30,140,90,0.25))
-            icon:
-            - color: '#c6ffd9'
-      - type: custom:button-card
-        entity: cover.balcony_curtain_none
-        name: Balcony
-        icon: mdi:balcony
-        show_state: true
-        tap_action:
-          action: toggle
-        hold_action:
-          action: more-info
-        styles:
-          card:
-          - border-radius: 24px
-          - padding: 14px
-          - background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(0,0,0,0.25))
-          - box-shadow: 0 12px 30px rgba(0,0,0,0.55), -6px -6px 16px rgba(255,255,255,0.05), 6px 6px 16px rgba(0,0,0,0.55),
-              inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.35)
-          - border: 1px solid rgba(255,255,255,0.10)
-          - color: '#eef2ff'
-          - transition: transform .2s ease, box-shadow .2s ease
-          - transform-style: preserve-3d
-          - perspective: 600px
-          img_cell:
-          - background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(255,255,255,0.02))
-          - border-radius: 50%
-          - width: 54px
-          - height: 54px
-          - margin-right: 8px
-          - box-shadow: inset 0 2px 4px rgba(255,255,255,0.25), inset 0 -2px 4px rgba(0,0,0,0.35), 0 6px 14px rgba(0,0,0,0.45)
-          icon:
-          - color: '#cfe2ff'
-          - width: 30px
-          name:
-          - font-size: 14px
-          - font-weight: '600'
-          - color: '#f2f5ff'
-          - text-align: start
-          - justify-self: start
-          state:
-          - font-size: 11px
-          - opacity: '0.75'
-          - text-align: start
-          - justify-self: start
-          grid:
-          - grid-template-areas: '"i n" "i s"'
-          - grid-template-columns: auto 1fr
-          - grid-template-rows: 1fr 1fr
-        state:
-        - value: 'on'
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(255,221,120,0.55), rgba(255,150,0,0.25))
-            - box-shadow: 0 14px 38px rgba(255,170,60,0.45), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45),
-                inset 0 -1px 0 rgba(0,0,0,0.30)
-            icon:
-            - color: '#fff4c2'
-            img_cell:
-            - background: radial-gradient(circle at 30% 30%, rgba(255,240,200,0.95), rgba(255,165,0,0.35))
-        - value: open
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(120,200,255,0.45), rgba(60,100,200,0.25))
-            - box-shadow: 0 14px 38px rgba(60,140,255,0.4), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45)
-            icon:
-            - color: '#d9efff'
-        - value: playing
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(140,240,180,0.45), rgba(30,140,90,0.25))
-            icon:
-            - color: '#c6ffd9'
-      - type: custom:button-card
-        entity: cover.garage_door_1
-        name: Garage 1
-        icon: mdi:garage
-        show_state: true
-        tap_action:
-          action: toggle
-        hold_action:
-          action: more-info
-        styles:
-          card:
-          - border-radius: 24px
-          - padding: 14px
-          - background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(0,0,0,0.25))
-          - box-shadow: 0 12px 30px rgba(0,0,0,0.55), -6px -6px 16px rgba(255,255,255,0.05), 6px 6px 16px rgba(0,0,0,0.55),
-              inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.35)
-          - border: 1px solid rgba(255,255,255,0.10)
-          - color: '#eef2ff'
-          - transition: transform .2s ease, box-shadow .2s ease
-          - transform-style: preserve-3d
-          - perspective: 600px
-          img_cell:
-          - background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(255,255,255,0.02))
-          - border-radius: 50%
-          - width: 54px
-          - height: 54px
-          - margin-right: 8px
-          - box-shadow: inset 0 2px 4px rgba(255,255,255,0.25), inset 0 -2px 4px rgba(0,0,0,0.35), 0 6px 14px rgba(0,0,0,0.45)
-          icon:
-          - color: '#cfe2ff'
-          - width: 30px
-          name:
-          - font-size: 14px
-          - font-weight: '600'
-          - color: '#f2f5ff'
-          - text-align: start
-          - justify-self: start
-          state:
-          - font-size: 11px
-          - opacity: '0.75'
-          - text-align: start
-          - justify-self: start
-          grid:
-          - grid-template-areas: '"i n" "i s"'
-          - grid-template-columns: auto 1fr
-          - grid-template-rows: 1fr 1fr
-        state:
-        - value: 'on'
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(255,221,120,0.55), rgba(255,150,0,0.25))
-            - box-shadow: 0 14px 38px rgba(255,170,60,0.45), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45),
-                inset 0 -1px 0 rgba(0,0,0,0.30)
-            icon:
-            - color: '#fff4c2'
-            img_cell:
-            - background: radial-gradient(circle at 30% 30%, rgba(255,240,200,0.95), rgba(255,165,0,0.35))
-        - value: open
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(120,200,255,0.45), rgba(60,100,200,0.25))
-            - box-shadow: 0 14px 38px rgba(60,140,255,0.4), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45)
-            icon:
-            - color: '#d9efff'
-        - value: playing
-          styles:
-            card:
-            - background: linear-gradient(145deg, rgba(140,240,180,0.45), rgba(30,140,90,0.25))
-            icon:
-            - color: '#c6ffd9'
-  - type: custom:mini-media-player
-    entity: media_player.spotify_1285970688
-    artwork: full-cover
-    hide:
-      power: false
-      volume: false
-      source: false
-      icon_state: false
-    shortcuts:
-      columns: 4
-      buttons:
-      - icon: mdi:play
-        type: service
-        id: media_player.media_play
-        data:
-          entity_id: media_player.spotify_1285970688
-      - icon: mdi:pause
-        type: service
-        id: media_player.media_pause
-        data:
-          entity_id: media_player.spotify_1285970688
-      - icon: mdi:skip-next
-        type: service
-        id: media_player.media_next_track
-        data:
-          entity_id: media_player.spotify_1285970688
-      - icon: mdi:skip-previous
-        type: service
-        id: media_player.media_previous_track
-        data:
-          entity_id: media_player.spotify_1285970688
-    card_mod:
-      style: |2
-
-        ha-card {
-          background: linear-gradient(145deg, rgba(80,30,100,0.55), rgba(10,10,40,0.85));
-          border-radius: 24px;
-          border: 1px solid rgba(255,255,255,0.12);
-          box-shadow:
-            0 20px 50px rgba(0,0,0,0.55),
-            inset 0 1px 0 rgba(255,255,255,0.22);
-          color: #ffffff;
-          overflow: hidden;
-          transform: perspective(1000px) rotateX(2deg);
-        }
-  - type: custom:mini-graph-card
-    name: Living Room Temp
-    entities:
-    - entity: sensor.living_room_temperature
-      name: Temp
-      show_state: true
-    - entity: sensor.living_room_humidity
-      name: Humidity
-      y_axis: secondary
-      show_state: true
-    hours_to_show: 24
-    points_per_hour: 2
-    line_width: 3
-    smoothing: true
-    show:
-      labels: false
-      fill: fade
-    color_thresholds:
-    - value: 16
-      color: '#4fc3f7'
-    - value: 22
-      color: '#ffd479'
-    - value: 26
-      color: '#ff7043'
-    card_mod:
-      style: |2
-
-        ha-card {
-          background: linear-gradient(145deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
-          backdrop-filter: blur(18px) saturate(140%);
-          -webkit-backdrop-filter: blur(18px) saturate(140%);
-          border: 1px solid rgba(255,255,255,0.12);
-          border-radius: 24px;
-          box-shadow:
-            0 10px 30px rgba(0,0,0,0.45),
-            inset 0 1px 0 rgba(255,255,255,0.25),
-            inset 0 -1px 0 rgba(0,0,0,0.35);
-          overflow: hidden;
-          color: #f3f6ff;
-        }
-  - type: horizontal-stack
-    cards:
-    - type: custom:button-card
-      entity: person.igor
-      name: Igor
-      show_entity_picture: true
-      show_state: true
-      styles:
-        card:
-        - border-radius: 24px
-        - padding: 14px
-        - background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(0,0,0,0.25))
-        - box-shadow: 0 12px 30px rgba(0,0,0,0.55), -6px -6px 16px rgba(255,255,255,0.05), 6px 6px 16px rgba(0,0,0,0.55),
-            inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.35)
-        - border: 1px solid rgba(255,255,255,0.10)
-        - color: '#eef2ff'
-        - transition: transform .2s ease, box-shadow .2s ease
-        - transform-style: preserve-3d
-        - perspective: 600px
-        img_cell:
-        - background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(255,255,255,0.02))
-        - border-radius: 50%
-        - width: 54px
-        - height: 54px
-        - margin-right: 8px
-        - box-shadow: inset 0 2px 4px rgba(255,255,255,0.25), inset 0 -2px 4px rgba(0,0,0,0.35), 0 6px 14px rgba(0,0,0,0.45)
-        icon:
-        - color: '#cfe2ff'
-        - width: 30px
-        name:
-        - font-size: 14px
-        - font-weight: '600'
-        - color: '#f2f5ff'
-        - text-align: start
-        - justify-self: start
-        state:
-        - font-size: 11px
-        - opacity: '0.75'
-        - text-align: start
-        - justify-self: start
-        grid:
-        - grid-template-areas: '"i n" "i s"'
-        - grid-template-columns: auto 1fr
-        - grid-template-rows: 1fr 1fr
-      state:
-      - value: 'on'
-        styles:
-          card:
-          - background: linear-gradient(145deg, rgba(255,221,120,0.55), rgba(255,150,0,0.25))
-          - box-shadow: 0 14px 38px rgba(255,170,60,0.45), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45),
-              inset 0 -1px 0 rgba(0,0,0,0.30)
-          icon:
-          - color: '#fff4c2'
-          img_cell:
-          - background: radial-gradient(circle at 30% 30%, rgba(255,240,200,0.95), rgba(255,165,0,0.35))
-      - value: open
-        styles:
-          card:
-          - background: linear-gradient(145deg, rgba(120,200,255,0.45), rgba(60,100,200,0.25))
-          - box-shadow: 0 14px 38px rgba(60,140,255,0.4), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45)
-          icon:
-          - color: '#d9efff'
-      - value: playing
-        styles:
-          card:
-          - background: linear-gradient(145deg, rgba(140,240,180,0.45), rgba(30,140,90,0.25))
-          icon:
-          - color: '#c6ffd9'
-    - type: custom:button-card
-      entity: person.mysh_2
-      name: Mysh
-      show_entity_picture: true
-      show_state: true
-      styles:
-        card:
-        - border-radius: 24px
-        - padding: 14px
-        - background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(0,0,0,0.25))
-        - box-shadow: 0 12px 30px rgba(0,0,0,0.55), -6px -6px 16px rgba(255,255,255,0.05), 6px 6px 16px rgba(0,0,0,0.55),
-            inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.35)
-        - border: 1px solid rgba(255,255,255,0.10)
-        - color: '#eef2ff'
-        - transition: transform .2s ease, box-shadow .2s ease
-        - transform-style: preserve-3d
-        - perspective: 600px
-        img_cell:
-        - background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(255,255,255,0.02))
-        - border-radius: 50%
-        - width: 54px
-        - height: 54px
-        - margin-right: 8px
-        - box-shadow: inset 0 2px 4px rgba(255,255,255,0.25), inset 0 -2px 4px rgba(0,0,0,0.35), 0 6px 14px rgba(0,0,0,0.45)
-        icon:
-        - color: '#cfe2ff'
-        - width: 30px
-        name:
-        - font-size: 14px
-        - font-weight: '600'
-        - color: '#f2f5ff'
-        - text-align: start
-        - justify-self: start
-        state:
-        - font-size: 11px
-        - opacity: '0.75'
-        - text-align: start
-        - justify-self: start
-        grid:
-        - grid-template-areas: '"i n" "i s"'
-        - grid-template-columns: auto 1fr
-        - grid-template-rows: 1fr 1fr
-      state:
-      - value: 'on'
-        styles:
-          card:
-          - background: linear-gradient(145deg, rgba(255,221,120,0.55), rgba(255,150,0,0.25))
-          - box-shadow: 0 14px 38px rgba(255,170,60,0.45), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45),
-              inset 0 -1px 0 rgba(0,0,0,0.30)
-          icon:
-          - color: '#fff4c2'
-          img_cell:
-          - background: radial-gradient(circle at 30% 30%, rgba(255,240,200,0.95), rgba(255,165,0,0.35))
-      - value: open
-        styles:
-          card:
-          - background: linear-gradient(145deg, rgba(120,200,255,0.45), rgba(60,100,200,0.25))
-          - box-shadow: 0 14px 38px rgba(60,140,255,0.4), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45)
-          icon:
-          - color: '#d9efff'
-      - value: playing
-        styles:
-          card:
-          - background: linear-gradient(145deg, rgba(140,240,180,0.45), rgba(30,140,90,0.25))
-          icon:
-          - color: '#c6ffd9'
-    - type: custom:button-card
-      entity: person.lena_2
-      name: Lena
-      show_entity_picture: true
-      show_state: true
-      styles:
-        card:
-        - border-radius: 24px
-        - padding: 14px
-        - background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(0,0,0,0.25))
-        - box-shadow: 0 12px 30px rgba(0,0,0,0.55), -6px -6px 16px rgba(255,255,255,0.05), 6px 6px 16px rgba(0,0,0,0.55),
-            inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.35)
-        - border: 1px solid rgba(255,255,255,0.10)
-        - color: '#eef2ff'
-        - transition: transform .2s ease, box-shadow .2s ease
-        - transform-style: preserve-3d
-        - perspective: 600px
-        img_cell:
-        - background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(255,255,255,0.02))
-        - border-radius: 50%
-        - width: 54px
-        - height: 54px
-        - margin-right: 8px
-        - box-shadow: inset 0 2px 4px rgba(255,255,255,0.25), inset 0 -2px 4px rgba(0,0,0,0.35), 0 6px 14px rgba(0,0,0,0.45)
-        icon:
-        - color: '#cfe2ff'
-        - width: 30px
-        name:
-        - font-size: 14px
-        - font-weight: '600'
-        - color: '#f2f5ff'
-        - text-align: start
-        - justify-self: start
-        state:
-        - font-size: 11px
-        - opacity: '0.75'
-        - text-align: start
-        - justify-self: start
-        grid:
-        - grid-template-areas: '"i n" "i s"'
-        - grid-template-columns: auto 1fr
-        - grid-template-rows: 1fr 1fr
-      state:
-      - value: 'on'
-        styles:
-          card:
-          - background: linear-gradient(145deg, rgba(255,221,120,0.55), rgba(255,150,0,0.25))
-          - box-shadow: 0 14px 38px rgba(255,170,60,0.45), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45),
-              inset 0 -1px 0 rgba(0,0,0,0.30)
-          icon:
-          - color: '#fff4c2'
-          img_cell:
-          - background: radial-gradient(circle at 30% 30%, rgba(255,240,200,0.95), rgba(255,165,0,0.35))
-      - value: open
-        styles:
-          card:
-          - background: linear-gradient(145deg, rgba(120,200,255,0.45), rgba(60,100,200,0.25))
-          - box-shadow: 0 14px 38px rgba(60,140,255,0.4), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45)
-          icon:
-          - color: '#d9efff'
-      - value: playing
-        styles:
-          card:
-          - background: linear-gradient(145deg, rgba(140,240,180,0.45), rgba(30,140,90,0.25))
-          icon:
-          - color: '#c6ffd9'
-  - type: grid
-    columns: 2
-    square: false
-    cards:
-    - type: picture-entity
-      entity: camera.front_2
-      name: Front
-      show_state: false
-      camera_view: live
-      card_mod:
-        style: |2-
-
-          ha-card {
-            background: linear-gradient(145deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
-            backdrop-filter: blur(18px) saturate(140%);
-            -webkit-backdrop-filter: blur(18px) saturate(140%);
-            border: 1px solid rgba(255,255,255,0.12);
-            border-radius: 24px;
-            box-shadow:
-              0 10px 30px rgba(0,0,0,0.45),
-              inset 0 1px 0 rgba(255,255,255,0.25),
-              inset 0 -1px 0 rgba(0,0,0,0.35);
-            overflow: hidden;
-            color: #f3f6ff;
-          }
-          ha-card{transform:perspective(1000px) rotateX(2deg);} .box{background:linear-gradient(180deg, transparent, rgba(0,0,0,0.6));}
-    - type: picture-entity
-      entity: camera.garage_3
-      name: Garage
-      show_state: false
-      camera_view: live
-      card_mod:
-        style: |2-
-
-          ha-card {
-            background: linear-gradient(145deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
-            backdrop-filter: blur(18px) saturate(140%);
-            -webkit-backdrop-filter: blur(18px) saturate(140%);
-            border: 1px solid rgba(255,255,255,0.12);
-            border-radius: 24px;
-            box-shadow:
-              0 10px 30px rgba(0,0,0,0.45),
-              inset 0 1px 0 rgba(255,255,255,0.25),
-              inset 0 -1px 0 rgba(0,0,0,0.35);
-            overflow: hidden;
-            color: #f3f6ff;
-          }
-          ha-card{transform:perspective(1000px) rotateX(2deg);}
-    - type: picture-entity
-      entity: camera.birdeye
-      name: Birdeye
-      show_state: false
-      camera_view: live
-      card_mod:
-        style: |2-
-
-          ha-card {
-            background: linear-gradient(145deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
-            backdrop-filter: blur(18px) saturate(140%);
-            -webkit-backdrop-filter: blur(18px) saturate(140%);
-            border: 1px solid rgba(255,255,255,0.12);
-            border-radius: 24px;
-            box-shadow:
-              0 10px 30px rgba(0,0,0,0.45),
-              inset 0 1px 0 rgba(255,255,255,0.25),
-              inset 0 -1px 0 rgba(0,0,0,0.35);
-            overflow: hidden;
-            color: #f3f6ff;
-          }
-          ha-card{transform:perspective(1000px) rotateX(2deg);}
-    - type: picture-entity
-      entity: camera.pet
-      name: Pet
-      show_state: false
-      camera_view: live
-      card_mod:
-        style: |2-
-
-          ha-card {
-            background: linear-gradient(145deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
-            backdrop-filter: blur(18px) saturate(140%);
-            -webkit-backdrop-filter: blur(18px) saturate(140%);
-            border: 1px solid rgba(255,255,255,0.12);
-            border-radius: 24px;
-            box-shadow:
-              0 10px 30px rgba(0,0,0,0.45),
-              inset 0 1px 0 rgba(255,255,255,0.25),
-              inset 0 -1px 0 rgba(0,0,0,0.35);
-            overflow: hidden;
-            color: #f3f6ff;
-          }
-          ha-card{transform:perspective(1000px) rotateX(2deg);}
-  - type: custom:button-card
-    entity: vacuum.roborock_s8_pro_ultra
-    name: Roborock S8
-    icon: mdi:robot-vacuum
-    show_state: true
-    tap_action:
-      action: more-info
-    styles:
-      card:
-      - border-radius: 24px
-      - padding: 14px
-      - background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(0,0,0,0.25))
-      - box-shadow: 0 12px 30px rgba(0,0,0,0.55), -6px -6px 16px rgba(255,255,255,0.05), 6px 6px 16px rgba(0,0,0,0.55), inset
-          0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.35)
-      - border: 1px solid rgba(255,255,255,0.10)
-      - color: '#eef2ff'
-      - transition: transform .2s ease, box-shadow .2s ease
-      - transform-style: preserve-3d
-      - perspective: 600px
-      img_cell:
-      - background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(255,255,255,0.02))
-      - border-radius: 50%
-      - width: 54px
-      - height: 54px
-      - margin-right: 8px
-      - box-shadow: inset 0 2px 4px rgba(255,255,255,0.25), inset 0 -2px 4px rgba(0,0,0,0.35), 0 6px 14px rgba(0,0,0,0.45)
-      icon:
-      - color: '#cfe2ff'
-      - width: 30px
-      name:
-      - font-size: 14px
-      - font-weight: '600'
-      - color: '#f2f5ff'
-      - text-align: start
-      - justify-self: start
-      state:
-      - font-size: 11px
-      - opacity: '0.75'
-      - text-align: start
-      - justify-self: start
-      grid:
-      - grid-template-areas: '"i n" "i s"'
-      - grid-template-columns: auto 1fr
-      - grid-template-rows: 1fr 1fr
-    state:
-    - value: 'on'
-      styles:
-        card:
-        - background: linear-gradient(145deg, rgba(255,221,120,0.55), rgba(255,150,0,0.25))
-        - box-shadow: 0 14px 38px rgba(255,170,60,0.45), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45),
-            inset 0 -1px 0 rgba(0,0,0,0.30)
-        icon:
-        - color: '#fff4c2'
-        img_cell:
-        - background: radial-gradient(circle at 30% 30%, rgba(255,240,200,0.95), rgba(255,165,0,0.35))
-    - value: open
-      styles:
-        card:
-        - background: linear-gradient(145deg, rgba(120,200,255,0.45), rgba(60,100,200,0.25))
-        - box-shadow: 0 14px 38px rgba(60,140,255,0.4), 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.45)
-        icon:
-        - color: '#d9efff'
-    - value: playing
-      styles:
-        card:
-        - background: linear-gradient(145deg, rgba(140,240,180,0.45), rgba(30,140,90,0.25))
-        icon:
-        - color: '#c6ffd9'
-  - type: entities
-    title: Home
-    entities:
-    - entity: sensor.living_room_temperature
-      name: Living Room Temp
-    - entity: sensor.living_room_humidity
-      name: Living Room Humidity
-    - entity: sensor.h5074_3a3a_temperature
-      name: Bedroom Temp
-    - entity: sensor.h5074_3a3a_humidity
-      name: Bedroom Humidity
-    - entity: weather.forecast_home
-      name: Forecast
-    - entity: sun.sun
-      name: Sun
-    state_color: true
-    card_mod:
-      style: |2
-
-        ha-card {
-          background: linear-gradient(145deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
-          backdrop-filter: blur(18px) saturate(140%);
-          -webkit-backdrop-filter: blur(18px) saturate(140%);
-          border: 1px solid rgba(255,255,255,0.12);
-          border-radius: 24px;
-          box-shadow:
-            0 10px 30px rgba(0,0,0,0.45),
-            inset 0 1px 0 rgba(255,255,255,0.25),
-            inset 0 -1px 0 rgba(0,0,0,0.35);
-          overflow: hidden;
-          color: #f3f6ff;
-        }
-
-        .card-header {
-          color: #ffffff;
-          letter-spacing: 0.5px;
-          font-weight: 500;
+        .element:hover ha-icon, .element:hover state-badge {
+          transform: translate(-50%, -50%) scale(1.35) !important;
+          filter: drop-shadow(0 10px 24px rgba(255,255,255,0.35)) !important;
         }
