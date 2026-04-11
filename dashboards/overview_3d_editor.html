@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Overview 3D · Drag Editor</title>
+<style>
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; padding: 0; background: #050a18; color: #e8efff;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+    overflow: hidden; height: 100%; }
+  .toolbar { position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 8px 12px; gap: 8px; background: rgba(10, 16, 36, 0.96);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    display: flex; align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.12); }
+  button { padding: 10px 14px; border: none; border-radius: 10px;
+    background: #2563eb; color: white; font-size: 13px; font-weight: 600;
+    cursor: pointer; touch-action: manipulation; }
+  button.save { background: #059669; }
+  button.locked { background: #6b7280; }
+  button:disabled { opacity: 0.5; }
+  .status { flex: 1; font-size: 11px; opacity: 0.8; text-align: right;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .canvas { position: fixed; top: 54px; left: 0; right: 0; bottom: 0;
+    display: flex; align-items: center; justify-content: center;
+    touch-action: none; padding: 6px; }
+  .wrap { position: relative;
+    height: 100%; aspect-ratio: 0.72;
+    max-width: 100%;
+    background:
+      radial-gradient(120% 60% at 50% 8%, rgba(90,140,255,0.22), transparent 60%),
+      radial-gradient(120% 60% at 50% 100%, rgba(255,140,80,0.16), transparent 55%),
+      linear-gradient(180deg, #05070f 0%, #0b1024 50%, #05070f 100%); }
+  .bg { position: absolute; inset: 0; width: 100%; height: 100%;
+    pointer-events: none; user-select: none; -webkit-user-drag: none; }
+  .icon { position: absolute; width: 30px; height: 30px;
+    border-radius: 50%; transform: translate(-50%, -50%);
+    display: flex; align-items: center; justify-content: center;
+    color: #eef4ff; font-size: 14px; user-select: none; touch-action: none;
+    border: 1px solid rgba(255,255,255,0.3);
+    background: radial-gradient(circle at 30% 28%, rgba(255,255,255,0.18) 0%, rgba(14,22,44,0.85) 80%);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.7),
+      inset 0 1px 0 rgba(255,255,255,0.3),
+      inset 0 -1px 0 rgba(0,0,0,0.4);
+    cursor: grab; transition: box-shadow .15s, transform .1s;
+    will-change: transform, left, top; }
+  .icon.on { background: radial-gradient(circle at 30% 28%, #ffe58c, #ff9e2a 62%, #a75a0c 100%);
+    border-color: rgba(255,220,140,0.75); box-shadow: 0 0 18px rgba(255,180,60,0.75); }
+  .icon.open { background: radial-gradient(circle at 30% 28%, #98dcff, #2a7ee3 62%, #0c3787 100%);
+    border-color: rgba(150,220,255,0.75); box-shadow: 0 0 16px rgba(92,180,255,0.75); }
+  .icon.playing { background: radial-gradient(circle at 30% 28%, #a0f4b6, #1fa567 70%);
+    border-color: rgba(140,240,170,0.72); box-shadow: 0 0 16px rgba(90,220,130,0.75); }
+  .icon.recording { background: radial-gradient(circle at 30% 28%, #ff8394, #ad1e34 62%);
+    border-color: rgba(255,140,150,0.72); box-shadow: 0 0 16px rgba(230,60,80,0.82); }
+  .icon.dragging { cursor: grabbing; z-index: 999;
+    transform: translate(-50%, -50%) scale(1.25);
+    box-shadow: 0 0 28px rgba(255,255,255,0.6), 0 8px 16px rgba(0,0,0,0.9); }
+  .icon.locked { cursor: default; }
+  .label { position: absolute; left: 50%; top: 100%; transform: translateX(-50%);
+    margin-top: 4px; font-size: 9px; white-space: nowrap; pointer-events: none;
+    color: rgba(230,240,255,0.9); text-shadow: 0 1px 2px #000, 0 0 3px #000; }
+  .icon.dragging .label { font-size: 11px; color: #fff; }
+</style>
+</head>
+<body>
+<div class="toolbar">
+  <button id="lock">🔓 Unlocked</button>
+  <button id="save" class="save" disabled>💾 Save</button>
+  <button id="reset" title="Clear stored token">⚙️</button>
+  <div class="status" id="status">Connecting…</div>
+</div>
+<div class="canvas">
+  <div class="wrap" id="wrap">
+    <img class="bg" id="bg" alt="">
+  </div>
+</div>
+<script>
+// ========== CONFIG ==========
+// Host is hard-coded (it's already visible in the dashboard URL you
+// load this editor from). Token is prompted once on first use and
+// stored in localStorage.
+const WS_HOST = "rcnk01hkmjuexvkv6jnfmojs7f3mvwzd.ui.nabu.casa";
+const URL_PATH = "overview-3d";
+const LS_KEY   = "ha_editor_token";
+
+function getToken() {
+  let t = localStorage.getItem(LS_KEY);
+  if (!t) {
+    t = prompt(
+      "Paste your Home Assistant long-lived access token.\n\n" +
+      "Create one at: /profile/security (bottom of the page).\n\n" +
+      "It's stored in this browser only."
+    );
+    if (t) localStorage.setItem(LS_KEY, t.trim());
+  }
+  return t;
+}
+const TOKEN = getToken();
+if (!TOKEN) {
+  document.body.innerHTML =
+    '<div style="padding:40px;color:#fca5a5;font-family:sans-serif">' +
+    'No token provided. Refresh to try again.</div>';
+  throw new Error("no token");
+}
+// ==========================================================
+
+const GLYPHS = {
+  "mdi:lightbulb":"💡","mdi:lightbulb-on":"💡","mdi:lightbulb-variant":"💡",
+  "mdi:torch":"🔦","mdi:ceiling-light":"💡","mdi:wall-sconce-flat":"🕯️",
+  "mdi:sofa-outline":"🛋️","mdi:sofa":"🛋️","mdi:bed":"🛏️","mdi:bed-double-outline":"🛏️",
+  "mdi:silverware-fork-knife":"🍴","mdi:cupboard-outline":"🗄️","mdi:cupboard":"🗄️",
+  "mdi:door":"🚪","mdi:blinds-open":"🪟","mdi:blinds-horizontal":"🪟",
+  "mdi:blinds":"🪟","mdi:curtains":"🪟","mdi:string-lights":"✨",
+  "mdi:speaker-wireless":"🔊","mdi:speaker":"🔊","mdi:television":"📺",
+  "mdi:floor-lamp":"💡","mdi:cctv":"📷"
+};
+
+function glyphFor(el) {
+  const g = GLYPHS[el.icon];
+  if (g) return g;
+  const d = (el.entity || "").split(".")[0];
+  return { light:"💡", switch:"💡", cover:"🪟", camera:"📷",
+           media_player:"🔊", climate:"🌡️" }[d] || "•";
+}
+
+let ws, msgId = 0, callbacks = {};
+let config = null, locked = false;
+const $ = id => document.getElementById(id);
+const wrap = $("wrap"), bg = $("bg"), status = $("status"), lockBtn = $("lock"), saveBtn = $("save");
+
+function wsCall(payload) {
+  return new Promise((resolve, reject) => {
+    msgId++;
+    const id = msgId;
+    callbacks[id] = { resolve, reject };
+    ws.send(JSON.stringify({ ...payload, id }));
+  });
+}
+
+function onMsg(ev) {
+  const m = JSON.parse(ev.data);
+  if (m.type === "auth_required") {
+    ws.send(JSON.stringify({ type: "auth", access_token: TOKEN }));
+  } else if (m.type === "auth_ok") {
+    status.textContent = "Authenticated · loading config";
+    init();
+  } else if (m.type === "auth_invalid") {
+    status.textContent = "Auth failed";
+  } else if (m.id && callbacks[m.id]) {
+    if (m.success === false) callbacks[m.id].reject(m.error);
+    else callbacks[m.id].resolve(m.result);
+    delete callbacks[m.id];
+  } else if (m.type === "event" && m.event && m.event.data) {
+    const d = m.event.data;
+    if (d && d.entity_id && d.new_state) {
+      const nodes = wrap.querySelectorAll(`[data-entity="${d.entity_id}"]`);
+      nodes.forEach(n => applyState(n, d.new_state.state));
+    }
+  }
+}
+
+function applyState(node, state) {
+  node.classList.remove("on","open","playing","recording");
+  if (["on","open","playing","recording"].includes(state)) {
+    node.classList.add(state);
+  }
+}
+
+async function init() {
+  try {
+    config = await wsCall({ type: "lovelace/config", url_path: URL_PATH });
+    const states = await wsCall({ type: "get_states" });
+    const byId = {};
+    states.forEach(s => byId[s.entity_id] = s);
+    renderBG();
+    renderIcons(byId);
+    // Subscribe to state changes so icons light up live
+    await wsCall({ type: "subscribe_events", event_type: "state_changed" });
+    status.textContent = "Ready — drag icons, then Save";
+    saveBtn.disabled = false;
+  } catch (err) {
+    status.textContent = "Init failed: " + JSON.stringify(err);
+  }
+}
+
+function renderBG() {
+  const card = config.views[0].cards[0];
+  bg.src = card.image;
+}
+
+function renderIcons(states) {
+  const els = config.views[0].cards[0].elements;
+  wrap.querySelectorAll(".icon").forEach(n => n.remove());
+  els.forEach((el, i) => {
+    const div = document.createElement("div");
+    div.className = "icon";
+    div.dataset.index = i;
+    div.dataset.entity = el.entity;
+    div.style.left = el.style.left;
+    div.style.top = el.style.top;
+    div.textContent = glyphFor(el);
+    const label = document.createElement("div");
+    label.className = "label";
+    label.textContent = el.entity.split(".")[1].slice(0, 14);
+    div.appendChild(label);
+    const s = states[el.entity];
+    if (s) applyState(div, s.state);
+    attachDrag(div);
+    wrap.appendChild(div);
+  });
+}
+
+function attachDrag(el) {
+  let rect, startX, startY, startLeft, startTop;
+  el.addEventListener("pointerdown", (ev) => {
+    if (locked) return;
+    ev.preventDefault();
+    el.setPointerCapture(ev.pointerId);
+    el.classList.add("dragging");
+    rect = wrap.getBoundingClientRect();
+    startX = ev.clientX; startY = ev.clientY;
+    startLeft = parseFloat(el.style.left);
+    startTop = parseFloat(el.style.top);
+  });
+  el.addEventListener("pointermove", (ev) => {
+    if (!el.classList.contains("dragging")) return;
+    const dx = (ev.clientX - startX) / rect.width * 100;
+    const dy = (ev.clientY - startY) / rect.height * 100;
+    let nl = startLeft + dx, nt = startTop + dy;
+    nl = Math.max(0, Math.min(100, nl));
+    nt = Math.max(0, Math.min(100, nt));
+    el.style.left = nl + "%";
+    el.style.top = nt + "%";
+  });
+  const end = (ev) => {
+    if (el.classList.contains("dragging")) {
+      el.classList.remove("dragging");
+      try { el.releasePointerCapture(ev.pointerId); } catch(_) {}
+    }
+  };
+  el.addEventListener("pointerup", end);
+  el.addEventListener("pointercancel", end);
+}
+
+lockBtn.addEventListener("click", () => {
+  locked = !locked;
+  lockBtn.textContent = locked ? "🔒 Locked" : "🔓 Unlocked";
+  lockBtn.classList.toggle("locked", locked);
+  wrap.querySelectorAll(".icon").forEach(i => i.classList.toggle("locked", locked));
+});
+
+saveBtn.addEventListener("click", async () => {
+  if (!config) return;
+  saveBtn.disabled = true;
+  status.textContent = "Saving…";
+  try {
+    const els = config.views[0].cards[0].elements;
+    wrap.querySelectorAll(".icon").forEach((div) => {
+      const i = parseInt(div.dataset.index, 10);
+      els[i].style = { ...(els[i].style || {}), left: div.style.left, top: div.style.top };
+    });
+    await wsCall({ type: "lovelace/config/save", url_path: URL_PATH, config });
+    status.textContent = "Saved ✓ · reload the dashboard to see";
+  } catch (err) {
+    status.textContent = "Save failed: " + JSON.stringify(err);
+  } finally {
+    saveBtn.disabled = false;
+  }
+});
+
+$("reset").addEventListener("click", () => {
+  localStorage.removeItem(LS_KEY);
+  location.reload();
+});
+
+ws = new WebSocket(`wss://${WS_HOST}/api/websocket`);
+ws.onmessage = onMsg;
+ws.onerror = () => { status.textContent = "WebSocket error"; };
+ws.onclose = () => { status.textContent = "Disconnected"; };
+</script>
+</body>
+</html>
