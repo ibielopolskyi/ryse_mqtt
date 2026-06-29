@@ -41,3 +41,11 @@ MOTION_CLOSING = 2
 RECONNECT_INTERVAL = 5.0
 BLE_DISCONNECT_DELAY = 0.5
 BLE_CONNECT_TIMEOUT = 30.0
+
+# Local patch (keepalive-debounce):
+# - While connected, issue a keep-alive GATT read every RECONNECT_INTERVAL so
+#   the shade does not drop an idle BLE link (root cause of the unavailable
+#   flapping on a stable proxy).
+# - Debounce: a brief disconnect no longer flips the entity to unavailable;
+#   it only goes unavailable if the link stays down this many seconds.
+UNAVAILABLE_GRACE = 30.0

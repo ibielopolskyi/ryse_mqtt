@@ -5,6 +5,16 @@ Supports two modes:
      discovery and connection management.
   2. Direct BLE: Uses bleak directly (for systems where HA Bluetooth is
      unavailable or the adapter is on a remote host).
+
+Local patch (keepalive-debounce, 2026-06-27):
+  - Keep-alive heartbeat: while connected, the connection loop issues a
+    lightweight GATT read each cycle so the shade does not drop an idle BLE
+    link. Idle-timeout disconnects were the root cause of the entity flapping
+    `unavailable` every few minutes despite a stable Bluetooth proxy.
+  - Availability debounce: a brief disconnect no longer flips the entity to
+    `unavailable` immediately. The connection loop reconnects within
+    RECONNECT_INTERVAL; we only surface `unavailable` if the link stays down
+    past UNAVAILABLE_GRACE. This hides the sub-second blips from automations.
 """
 
 from __future__ import annotations
@@ -31,6 +41,7 @@ from .const import (
     RECONNECT_INTERVAL,
     STATE_MOTION_INDEX,
     STATE_POSITION_INDEX,
+    UNAVAILABLE_GRACE,
     UUID_RX,
     UUID_TX,
 )
@@ -73,6 +84,8 @@ class RyseSmartShadeDevice:
         self._state_callbacks: list[Callable[[], None]] = []
         self._running: bool = False
         self._connection_task: asyncio.Task | None = None
+        # Local patch: debounce timer for the availability grace window.
+        self._unavailable_task: asyncio.Task | None = None
 
     def set_ble_device(self, ble_device: BLEDevice) -> None:
         """Update the BLEDevice reference (from HA Bluetooth scanner)."""
@@ -146,10 +159,39 @@ class RyseSmartShadeDevice:
         self._parse_state(data)
 
     def _on_disconnect(self, _client: BleakClient) -> None:
-        """Handle BLE disconnection."""
-        _LOGGER.info("%s disconnected", self.name)
-        self.available = False
-        self._fire_callbacks()
+        """Handle BLE disconnection.
+
+        Local patch: debounce. Do NOT flip the entity to unavailable on a brief
+        drop -- the connection loop reconnects within RECONNECT_INTERVAL. Start
+        a grace timer; only if we are still down after UNAVAILABLE_GRACE do we
+        surface `unavailable`.
+        """
+        _LOGGER.info("%s disconnected (debouncing for %.0fs)", self.name, UNAVAILABLE_GRACE)
+        if self._unavailable_task is None or self._unavailable_task.done():
+            self._unavailable_task = asyncio.ensure_future(
+                self._mark_unavailable_after_grace()
+            )
+
+    async def _mark_unavailable_after_grace(self) -> None:
+        """Surface `unavailable` only if the link stays down past the grace window."""
+        try:
+            await asyncio.sleep(UNAVAILABLE_GRACE)
+        except asyncio.CancelledError:
+            return
+        if not self.is_connected and self.available:
+            _LOGGER.info(
+                "%s still disconnected after %.0fs -> marking unavailable",
+                self.name,
+                UNAVAILABLE_GRACE,
+            )
+            self.available = False
+            self._fire_callbacks()
+
+    def _cancel_unavailable_task(self) -> None:
+        """Cancel a pending availability grace timer (we are back, or shutting down)."""
+        if self._unavailable_task and not self._unavailable_task.done():
+            self._unavailable_task.cancel()
+        self._unavailable_task = None
 
     @property
     def is_connected(self) -> bool:
@@ -181,6 +223,9 @@ class RyseSmartShadeDevice:
                     await self._client.connect()
 
                 if self._client.is_connected:
+                    # Local patch: we reconnected within the grace window, so
+                    # cancel any pending unavailable timer and stay available.
+                    self._cancel_unavailable_task()
                     self.available = True
                     # Read initial state
                     initial_data = await self._client.read_gatt_char(UUID_RX)
@@ -193,13 +238,19 @@ class RyseSmartShadeDevice:
 
             except Exception:
                 _LOGGER.exception("Failed to connect to %s", self.name)
-                self.available = False
+                # Local patch: do NOT force `available = False` here. If we were
+                # previously available, the grace timer started by _on_disconnect
+                # decides when to surface unavailable; if we were never available,
+                # `available` is already False.
                 self._fire_callbacks()
             return False
 
     async def disconnect(self) -> None:
         """Disconnect from the BLE device."""
         async with self._lock:
+            # Local patch: an explicit disconnect is intentional (unload/reload),
+            # so cancel the grace timer and surface unavailable immediately.
+            self._cancel_unavailable_task()
             if self._client and self._client.is_connected:
                 try:
                     await self._client.disconnect()
@@ -254,13 +305,32 @@ class RyseSmartShadeDevice:
             except asyncio.CancelledError:
                 pass
             self._connection_task = None
+        self._cancel_unavailable_task()
 
     async def _connection_loop(self) -> None:
-        """Maintain the BLE connection when fast mode is enabled."""
+        """Maintain the BLE connection when fast mode is enabled.
+
+        Local patch: when connected, issue a lightweight keep-alive GATT read
+        each cycle so the shade does not drop an idle link. This is the
+        root-cause fix for the periodic `unavailable` flapping.
+        """
         while self._running:
             try:
-                if not self.is_connected and self.fast_mode:
-                    await self.connect()
+                if not self.is_connected:
+                    if self.fast_mode:
+                        await self.connect()
+                else:
+                    # Keep-alive heartbeat: a periodic read keeps the BLE link
+                    # active so the shade's idle-supervision timeout never fires.
+                    data = None
+                    try:
+                        async with self._lock:
+                            if self.is_connected:
+                                data = await self._client.read_gatt_char(UUID_RX)
+                    except Exception:
+                        _LOGGER.debug("%s keep-alive read failed", self.name)
+                    if data is not None:
+                        self._parse_state(data)
                 await asyncio.sleep(RECONNECT_INTERVAL)
             except asyncio.CancelledError:
                 break
